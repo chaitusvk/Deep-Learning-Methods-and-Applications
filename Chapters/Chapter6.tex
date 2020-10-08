@@ -1,0 +1,303 @@
+\chapter{Procedure for loading Linux Operating System and other drivers along with add on cards}
+\label{Chapter6}
+
+\section{Loading of Redhat Linux Operating System} 
+
+\begin{enumerate}
+	\item [\textbullet] Insert RHEL7 DVD
+	\item [\textbullet] Press delete/enter : it will go to boot means
+	\item [\textbullet] Here select : $\#$option(with SSTA DVD) for boot priorities. Then Save $\&$ exit (files)
+	\item [\textbullet] DVD
+	\item [\textbullet] It will ask for time $\&$ date, software sections.
+	\item [\textbullet] In the software selection, go to server with GUI option. In the following six points select required tools or packages.
+		\begin{enumerate}
+			\item [a)] Compatibility libraries
+			\item [b)] Java
+			\item [c)] KDE
+			\item [d)] Hardware priorities
+			\item [e)] Performance tools
+			\item [f)] Development tools
+		\end{enumerate}
+	\item [\textbullet] Then go for Automatic partition selection. Here make sure that 114.5 GB free space is available. If not, make it free using windows vista OS CD/DVD or any windows OS CD/DVD. Then use the following partitions.
+		\begin{enumerate}
+			\item [a)] \textit{Boot :} /boot 512 MB
+			\item [b)] \textit{Root :} / 50 MB
+			\item [c)] \textit{User :} /user 10 GB
+			\item [d)] \textit{Var :} /var 10 GB
+			\item [e)] \textit{Home :} home 20 GB
+			\item [f)] \textit{Swap :} swap 1 GB (aproximately double the ram size 8 GB)
+		\end{enumerate}
+	\item [\textbullet] Begin for Installation
+	\item [\textbullet] Set Root password as telecommand123 and user along with password  as given below \\
+			$username	: telecommand$ \\
+			$password	: telecommand$
+	\item [\textbullet] After completion and installation of loading of OS, reboot the system.
+	\item [\textbullet] Accept the license and finish the configuration.		
+\end{enumerate}
+
+\section{Copying packages and repository creation}
+\subsection{Copying of packages}
+
+\begin{enumerate}
+	\item [\textbullet] Go to $\#$home  
+	\item [\textbullet] Create a folder and name it as ``mserver". \\ This will be a local server file. Instead of mounting RHEL7 DVD everytime, one can use this folder.
+	\item [\textbullet] Inside ``mserver" folder, create another folder and name it as ``RHEL7". In this ``RHEL7" folder, copy all the available files in packages folder in CD/DVD  (total of 4300 files to be copied).
+\end{enumerate}
+
+\subsection{Repository creation}
+All the packages are copied and the packages are available in the path ``/home/mserver/RHEL7"
+
+\begin{enumerate}
+	\item [\textbullet] First go the folder ``RHEL7" where all the packages are available. 
+	\item [\textbullet] Open DVD, go to repodata, then copy ``...comps.xml" file to packages/RHEL7
+	\item [\textbullet] Go to path /home/mserver (where, earlier all packages are copied), paste ``...comps.xml" and re-name to ``comps.xml" 
+	\item [\textbullet] Go to the path /home/mserver
+			\begin{enumerate}
+				\item [a)] Go to root\\
+				$\#$su\\
+				$\#$pw: telecommand123 (if different, enter root password)
+				\item [b)] $\#$ createrepo -g RHEL7/comps.xml\\
+				repository will be created
+				\item [c)] $\#$ vi /etc /yum repos.d/rhel7.repo \\
+				editing the file in vi edit tool\\
+				$[rhel7]$\\
+				name=rhel7\\
+				baseurl=file:///home/tc/mserver (where tc is user name, if user name for the pc is telecommand then in place of tc, telecommand to be written)\\
+				enabled =1\\
+				gpgcheck=0\\		
+				Here for editing, i: insert; press with esc then :wq	
+				\item [d)] $\#$ yum repolist all\\
+				to know all the available repositories.
+				\item [e)] $\#$ yum makecache
+				\item [f)] $\#$ yum install kernel $~$devel gcc $\&$$\&$ yum update
+			\end{enumerate}
+\end{enumerate}
+
+\section{Installation of libraries}
+
+\begin{enumerate}
+	\item [\textbullet] Go to the packages where all are available (/home/mserver/rhel7).
+	\item [\textbullet] The execute the following files. Execute the file by double clicking. It will ask for dependencies and authentication. Enter root password and give install. The the file will be installed, otherwise ``file is already installed" message will come. Search for the following files in search bar.
+	\begin{enumerate}
+		\item [a)] libattr -2.4 (2 files)
+		\item [b)] libattr -devel (2 files)
+		\item [c)] lib coll (2 files))
+		\item [d)] libcap -2.22 (2 files)
+		\item [e)] libcap -devel (2 files)
+		\item [f)] libavc -136u (2 files)
+		\item [g)] mesa -libGLU -9.0.0
+		\item [h)] mesa libGL -devel
+	\end{enumerate}
+	\item [\textbullet] gcc, gcc+ libraries
+		\begin{enumerate}
+			\item [a)] $\#$yum install libmpc.i686
+			\item [b)] $\#$yum install libcap-ng-devel.i686
+			\item [c)] $\#$yum install libcgroup.i686
+			\item [d)] $\#$yum install libattrgroup.i686
+			\item [e)] $\#$libcgroup -0.41.6....
+			\item [f)] $\#$libcroco -0.6.8.5...
+			\item [g)] $\#$libcxgb3 
+		\end{enumerate}
+\end{enumerate}	
+
+
+\section{Installation of Qt}
+\begin{enumerate}
+	\item [\textbullet] Copy qt enterprise linux X64-5.4.0 and Qt licence in /home folder
+	\item [\textbullet] Make the file as executable.\\ Go to properties.\\
+	Go to permissions.\\
+	Tick/select for allow as executable file. \\
+	Then go to root and do the following
+		\begin{enumerate}
+			\item [a)] $\#$su  (go to root via terminal)
+			\item [b)] $\#$pw (enter root password) 
+			\item [c)] $\#$ls (to get the list of files)
+			\item [d)] $\#$ ./qt-enterprise-linux-x64-5.4.0.run 
+			\item [e)] Installation wizard will appear. Go tick for enter manual install details option and proceed.
+				\begin{enumerate}
+					\item License : XXXXUserXXXX
+					\item QtLey	: XXXXKeyXXXX
+					\item QtLey	: XXXXKeyXXXX \\
+					copy key ``XXXXKeyXXXX" from license file.
+				\end{enumerate}
+		\end{enumerate}
+	\item [\textbullet] Select all tools under qt.5.4.0 for installation.
+	\item [\textbullet] Installation will go to the folder /opt/qt5.4 in root account (if already there, go to root and delete the file).
+	\item [\textbullet] Go step by step and agree license tems and conditions.
+	\item [\textbullet] Finish installation.
+	\item [\textbullet] Restart the system.
+\end{enumerate}
+
+\section{Installation of drivers for add-on cards}
+Copy AddonDrivers in /home folder
+\subsection{blacklisting}
+	\begin{enumerate}
+		\item [\textbullet] Go to terminal and then to root (su and then root password)
+		\item [\textbullet] $\#$yum makecache
+		\item [\textbullet] $\#$yum install kernel-devel gcc $\&$$\&$ yum update kernel\\
+		if already done, then this can be ignored. 
+		\item [\textbullet] $\#$ vi /etc/modprobe.d/blacklist.conf
+		\begin{enumerate}
+			\item blacklist comedi
+			\item blacklist $adv\_pci\_dio$ 
+			\item blacklist $adv\_pci1710$ 
+		\end{enumerate}
+	These three lines are to be added using `i' for inserting and `esc+shift :wq' for saving.
+	\end{enumerate}
+\subsection{Adding several ports to system}
+To add several ports to the system, go to root via terminal (su and root password) and do the following\\
+$\#$sudo usermod -a -G dialout tc\\
+where `tc' is the user of the system to be verified. If the user name is `telecommand', then `telecommand' to be used in place of `tc'.
+\subsection{Serial Card installation : PCI1620B}
+\begin{enumerate}
+	\item [\textbullet] Go to V3.39 (in AddonDrivers folder which is located in /home)
+	\item [\textbullet] Then go to `Src' which contains either a or b.
+		\begin{enumerate}
+			\item [a)] $adv950\_source_v3.39.tar.gz$ a zipped file. \\ For un-zipping: in this location go to terminal \& root, then un-zipping can be done using the following command in terminal\\
+			$\#$ tar -xzvf $adv950\_source_v3.39.tar.gz$ \\
+			It creates: $adv950\_source_v3.39$ 
+			\item [b)] If already contains, un-zipped file then no need of un-zipping again
+		\end{enumerate}
+	\item [\textbullet] Go to the folder: $adv950\_source_v3.39$, \\
+	$\#$ ls\\
+	gives: 2.4  2.6  3.x advmknod get config readme
+	\item [\textbullet] In this go to the folder `3.x'
+	\item [\textbullet] In this folder, open terminal and root
+	\item [\textbullet] $\#$make
+	\item [\textbullet] $\#$depmod
+	\item [\textbullet] Completes serial card installation
+	\item [\textbullet] Restart the PC
+	\item [\textbullet] After re-starting, check for the availability of serial ports using the following 
+		\begin{enumerate}
+			\item \textbf{For Comports information}: $\#$ setserial -g /dev/ttyS*
+			\item \textbf{For Moxa ports information}:
+			$\#$ setserial -g /dev/ttyAP*
+		\end{enumerate}
+\end{enumerate}
+
+\subsection{DIO Parallel Card installation : PCI1753}
+\begin{enumerate}
+	\item [\textbullet] Go to AddonDrivers folder
+	\item [\textbullet] Go to $Linuxdriver\_Source$ \textbf{(i)}
+	\item [\textbullet] Go to drivers
+	\item [\textbullet] Go to $driver\_base$
+	\item [\textbullet] Go to src
+	\item [\textbullet] Go to $lnx\_ko$ \\
+	here open terminal in root. 
+		\begin{enumerate}
+			\item $\#$ make\\
+			exit from here.
+		\end{enumerate}
+	\item [\textbullet] Go back to folder `drivers'\\
+		$lnx\_ko$ $\Rightarrow$ src $\Rightarrow$ $driver\_base$ $\Rightarrow$ drivers\\
+		now we are in `drivers' folder
+	\item [\textbullet] Go to $pci1753\_mic3753_pcm3753i$ 
+	\item [\textbullet] Go to src
+	\item [\textbullet] Go to $lnx\_ko$ \\
+	here open terminal in root
+		\begin{enumerate}
+			\item $\#$ make
+			\item $\#$ mkdir /lib/modules/ \textdollar (uname -r)/biodaq \\
+		exit from here.
+		\end{enumerate}
+	\item [\textbullet] Go back to `drivers' folder again\\
+	Now we are in drivers folder\\
+	Open terminal in root
+		\begin{enumerate}
+			\item $\#$ cp bin/*.ko /lib/modules/\textdollar (uname -r)/biodaq/
+			\item $\#$ depmod
+			\item $\#$ vi /etc/modules-load.d/biodaq.conf //
+			Type the following three lines using `i' for inserting and `esc+shift :wq' for saving. \\
+			$\#$Load biodaq at boot\\
+			biokernbase\\
+			bio1753\\
+			exit from here.
+		\end{enumerate}
+	\item [\textbullet] Go back to \textbf{(i)}, i.e., outside of drivers folder and into $Linuxdriver\_Source$
+	\item [\textbullet] Go to libs\\
+	Now we are in libs folder \\
+	Here open terminal in root \\
+	\begin{enumerate}
+		\item $\#$ cp * /usr/lib \\
+		Exit from here
+	\end{enumerate}
+	\item [\textbullet] Go back to \textbf{(i)}, i.e., outside of drivers folder and into $Linuxdriver\_Source$
+	\item [\textbullet] Go to inc folder \\
+	Now we are in `inc' folder \\
+	Here open terminal in root 
+		\begin{enumerate}
+			\item $\#$ cp bdaqctrl.h /usr/include/
+			\item $\#$ mkdir /usr/share/Advantech
+			\item $\#$ cp Automation.BDaq.jar /usr/share/Advantech/
+			\item $\#$ chmod 444 /usr/share/Advantech/Automation.BDaq.jar \\
+			Exit from here
+		\end{enumerate}
+	\item [\textbullet] This completes PCi1753 DIO drivers installation
+	\item [\textbullet] Restart the system
+	\item [\textbullet] After re-starting, check for the availability of daq devices using the following 
+	\begin{enumerate}
+		\item \textbf{To get number of daq devices}: Go to root,  $\#$ ls /dev/daq* \\
+		For example, if it is displayed like the following\\
+		/dev/daq0             /dev/daq255   : It means that two devices are there.
+		\item \textbf{To get description of particular daq}:
+		$\#$ cat /sys/class/daq/daq0/desc   : It gives description of daq0 device.
+	\end{enumerate}
+	
+\end{enumerate}
+
+\subsection{Multifunction Card installation : PCI1716}
+Already DIO card PCI1753 installation is successful. Then with minimal installation PCI1716 installation can be done as given below
+\begin{enumerate}
+	\item [\textbullet] Go to AddonDrivers folder
+	\item [\textbullet] Go to $Linuxdriver\_Source$ 
+	\item [\textbullet] Go to PCI1716 folder
+	\item [\textbullet] Go to SRC
+	\item [\textbullet] Go to $lnx\_ko$ \\
+	here open terminal in root. 
+		\begin{enumerate}
+			\item $\#$ make
+			\item $\#$ depmod
+			\item $\#$ vi/etc/$modules\_load.d$/biodaq.conf\\
+			From the above points after entering this, we will get the following window because already during `PCI1753' the file was edited and saved.
+			\begin{enumerate}
+				\item load biodaq at boot
+				\item biokernbase
+				\item bio1753
+			\end{enumerate}
+			The above three points already used at devise PCI1753 
+			\begin{enumerate}
+				\item bio1716 \textbf{(newly entered)}\\
+				 to be added using `i' for inserting and `esc+shift :wq' for saving.\\
+				 Exit from here.
+			\end{enumerate}	 
+		\end{enumerate}
+\end{enumerate}
+
+\section{Other useful Commands}
+
+\begin{enumerate}
+	\item [\textbullet] $\#$ cntr+L				: to clear
+	\item [\textbullet] $\#$ systemctl reboot	: to reboot
+	\item [\textbullet] $\#$ ls /dev/daq*		: to get list of daq devices
+	\item [\textbullet] $\#$ cat /sys/class/daq/daq0/desc					: to get details of paticular daq for example] daq0		
+	\item [\textbullet] $\#$ lsmod		: to get list of modules
+	\item [\textbullet] $\#$ free -m	: to get ram details
+	\item [\textbullet] $\#$ fdisk -l	: to know the partition information
+	\item [\textbullet] $\#$ cat /proc/cpuinfo : to get processor information
+	\item [\textbullet] $\#$ lspci	: to get list of PCI devices
+	\item [\textbullet] $\#$ minicom -s : to open communication terminal for serial port testing
+	\item [\textbullet] $\#$ setserial -g /dev/ttyS*	 : to get details of serial ports in the PC
+	\item [\textbullet] $\#$ su	: to enter to root user
+	\item [\textbullet] $\#$ gcc -o targetExeFileName cfileName	: to compile, buid and output executable file.
+	\item [\textbullet] $\#$ systemctl status firewall.d	: to know about firewall active status.
+	\item [\textbullet] $\#$ systemctl status iptables	: to know about iptables active status.
+	\item [\textbullet] $\#$ top: in root mode gives the memory along with cpu usage.
+	\item [\textbullet] $\#$ vmstat : in root mode gives virtual memory status
+	\item [\textbullet] $\#$ chmod 777 filename : in root mode assigns full writing and reading control for the file.
+	\item [\textbullet] $\#$ goto root (su and then root password) cd /var/log; then to see messages give `vim messages' or `gedit messages'
+	\item [\textbullet] $\#$ ifconfig : to get Ethernet configurations details.
+	
+	
+	
+	
+\end{enumerate}

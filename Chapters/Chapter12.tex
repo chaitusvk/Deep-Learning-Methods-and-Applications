@@ -1,0 +1,17 @@
+\chapter{Features of new Linux based DPS compared to old windows 2K based DPS}\label{Chapter9}
+
+
+\begin{enumerate}
+	\item [$\blacksquare$] Continuous logging at different rates. DCE/RCU logging is introduced as per project requirement for logging the DCE/RCU data at 40ms rate via DI interface.
+	\item [$\blacksquare$] Radiated power level limits (lower and upper) are configurable through tcconstants.inp file where as these are hardcoded in windows based DPS. 
+	\item [$\blacksquare$] Independent buffers for line-1 and line-2 of MCC are maintained and logged independently where as single buffer was in use for windows based DPS. 
+	\item [$\blacksquare$] Programmable limits and pre-limits are provided for both azimuth and elevation in-addition to mechanical limits. Only mechanical limts and pre-limits are available for windows based DPS. 
+	\item [$\blacksquare$] Application developed caters the need for both SHAR and PBLR TC chains. Only corresponding input files (rxsocket, txsocket, sio, pio, constants) to be changed as per chain configuration. 
+	\item [$\blacksquare$] Healths of add on cards along with threads running status is provided on the main GUI page. This information is not available in windows based DPS.
+	\item [$\blacksquare$] Plotting is introduced in the new design. In this azimuth and elevation responses are plotted in two segments. Power level status and command radiated status are plotted in other two segments of second GUI plotting page.
+	\item [$\blacksquare$] Logged data are saved into harddisk and the folder name as specified in the tcconstants file. This is not there in windows based DPS.
+	\item [$\blacksquare$] Timing data is acquired in two chains one each from two readers using RS232 serial interface at refresh rate of 10ms. This has reduced the load on DI card compared to windows based DPS, where in CDT is acquired using DI card for BCD timing data. 
+	\item [$\blacksquare$] The limitation of windows based DPS for prog mode data is taken care in the new design. In the old design, prog mode data takes upto T+500s and after that in case of selection of prog mode (operational error), antenna will run away to initial position. In the new linux based DPS, prog mode data takes upto T+1000s and after that also incase of selection of prog mode, commanded angle takes the last value at T+1000s. Also, in case of non availability of prog mode data before T+1000s previous value will be buffered for the rest of the values. 
+	\item [$\blacksquare$] Extra parameters are added in different log files and each log file is provided with header containing the information of the parameters being logged.
+	\item [$\blacksquare$] Default logging for all files is incorporated as per suggestion of STARS. MCC transmission and logging is selection dependant by the operator. CDM data will be logged as and when data is received. In windows based DPS, defulat logging is off and MCC transmission is on.  
+\end{enumerate}

@@ -1,0 +1,204 @@
+\chapter{}
+
+\section{Introduction}
+\hspace{1cm}Natural convection heat transfer is an important consideration in the design of many engineering equipments and instruments. Natural convection heat transfer finds application in scenarios where there is  temperature difference between a surface which is in contact with a quiescent fluid. One of the geometric configuration which has application over wide range of engineering problems is that of horizontal circular cylinder. Thus it is important to study natural convection heat transfer around horizontal circular cylinder. It will be a useful input for the design of heat exchangers such as passive heat exchangers that are used in subsea  application which work solely based on natural convection heat transfer,boiler design,air cooling systems,design of electrical equipments such as substation transformers. Another area of application is in food processing industry. Thermal treatment of  food items like canned food,liquids confined in closed space. In such applications the only mechanism of heat transfer is natural convection.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=1\textwidth]{horz_confinement_fig}
+\caption{Computational Domain}
+\label{fig:cd}
+\end{figure}
+
+In most of the practical applications horizontal cylinder will be confined either horizontally or vertically. In HVAC industries pipes carrying hot fluid are often suspended in hangers below an overlying surface. In Electronic gadgets, electronic components are inside a casing which act as confinement. Solar energy storage devices,nuclear reactors are other examples. Thus for better design and performance point of view it is necessary to investigate the effect of confinement on natural convection heat transfer around horizontal cylinder.  Therefore the present study focuses on understanding heat transfer performance from horizontal heated cylinder kept in an unrestricted quiescent fluid and the effect of confining the cylinder.
+\section{Literature Review}
+\hspace{0.5cm}There are studies available in literature for cylinder with and without confinement. These studies consists of analytical work,experimental analysis and numerical simulations.
+\subsection{Natural Convection around horizontal heated cylinder in quiscent fluid}
+Natural convection studies around horizontal cylinder date back to the time of Nusselt. Ackerman\cite{ack},a student of Nusselt carried out experiments on horizontal
+\begin{table}[h!]
+\caption{Summary of Average Nusselt Number correlations for horizontal circular cylinder}
+\label{tab:correlation}
+\begin{center}
+\begin{tabular}{|p{3cm}|p{8cm}|p{4.5cm}|}
+\hline
+Name & Correlation & conditions \\
+%\hline
+%Morgan & comparision of previous experimental datas  & empherical relations presented  \\
+\hline
+\vspace{0.3cm}Morgan & \vspace{0.3cm} \pbox{5cm}{$\overline{Nu} =0.556Ra^{*1/5}$\\$\overline{Nu} =0.21Ra^{*1/4}$\\ \\} &\vspace{0.3cm} \small\pbox{5cm}{ $4.8\times10^4<Ra^*<2.7\times10^8$\\$2.7\times10^8<Ra^*<1.3\times10^{15}$} \\
+ 
+\hline
+\vspace{0.3cm}Churchill and Chu & \vspace{0.3cm} \small \pbox{8cm}{$\overline{Nu}=\Bigg(0.6+0.387\left(\frac{Ra}{\left[1+\left(\frac{0.559}{Pr}\right)^{9/16}\right]^{16/9}}\right)^{1/6}\Bigg)^{2}$\\ \\} &\pbox{5cm}{ uniform wall temperature\\all Ra and Pr} \\
+
+\hline
+\vspace{0.3cm}Churchill and Chu & \vspace{0.3cm} \small \pbox{7cm}{$\overline{Nu}=0.36+ 0.521\left(\frac{Ra}{\left[1 +\left(\frac{0.442}{Pr}\right)^{9/16}\right]^{16/9}}\right)^{1/4}$\\ \\} &\pbox{5cm}{ uniform heat flux\\for laminar regime \\and small Pr} \\
+\hline
+\vspace{0.3cm}McAdams & \vspace{0.3cm} \pbox{5cm}{$\overline{Nu} =0.53Ra^{1/4}$\\$\overline{Nu} =0.13Ra^{1/3}$\\ \\} &\vspace{0.3cm} \pbox{5cm}{ $10^4<Ra<10^9$\\$10^9<Ra<10^{12}$} \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+ cylinder to verify Nusselt's theory. There is considerable amount of literature on Natural convection from a horizontal cylinder kept in unbounded fluid. Morgan\cite{mor} investigated published results in heat transfer by natural convection around smooth  circular horizontal cylinders and proposed correlations valid for different ranges of Ra.  Churchill and Chu\cite{chu} presented correlating equations for both laminar and turbulent flow conditions based on compilation of experimental data. McAdams\cite{mca} proposed average Nusselt number correlations for Rayleigh number between $10^4$ and $10^{12}$.   
+
+\subsubsection{Analytical works}
+Attempts were made successfully to analytically predict the local and overall heat transfer rate from heated horizontal cylinders based on boundary layer approximation. Hermann\cite{her} modified pohlausen's  similarity solution for vertical flat plate at Pr=0.733 to obtain boundary layer thickness around the cylinder. Due to the boundary layer approximation his solution was valid only for sufficiently high Grashof number. Chiang et al.\cite{chg} used a Blasius series expansion method to predict heat transfer coefficient for laminar natural convection around horizontal cylinders. Mark and Pins\cite{mark} obtained a similarity solution valid near stagnation point and later presented an integral solution. Nakai and Okazaki\cite{nki} studied natural convection around horizontal wires of small diameter for uniform temperatures. The similarity solution thus obtained were compared with experimental results.\\
+\begin{table}[h]
+\caption{Summary of Analytical works in Natural Convection around horizontal circular cylinder}
+\label{tab:analytical}
+\begin{center}
+\begin{tabular}{|p{3cm}|p{7cm}|p{5cm}|}
+\hline
+Name & Nature of work & Major Results\\
+\hline
+Hermann & analytical & similarity solution for boundary layer thickness around cylinder obtained \\
+\hline
+Chiang et al. & analytical & predicted h using Blasius series expansion method \\
+\hline
+Mark and Pins & analytical & obtained similarity solution valid near stagnation point \\
+\hline
+Nakai and Okazaki & \pbox{5cm}{analytical and experimental \\small diameter wires at  uniform temperature \\Fluid: air } & obtained analytical solution which was in agreement with experimental data\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}                  
+ 
+\subsubsection{Experimental works}       
+\hspace{1cm}Coming to experimental works,Kitamura et al.\cite{kitamura} experimentally investigated natural convection flow of water around large horizontal cylinders. Their main objective was to find out the effects of local heat transfer with turbulent transition. They carried out experiments for cylinder diameter ranging from 65mm to 800mm. They found that for each diameter there is a critical value of $Ra^{*}$ below which the flow is completely laminar,but for larger $Ra^{*}$, 3D separation of flow happens from the cylinder surface resulting in transition from laminar to turbulent flow.Kitamura et al. also reported that the point of flow separation from the cylinder would travel upstream with increasing Rayleigh number. Herraez and Belda\cite{hez} conducted experiments using holographic interferometry to study natural convection in air around horizontal cylinders. Cylinders of different diameters but equal length and different surface temperatures were used. The distance of each interference line was used to develop an exponential function of temperature as a function of radial distance. This in turn was used to determine local and mean Nusselt number. Atayilmaz ans Ismail\cite{ata} did experimental and numerical study of natural convection from heated horizontal cylinder kept in different ambient and surface temperatures. They proposed a correlation for the average Nusselt number over the cylinder for Rayleigh number in the range between $7.4\times10^1$ and $3.4\times10^3$. Grafsronningen investigated the buoyant plume by natural convection heat transfer from horizontal heated cylinder using PIV. The experiments were performed for a range of Rayleigh number from $2.05\times10^{7}$ to $7.94 \times10^{7}$. He showed that mean velocity in the center of the plume approaches a constant value at some distance downstream of the cylinder for all cases considered. He reported that local Nusselt number decreases with increase in circumferential angle.	
+
+\begin{table}[h]
+\caption{Summary of Experimental works}
+\label{tab:experiment}
+\begin{center}
+\begin{tabular}{|p{3cm}|p{5cm}|p{6cm}|}
+\hline
+Name & conditions of study & Major Results \\
+%\hline
+%Morgan & comparision of previous experimental datas  & empherical relations presented  \\                                
+\hline
+\vspace{0.25cm}Kitamura et al. & \vspace{0.25cm}\pbox{5cm}{D= 65mm to 800mm\\fluid:air} & found a critical $Ra^*$ at which transition happens from laminar to turbulent flow,point of transition shifts upward as $Ra^*$ increases \\
+                
+\hline
+\vspace{0.25cm}Herraez and Belda & \vspace{0.25cm} \pbox{5cm}{fluid:air\\ $2.2\times10^3<Ra<1.6\times10^5$} &local and mean Nu around cylinder determined using functional relation between temperature and distance of interference line \\
+                   
+\hline
+\vspace{0.25cm}Atayilmaz ans Ismail & \vspace{0.25cm}\pbox{5cm}{ ambient temperature: $10^oc - 40^oc$\\surface temperature: $20^oc - 60^oc$\\cylinder diameters:4.8mm \& 9.45mm\\$7.4\times10^1<Ra<3.4\times10^3$\\fluid:air\\ \\} & proposed a correlation for average Nu over the cylinder for the range of Ra considered \\
+                 
+\hline
+\vspace{0.25cm}Grafsronningen & \vspace{0.25cm}\pbox{5cm}{ fluid:water\\$2.05\times10^7<Ra<7.94\times10^7$\\ \\}& buoyant plume formed by natural convection above horizontal cylinder was investigated using PIV \\                              
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\subsubsection{Numerical works}
+\hspace{1cm}The most important work on numerical solution of Natural convection around horizontal cylinder was done by Kuehn and Goldstein\cite{kuehn}. They solved full Navier Stoke equation numerically without boundary layer approximation using finite difference method. The results are obtained for $10^{0}<Ra<10^{7}$. They found that flow approaches natural convection flow from a line heat source as $Ra\rightarrow0$ and laminar boundary layer flow as $Ra\rightarrow\infty$. They also reported that boundary layer solutions do not adequately describe the flow and heat transfer at low and moderate values of Ra. They used inflow and outflow boundary conditions to define the imaginary outer boundary which defines the computational domain.The numerical solution was validated by conducting experiments under same conditions. Farouk and Guceri\cite{farouk} adopted a Finite difference numerical  method to generate flow patterns and heat transfer characteristics for laminar,steady state 2D natural convection around a circular cylinder submerged in an unbounded boussinesq fluid. They found that for larger Rayleigh numbers boundary layer becomes thinner necessitating a finer mesh close to the boundary but at the same time allowing smaller domain size($D_{\infty}/D$). Saitoh et al.\cite{saitoh} presented a high accuracy benchmark solution for the natural convection flow around a horizontal circular cylinder with uniform surface temperature. They concluded that in order to get a good solution the grid should be highly refined near the cylinder,domain should be sufficiently large and the  imaginary boundary which defines the computational domain should be a solid boundary as against inflow-outflow boundary condition used by some of the previous researchers.
+
+\begin{table}[h]
+\caption{Summary of Numerical works}
+\label{tab:properties}
+\begin{center}
+\begin{tabular}{|p{3cm}|p{5cm}|p{6cm}|}
+\hline
+Name & Nature and conditions of study & Major Results \\
+\hline
+Kuehn and Goldstein & \pbox{5cm}{Numerical\\ $10^0<Ra<10^7$\\Pr=0.71\\fluid:air} & flow approaches that of line heat source as $Ra\rightarrow 0$ and laminar boundary layer flow as $Ra\rightarrow \infty$ boundary layer solution does'nt work well for low and moderate Ra \\
+                   
+\hline
+Farouk and Guceri & \pbox{5cm}{ Numerical\\$10^3<Ra<10^7$\\Pr=0.721\\fluid:air} & for larger Ra,finer mesh required near cylinder but allowing smaller $L_\infty/D$ \\
+                 
+\hline
+Saitoh et al. & \pbox{5cm}{ Numerical\\$10^3<Ra<10^5$\\Pr=0.7}& inflow-outflow boundary condition gives significant  discrepancy compared with solid boundary condition for pseudo boundary \\                              
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[h!]
+\caption{Summary of Average Nusselt Number correlations for horizontal circular cylinder based on experimental works}
+\label{tab:correlation1}
+\begin{center}
+\begin{tabular}{|p{3cm}|p{8cm}|p{4.5cm}|}
+\hline
+Name & Correlation & conditions \\
+\hline
+Morgan & comparision of previous experimental datas  & empherical relations presented  \\
+\hline
+\vspace{0.3cm}Kitamura et al. & \vspace{0.3cm} \pbox{5cm}{$\overline{Nu} =0.6Ra^{*0.2}$\\$\overline{Nu} =0.23Ra^{*0.24}$\\ \\} &\vspace{0.3cm} \small\pbox{5cm}{ $3\times10^8<Ra^{*}<2.5\times10^10$\\$2.5\times10^10<Ra^{*}<3.6\times10^{13}$} \\
+
+ 
+\hline
+\vspace{0.3cm}Herraez and Belda & \vspace{0.3cm} \small \pbox{8cm}{$\overline{Nu}= 0.022(Ra)^{0.5682}$\\ \\} &\pbox{5cm}{$2.2\times10^3<Ra<1.6\times10^5$} \\
+
+\hline
+\hline
+\vspace{0.3cm}Atayilmaz and Ismail & \vspace{0.3cm} \small \pbox{8cm}{$\overline{Nu}= 0.0954(Ra)^{0.168}$\\ \\} &\pbox{5cm}{$7.4\times10^1<Ra<3.4\times10^3$} \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The Summary of correlations available for average Nusselt number is given in table \ref{tab:correlation1}. 
+\subsection{Effect of Horizontal confinement}
+\hspace{1cm}When the horizontal cylinder is confined horizontally or vertically,it becomes  another configuration of practical importance.Thus an understanding of the influence of blocking surface on free convection heat transfer from a heated cylinder is important. Saito et al.\cite{sai} found that overall convection heat transfer from the cylinder was minimum as compared to a cylinder in an infinite medium  at a $H/D\approx 0.12$. Koizumi and Hosokawa\cite{koizumi} conducted experimental investigation of the flow and heat transfer performance around isothermally heated horizontal cylinder in the presence of a flat ceiling above the cylinder.Experiments were performed for different H/D ratios and two temperature conditions of the ceiling ie conductive and adiabatic. Rayleigh numbers considered for the study  varies from $4.8\times10^4$ to $1\times10^7$. They classified the flow patterns in to 3 types depending on Ra and H/D ratio. The classification is as follows-3D unsteady flow,2D steady flow and oscillatory flow. It was shown that the 3D unsteady flow is chaotic. The oscillatory flow in which an ascending flow begins to oscillate from the intermediate region between ceiling and cylinder for a particular range of H/D ratios and Ra was reported to have 3D and chaotic behaviour. Atmane et al.\cite{atma} investigated the dynamics of plume by natural convection heat transfer above a horizontal cylinder kept in water . The free surface of water is used as confinement. They found that for H/D ratio of 0.5 and 1, there is an increase in local Nusselt number at the top half of the cylinder.The increase was found to be more pronounced for H/D=1. The increase in local Nu was attributed to oscillation of thermal plume above the cylinder. They found that the effect of confinement can be neglected for H/D>3. The effect of adiabatic ceiling on natural convection heat transfer around horizontal circular cylinder with air as fluid was studied experimentally by Ashjaee et al.\cite{ashjaee}. They used Mach-Zehnder interferometer to visualize the flow.The study was conducted for H/D ratio ranging from 0.1 to 2.4 and Ra upto 40000. They found that for $H/D<0.5$ local Nu at the top of cylinder increases due to vortex formation above the cylinder.Average Nu decreases with decrease in L/D ratio For $0.5<H/D<1.5$  which was attributed to damping effect of ceiling and for $H/D>1.5$ confining wall deos'nt have any influence on Nu. Lawrence et al.'s\cite{law} experiment showed that at $H/D>1$,the ceiling has almost negligible influence on heat transfer. Correa et al.'s\cite{correa} numerical result revealed that the ceiling has no effect on heat transfer rate for $H/D>2$. 
+
+Ashjaee et al.\cite{ashj11} studied the effect of Rayleigh number and cylinder to wall spacing on local and average heat transfer from a horizontal heated cylinder located above an adiabatic wall. They carried out experimental study using air as fluid using mach zehnder interferometer. The study is done for cylinder to wall spacing from 0 to 0.9 and Ra range of 500 to 15000.Numerical investigation was also performed for Ra between 100 to 100000 and H/D ratios from 0.1 to 1.7. They reported that for every Ra as H/D ratio increases average Nu increases and approaches the value of cylinder without confinement. They concluded that the effect of horizontal confinement below the cylinder can be neglected for $H/D>1.1$
+\begin{table}[h]
+\caption{Summary of Horizontal cylinder with confinement}
+\label{tab:confinement}
+\begin{center}
+\begin{tabular}{|p{3cm}|p{5cm}|p{6cm}|}
+\hline
+Name & Nature and conditions of study & Major Results \\
+%\hline
+%Morgan & comparision of previous experimental datas  & empherical relations presented  \\
+ 
+\hline
+Saito et al. & \pbox{5cm}{experiment\\confinement: above\\$2.1\times10^6<Gr<3.2\times10^6$\\fluid:air}  &\small For $H/D\approx0.12$,$Nu_{confinement}=11\%$ lower than $Nu_{without confinement}$ \\
+
+\hline
+Koizumi and Hosokawa &\pbox{5cm}{experiment\\confinement: flat ceiling above\\$4.8\times10^4<Ra<1\times10^7$\\fluid:air} & Classified the flow into steady flow,oscillatory flow,3D unsteady flow based on Ra and H/D \\
+\hline
+Atmane et al. & \pbox{5cm}{experimental,\\$Ra<40000$\\H/D= 1/5 to 4\\fluid:water} & effect of confinement can be neglected for $H/D>3$ \\
+                
+\hline
+Ashjaee et al. & \pbox{5cm}{experiment,\\confinement: adiabatic ceiling above\\$Ra<40000$\\H/D: 0.1 to 2.4\\fluid:air} &confining wall has no effect for $H/D>1.5$ \\
+\hline
+Lawrence et al. & \pbox{5cm}{experiment\\confinement:isothermal ceiling above\\$10^3<Ra<10^5$}& confining wall has no effect for $H/D>1$ \\
+\hline
+Correa et al. & \pbox{5cm}{numerical, \\confinement:adiabatic ceiling above} & confining wall has no effect for $H/D>2$\\
+\hline  
+\hline
+Ashjaee et al. & \pbox{5cm}{experiment \& numerical, \\$500<Ra<15000$ (exp)\\$100<Ra<100000$(num)\\confinement:adiabatic wall below} & confining wall below cylinder has no effect for $H/D>1.1$\\
+\hline                
+\end{tabular}
+\end{center}
+\end{table}
+
+\section{Objectives of the present study}
+The above section covered the literature available for natural convection heat transfer around horizontal heated cylinder with and without confinement. In case of cylinder without confinement, there are a few correlations available which can predict average Nusselt number around circular horizontal cylinder, but there are no correlations present which can predict the local Nusselt number at various angular positions of the cylinder. When the cylinder is confined, studies done so far confirms a reduction in average nusslet number for lower H/D ratios. However there is no consensus among researchers regarding the spacing between the cylinder and the confinement beyond which the effect of confinement can be neglected. One of studies reported an increase in local nusselt number at the top half of the cylinder for lower H/D ratios. The possibilty of a transient flow phenomena cannot be ruled out for such a case.Although there are many studies done on horizontal circular cylinder,the effect of natural convection heat transfer around converging or diverging circular duct is not studied till date. Converging or diverging circular duct is a geometry obtained by providing taper to a prismatic circular cylinder. It will be interesting to investigate if the existing correlations available for determining Nusselt number for horizontal circular cylinder is valid for converging or diverging duct.\\
+Thus the objective of the present study is outlined as below:
+\begin{itemize}
+\item Numerical analysis of natural convection around heated horizontal circular cylinder kept in an unbounded fluid for a wide range of Rayleigh number from 10 to $10^6$ 
+\item Propose correlation to predict local Nusselt number around cylinder
+\item Numerical study on the effect of confinement on natural convection heat transfer around horizontal heated cylinder for different Rayleigh number
+\item  Effect of horizontal confinement above the cylinder for H/D ratios from 0.05 to 5
+\item Effect of horizontal confinement below the cylinder for H/D ratios from 0.05 to 5
+\item compare the effect of confining the cylinder from above and below by an adiabatic ceiling
+\item Numerical and experimental study of natural convection around converging or diverging duct
+\end{itemize}
+
+\section{Thesis outline}
+The aim of this thesis is to understand the natural convection heat transfer phenomena happening around a circular horizontal cylinder. 
+
+ Chapter 2 covers numerical study on natural convection around horizontal cylinder kept in an unconfined fluid. The study is done for Rayleigh number upto $10^6$. Correlation for predicting local nusselt number around cylinder at different $\theta$ is introduced. 
+ 
+ Chapter 3  presents the numerical study on the effect of confinement above the cylinder.Transient flow phenomena and other effects at different spacing between cylinder and confinement is discussed.
+ 
+ Chapter 4 discusses about numerical study on confinement below the cylinder for different H/D ratios. The variations in local Nu with spacing between the cylinder and confinement is explained 
+ 
+Chapter 5 presents the results obtained for experimental and numerical study of natural convection heat transfer around converging or diverging circular duct
+
+Chapter 6 summarizes the conclusions from this study
+
+Chapter 7 gives recommendations on future scope based on the present work.
+
+

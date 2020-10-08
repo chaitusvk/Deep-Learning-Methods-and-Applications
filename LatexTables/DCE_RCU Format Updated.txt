@@ -1,0 +1,29 @@
+% Please add the following required packages to your document preamble:
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\begin{landscape}
+\begin{longtable}[c]{|c|c|c|c|c|}
+\caption{DCE RCU Log Format}
+\label{Table:DCERCULog}\\
+\hline
+\textbf{S.No} & \textbf{Data Variable} & \textbf{Data Type} & \textbf{Range}                                                                                                    & \textbf{Description}     \\ \hline
+\endfirsthead
+%
+\endhead
+%
+1             & ch1\_sign              & char               & - / +/H                                                                                                           & CDT1 sign information    \\ \hline
+2             & ch1\_hrs               & quint8             & 0 to 2\textasciicircum 8 -1                                                                                       & CDT1 Hours Infromation   \\ \hline
+3             & ch1\_min               & quint8             & 0 to 59                                                                                                           & CDT1 minutes Information \\ \hline
+4             & ch1\_sec               & quint8             & o to 59                                                                                                           & CDT1 Seconds Information \\ \hline
+5             & ch1\_hmsec             & quint8             & 0 to 9                                                                                                            & CDT1 hmsec information   \\ \hline
+6             & ch2\_sign              & quint8             & -/+/H                                                                                                             & CDT2 sign information    \\ \hline
+7             & ch2\_hrs               & quint8             & 0 to 2\textasciicircum 8 -1                                                                                       & CDT2 hours information   \\ \hline
+8             & ch2\_min               & quint8             & 0 to 59                                                                                                           & CDT2 minutes information \\ \hline
+9             & ch2\_sec               & quint8             & 0 to 59                                                                                                           & CDT2 seconds information \\ \hline
+10            & ch2\_hmsec             & quint8             & 0 to 9                                                                                                            & CDT2 hmsec information   \\ \hline
+11            & DCE\_RCU\_ComdWord     & quint8             & \begin{tabular}[c]{@{}c@{}}0 : Safe\\ 1 : Arm\\ 2 : Destruct\\ 3 ; command1\\ 5 : Not Ok\\ 10 : Test\end{tabular} & DCE/RCU CommandWord      \\ \hline
+12            & DCE\_RCU\_Health       & bool               & \begin{tabular}[c]{@{}c@{}}0 - Not Healthy\\ 1 - Healthy\end{tabular}                                             & DCE/RCU health Status    \\ \hline
+13            & DCE\_RCU\_LocalRemote  & bool               & \begin{tabular}[c]{@{}c@{}}0 - Remote\\ 1 - Local\end{tabular}                                                    & DCE Command Control      \\ \hline
+\end{longtable}
+\end{landscape}

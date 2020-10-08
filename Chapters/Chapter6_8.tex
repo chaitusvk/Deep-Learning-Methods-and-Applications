@@ -1,0 +1,586 @@
+\chapter{Rotational Invariant Convolutional Neural Network}
+\label{Chapt6}
+%% ************************************** Start of New RCNN *********************
+% Large number of interlinked neurons learns non linear complex features and structures of the input data  similar to that of multi tasking of neurons in the human brain \cite{P1} \cite{P2}\cite{P3}. Applications involving classification, recognition \cite{P8}, image patch comparison \cite{P11}, facial expression recognition \cite{P10}, face detection \cite{P9}, image super resolution \cite{RCNN24} makes use of several neural network architectures because of their efficient learning capabilities of the structure of the input.
+ 
+  CNN is a Deep learning architecture which is an emerging trend of acquiring complex set of features and extends its scope in wide range of applications like classification, recognition \cite{P8}, image patch comparison \cite{P11}, facial expression recognition \cite{P10}, face detection \cite{P9}, image super resolution \cite{RCNN24}. Most of the CNN configurations in literature take different orientations of the samples during training to handle invariance to rotations \cite{RCNN21}-\cite{RCNN23}. Unlike these conventional method of increasing the training samples, we propose CNN architectures for improvement to invariance to rotations by introducing new layer of rotational map and convolutional maps with different orientations.\\	
+	
+\tab In this, two CNN architectures are proposed to provide better invariance to rotations and demonstrated using the basic LeNet-5 architecture. The idea behind the two architectures are $i)$ introducing rotational invariant map using differential excitation to CNN (RCNN), $ii)$ modifying convolutional layer maps by orienting each map to a different angle of rotation (MCNN). Proposed RCNN is based on the intuition that the current pixels's differential excitation with respect to neighbours (inspired from weber's law \cite{RCNN30}) remains imperceptible even after orientation of the sample from the center of the image. The following are the pre-requisites for the inclusion of Rotational map (R-Map) in CNN architecture $i)$ all the samples are resized to minimum of $\sqrt{2}$ $\times$OriginalSize, $ii)$ all the samples are normalised and centered, $iii)$ samples to be tested are either with no orientation or orientation with respect to center of the image, $iv)$ handwritten digits which is a ten class problem is converted to nine class problem by considering the samples belonging to classes zero to eight for addressing improvement in invariance to rotations.\\
+
+The major contributions related to the improvement of rotational invariancy towards CNN are i) to propose a novel CNN architecture with inclusion of rotational map to provide better accuracy of invariance to rotations, ii) to propose a CNN architecture with convolutional maps be oriented each with different angles to have better accuracy of invariance to rotations, iii) to demonstrate the rotational variance of CNN architecture by considering LeNet-5 architecture, iv) to demonstrate the cost of training time by training the network with different orientations of the training samples and this is the ideal case, v) to carry out performance comparisons of the methods in terms of training time, testing time and error in accuracy. \\
+
+
+\section{Convolutional Neural Networks (CNN)} 
+	\label{BasicGenCNNArch}
+	CNN architectures are one of the deep learning architectures capable of learning non linear complex set of features representing the input of the network. It consists of series of convolutional, pooling/sub sampling layers followed by fully connected layer. Basic generalised architecture is shown in Fig. \ref{Fig:GCNN}. These series of layers uses weight sharing mechanisms (convolution kernel operations and pooling operations) and learn the features representing the input \cite{P1}\cite{P2}\cite{P3}. Let $ Oi$-$j$ represents $i^{th}$ layer operation $O$ having $j^{th}$ map where the Operation $O$ can either $C$ or $S$ representing convolution or sub-sampling of $2$x$2$ respectively. Different variations of CNN architectures are widely in use for different tasks like classification, detection, recognition, super resolution, patch matching because of their effective learning capabilities in representing the data with limited number of parameters (kernels, biases, weights). Now a days CNNs are the better choice in learning complex set of features in most of the applications because of the following advantages $i)$ limited connectivity, $ii)$ less number of free parameters, $iii)$ limited memory/buffer requirement, $iv)$ slight amount of invariance to distortions and scaling. Updations of kernels, weights and biases at different layers of CNN is carried out using standard gradient descent back propagation algorithm \cite{P14} \cite{RCNN15}.
+
+%The details of number of maps, map sizes, number of kernels at different layers is given in Table.\ref{TCMK} with respect to Fig.\ref{AECNNA}.
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=1\linewidth]{./CNNGenArch1.png}
+ \caption{Basic generalised CNN Architecture.}
+ \label{Fig:GCNN}
+\end{figure}
+
+\section{Demonstration of rotational variancy of CNN}
+\label{SecDemRVarCNN}
+ Standard MNIST handwritten digits data set \cite{RCNN40} was taken for the demonstration of rotational variancy of CNN. 
+ It consists of training (60000) and testing (10000) samples each with size of $28\times28$.  Pre-requisites includes the following i) centering the $28\times28$ samples in $52\times52$ to address rotational variancy, ii) samples belonging to class 9 are not considered because samples of classes 9 and 6 falls into same class when dealing with rotational invariancy, iii) CNN configuration is made for 9 class classification task instead of 10 classes. So after considering these points, number of training samples and testing samples from this dataset are 54000 and 9000 respectively (rounded to nearest 100's figure by repeating some samples). Basic LeNet-5 CNN architecture was taken with 9 class classification task and the architecture is shown in Fig. \ref{FIG:OCNN}. Let K, P and FC denotes kernel (size $5\times5$), average pooling ($2\times2$) and fully connected layer. Both N1 and N2 are choosen as 6 as there is no considerable variation of accuracy by choosing different values other than 6. The details of network shown in Fig. \ref{FIG:OCNN} are given in Table. \ref{Tbl1}.\\
+
+% It consists of training (60000) and testing (10000) samples each with size of $28\times28$.  Pre-requisites includes the following i) centering the $28\times28$ samples in $52\times52$ to address rotational variancy, ii) samples belonging to class 9 are not considered because samples of classes 9 and 6 falls into same class when dealing with rotational invariancy, iii) CNN configuration is made for 9 class classification task instead of 10 classes. So after considering these points, number of training samples and testing samples from this dataset are 54000 and 9000 respectively (rounded to nearest 100's figure by repeating some samples). Basic LeNet-5 CNN architecture was taken with 9 class classification task and the architecture is shown in Fig. \ref{FIG:OCNN}. Let K, P and FC denotes kernel (size $5\times5$), average pooling ($2\times2$) and fully connected layer. Both N1 and N2 are choosen as 6 as there is no considerable variation of accuracy by choosing different values other than 6. The details of network shown in Fig. \ref{FIG:OCNN} are given in Table. \ref{Tbl1}.\\
+ 
+ \begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/BlockDiag/OCNN.eps}
+\caption{Implemented configuration of the original CNN}
+\label{FIG:OCNN}
+\end{figure*}
+
+\begin{table*}
+\caption{Details of mapping between layers : Original Basic Configuration}
+\smallskip\noindent
+\resizebox{\linewidth}{!}{%
+\footnotesize
+\label{Tbl1}
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+{\bf Layer Number} & {\bf 1}           & {\bf 2}            & {\bf 3}            & {\bf 4}            & \multicolumn{1}{c}{{\bf 5}} \\ \midrule
+{\bf Input Layer Map}   & INP IMG  	& CONV-1 & SAMP-1 & CONV-2  & SAMP-2  \\ \\
+{\bf Output Layer Map}   & CONV-1  	& SAMP-1 & CONV-2 & SAMP-2  & Cls-Layer \\ \\
+{\bf Number of Input Maps}  & 1   		& 6  	 & 6 	  & 6  	& 6 \\ 
+(\text{ Fan In : FI})\\ \\
+{\bf Number of Output Maps}   & 6 		& 6  	 & 6 	  & 6  	& 9  \\ 
+(\text{ Fan Out : FO})\\ \\
+{\bf Input Map Size}  & 52x52   & 48x48 & 24x24  & 20x20   & 10x10 \\ 
+(\text{ IMS})\\ \\
+{\bf Output Map Size}   & 48x48 & 24x24  & 20x20   & 10x10  & 9x1  \\ 
+(\text{ OMS})\\  \\
+{\bf Number of Kernels/Weights}  & kn:6  		& -  	 & kn:36 	  & -  		& wn:10x10x6x9x1 \\
+(\text{ kn : Kernels, wn : Weights})\\ \\
+{\bf Number of Biases}   & 6  		& -  	 & 6 	  & -  		& 9           \\ \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+ The kernels , weights and biases of different layers of CNN are initialised in the same manner as mentioned in section. \ref{CNNInitKWB}\\
+ 
+ For this network configuration shown in Fig. \ref{FIG:OCNN}, we carried out training using training dataset (without orientations) and standard gradient descent algorithm is used for updation of parameters (kernels, weights, biases) till the error gets converged. The corresponding training error profile is shown in Fig. \ref{TestErrDeg}(a). Then, testing data set is used for testing the network with different orientations ranging from $0^o$ to $360^o$. A particular testing sample and total percentage of testing error with different degrees of rotations is given in Fig. \ref{Fig:OrientSample} and Fig. \ref{TestErrDeg}(b) respectively. This shows that, network is not invariant to rotations and the error profile is symmetry about $180^o$ of rotation.\\
+
+
+\begin{figure*}
+ \centering
+ \includegraphics[width=1\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/SampleswithOrientations.eps}
+ \caption{Orientation of a particular test sample.}
+ \label{Fig:OrientSample}
+\end{figure*}
+
+\begin{figure*}
+\begin{tabular}{cc}
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/OTrainErr.png}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/OTestErrDeg.eps}\\
+(a)  & (b) \\
+\end{tabular}
+\caption{ Demonstration of rotational variancy of CNN;(a) Training error profile, (b) Percentage of Testing error Vs Degree of rotation}
+\label{TestErrDeg}
+\end{figure*}
+
+\section{Different rotational invariant CNN configurations}
+\label{AddDiffRotConfig}
+\subsection{Increasing the training samples with different degrees of rotations for invariance to rotations}
+\label{ORCNNConfg}
+Applications involving convolutional face finder for face detection \cite{RCNN21}, medical image pattern recognition \cite{RCNN22}, rotation invariant face detection \cite{RCNN23} makes use of training samples with different orientations for handling rotational invariancy of the samples for detection. This type of training by including the samples with different orientations in training dataset forms the ideal case giving the lowest possible error in classification accuracy at the cost of training time. The same network configuration as given in Fig. \ref{FIG:OCNN} is used for doing this task for invariancy towards rotation. The configuration details are same as that of section. \ref{SecDemRVarCNN} with increased number of training samples and in-turn leads to increase in training time. Updations of kernels, weights, biases is same as that of original configuration i.e., making use of standard gradient descent back propagation algorithm \cite{P14} \cite{RCNN15}.\\
+
+\subsection{Appending Rotational invariant map to CNN architecture}
+\label{RCNNConfig}
+\subsubsection{Rotational Invariance map using differential excitation and distance metric from the center of the image}
+\label{SecDiffExcDistMap}
+\label{RCNNConfiga}
+% WLD Papers references and description regarding d vs DE map
+
+Differential Excitation (DE) inspired by weber's law \cite{RCNN30} is calculated using the intensity differences between current pixel and its neighbours. This change in current pixel with respect to neighbours is taken as arctan function for limiting the value in the range [-$ \frac{\pi}{2} $  $ \frac{\pi}{2}$] \cite{RCNN31}-\cite{RCNN33}. This is used to find the salient variations within an image for simulating the pattern perception of human beings. Let I be an image and I =\{I$_s$\}, where I$_s$ is a patch around the current pixel intensity of interest I$_c$ by considering $p$ immediate neighbours ( in our implementation, $p$ is choosen as 8). This is shown in Fig. \ref{Fig.DedFormation}(a). Calculation of DE at a particular current pixel (DE$_c$) based on $p$=8 immediate neighbours is given by Eq.\ref{DEEqn}. \\
+
+\begin{figure*}
+\begin{tabular}{cc}
+\includegraphics[width=1\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/BlockDiag/DEformation.eps}\\
+(a) \\
+\includegraphics[width=1\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/BlockDiag/dformation1.eps}\\
+(b) \\
+\end{tabular}
+\caption{ (a) Formation of differential excitation map considering the current pixel with respect to neighbours, (b) Formation of distance plane considering the current pixel location with respect to center of the image.}
+\label{Fig.DedFormation}
+\end{figure*}
+
+\begin{eqnarray}
+\text{DE$_c$} & = &\arctan \big[ \sum_{i=0}^{p-1}\big( \frac{\text{I}_i - \text{I}_c}{\text{I}_c}\big) \big] 
+\label{DEEqn}
+\end{eqnarray}
+
+Distance plane (d) is formed by calculating euclidean distance of current pixel location (i, j) from the center of the image (i$_o$, j$_o$) given by the Eq.\ref{dEqn} and the distance map is shown in Fig. \ref{Fig.DedFormation}(b).\\
+
+\begin{eqnarray}
+\nonumber
+\text{d((i, j),(i$_o$, j$_o$))} & = &\sqrt{\text{(i-i$_o$)}^2+\text{(j-j$_o$)}^2}\\ 
+& = &\text{d$_{ij}$} 
+\label{dEqn}
+\end{eqnarray}
+
+
+The maps DE and d thus formed are binned to M-levels to form a DE Vs d map called as R-Map. M = 40 is chosen in our implementation. The idea of formation of DE Vs d plane (R-Map) is shown in Fig. \ref{Fig:DEVsDEMainIdea}. The overall idea of taking R-Map with respect to orientation of the image about the center by an angle $\theta$ is shown in Fig. \ref{Fig.DeVsDPlaneDemo}. DE value almost remains same even after rotation which cannot vary drastically by a larger factor and this is the main factor used for the improvement of CNN towards rotational invariance. Let DE1 is the current pixels excitation before rotation whose distance from the center of the image is d1 and DE2 is the excitation of the corresponding location after rotation by an angle $\theta$ whose distance from the center of the image is d2. From the Fig. \ref{Fig.DeVsDPlaneDemo}, it is clear that d1, d2 remains same; DE1, DE2 doesnot have much variation and the R-Map so formed visually appears almost same. This is the basic idea of introducing R-Map in CNN architecture for the improvement towards rotational invariance. \\
+
+
+\begin{figure*}
+ \centering
+ \includegraphics[width=1\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/BlockDiag/DEvsdformation.eps}
+ \caption{Formation of Differential Excitation Vs distance (DE Vs d : R-Map) by considering the binning to M-levels}
+ \label{Fig:DEVsDEMainIdea}
+\end{figure*}
+
+\begin{figure*}
+\begin{tabular}{cc}
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/BlockDiag/dVsDe11.eps}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/BlockDiag/dVsDe21.eps}\\
+(a)  & (b) \\
+\end{tabular}
+\caption{ Demonstration of formation of Differential Excitation Vs Distance plane as rotational invariance map (R-Map); (a) DE Vs d plane formation before orientation of the image, (b) DE Vs d plane formation after orientation of the image by an angle $\theta$}
+\label{Fig.DeVsDPlaneDemo}
+\end{figure*}
+
+Both d and DE are normalised to the range [0 1]. It is noted that, the uniform regions are not considered for DE excitation and hence not included for binning; i.e., change of current pixel excitation with respect to neighbours is only considered.  Let d$_{ij}$ and DE$_{ij}$ are the values respectively from d and DE maps at the location ($i,j$). Let d$_{step}$, DE$_{step}$ are step size of each bin for d and DE respectively given by Eq.\ref{dStep} , Eq.\ref{DEstep}. Let d$^{l}_{b}$, DE$^{k}_{b}$ are $l^{th}$ and $k^{th}$ bins of d and DE maps respectively where $l$, $k$ takes values 0 to M-1, these are shown in Eq.\ref{dbinloc}, Eq.\ref{DEbinloc}. \\
+
+R-Map is initialised with zero for all the bins in both d and DE directions using Eq.\ref{RMapInit}. Then R-Map binning is formed for all the elements of d and DE maps using Eq.\ref{RMapping} and finally R-Map is normalised to the range [0 1]. This is the procedure adopted during forward propagation of error through R-Map. The same reverse approach is used for mapping the error backwards to previous layer from R-Map layer. The change in error at R-Map bins is shared by different locations of the previous layer because of binning which is shown in Fig. \ref{Fig:RMap2PrevBackErr}. Standard gradient descent back propagation algorithm \cite{P14}\cite{RCNN15} is used for updation of kernels, weights, biases of convolutional layers and final fully connected layer. \\
+
+\begin{eqnarray}
+ \label{dStep}
+\text{d$_{step}$} & = & \frac{\text{d$_{max}$ - d$_{min}$}}{\text{M}} \\ \label{DEstep}
+\text{DE$_{step}$} & = & \frac{\text{DE$_{max}$ - DE$_{min}$}}{\text{M}} \\
+\nonumber
+\end{eqnarray}
+\vspace*{-1in}
+\begin{eqnarray}
+ \label{dbinloc}
+\text{d$^{l}_{b}$} & = &\big{\lfloor} \frac{\text{d$_{ij}$}}{\text{d$_{step}$}}+0.5 \big{\rfloor}\\ \label{DEbinloc}
+\text{DE$^{k}_{b}$} & = & \big{\lfloor} \frac{\text{DE$_{ij}$}}{\text{DE$_{step}$}}+0.5 \big{\rfloor} \\
+\nonumber
+\end{eqnarray}
+\vspace*{-1in}
+
+\begin{eqnarray}
+ \label{RMapInit}
+\text{R-Map(\text{d$^{l}_{b}$}, \text{DE$^{k}_{b}$})} & = & {0 \hspace{0.3in} \forall \hspace{0.1in} {l,k}}\\ 
+\nonumber
+\end{eqnarray}
+\vspace*{-1in}
+\begin{eqnarray}
+ \label{RMapping}
+\text{R-Map(\text{d$^{l}_{b}$}, \text{DE$^{k}_{b}$})} & = & \text{R-Map(\text{d$^{l}_{b}$}, \text{DE$^{k}_{b}$})}+1 \\ 
+\nonumber
+\end{eqnarray}
+
+\begin{figure*}
+ \centering
+ \includegraphics[width=1\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/BlockDiag/RMap2PrevDeltaErrorBP1.eps}
+ \caption{Back propagation of delta error at R-Map layer to previous layer where the error can be shared by more than a single location}
+ \label{Fig:RMap2PrevBackErr}
+\end{figure*}
+
+\subsubsection{Introducing Rotational invariance map in CNN (RCNN) for improvement in invariance to rotations}
+\label{RCNNConfigb}
+A rotational invariance map with the intuition of differential excitation versus distance as discussed in section \ref{SecDiffExcDistMap} is included in the original configuration shown in Fig. \ref{FIG:OCNN} as the last layer before classification layer. The resultant new configuration is shown in Fig. \ref{FIG:RCNN}. N1, N2 maps are taken to be same as that of original configuration and here R-MAP size was taken as $40\times40$. The details of maps for RCNN are given in Table \ref{Tbl2}.\\
+
+
+\begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/BlockDiag/RCNN.eps}
+\caption{CNN Architecture with Rotational invariance map}
+\label{FIG:RCNN}
+\end{figure*}
+
+\begin{table*}
+\caption{Details of mapping between layers : RCNN Configuration}
+\smallskip\noindent
+\resizebox{\linewidth}{!}{%
+\footnotesize
+\label{Tbl2}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+{\bf Layer Number} & {\bf 1}           & {\bf 2}            & {\bf 3}            & {\bf 4}    & {\bf 5}         & \multicolumn{1}{c}{{\bf 6}} \\ \midrule
+{\bf Input Layer Map}   & INP IMG  	& CONV-1 & SAMP-1 & CONV-2  & SAMP-2 & R-Map  \\ \\
+{\bf Output Layer Map}   & CONV-1  	& SAMP-1 & CONV-2 & SAMP-2  & R-Map & Cls-Layer                 \\ \\
+{\bf Number of Input Maps}  & 1   		& 6  	 & 6 	  & 6  	& 6 & 6\\
+(\text{ Fan In : FI})\\ \\
+{\bf Number of Output Maps}   & 6 		& 6  	 & 6 	  & 6  	& 6 & 9  \\ 
+(\text{ Fan Out : FO})\\ \\
+{\bf Input Map Size}  & 52x52   & 48x48 & 24x24  & 20x20   & 10x10 & 40x40\\ 
+(\text{ IMS})\\ \\
+{\bf Output Map Size}   & 48x48 & 24x24  & 20x20   & 10x10  & 40x40 & 9x1  \\ 
+(\text{ OMS})\\ \\
+{\bf Number of Kernels/Weights}  & kn:6  		& -  	 & kn:36 	  & -  		  & -  & wn:40x40x6x9x1 \\
+(\text{ kn : Kernels, wn : Weights})\\ \\
+{\bf Number of Biases}   & 6  		& -  	 & 6 	  & -  	 & - 	& 9           \\ \\
+\bottomrule
+\end{tabular}}
+\end{table*}
+
+RCNN configuration with N2 of 12, 6 are chosen during simulations which are going to be discussed in section \ref{SR} to demonstrate that there is no much considerable accuracy improvement but the training time is more for the configuration with N2=12 than that of N2=6. This is due to the fact that number of free parameters are more in former configuration than that of later one which is shown in Table \ref{RCNN126Comp}. \\
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{table}[]
+\centering
+\caption{Comparison of RCNN configurations with N2=12 and N2=6 with respect to maps and connectivity }
+\smallskip\noindent
+\resizebox{0.8\linewidth}{!}{%
+\footnotesize
+\label{RCNN126Comp}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\multicolumn{1}{c}{\textbf{Parameter}}                                                                                     & \textbf{RCNN (N2=12)}                                                                              & \textbf{RCNN (N2=6)}                                                                            \\ \midrule
+\textbf{INP Layer Maps (size)}                                                                                             & 1 (52x52)                                                                                          & 1 (52x52)                                                                                       \\ \\
+{\textbf{\begin{tabular}[c]{@{}l@{}}Conv-1 Layer Maps (size)\\ Kernel weights\\ Biases\end{tabular}}} & { \textbf{\begin{tabular}[c]{@{}c@{}}6 (48x48)\\ 1x6x5x5\\ 6\end{tabular}}}    & { \textbf{\begin{tabular}[c]{@{}c@{}}6 (48x48)\\ 1x6x5x5\\ 6\end{tabular}}} \\ \\
+\textbf{Samp-1 Layer Maps (size)}                                                                                          & 6 (24x24)                                                                                          & 6 (24x24)                                                                                       \\ \\
+{ \textbf{\begin{tabular}[c]{@{}l@{}}Conv-2 Layer Maps (size)\\ Kernel weights\\ Biases\end{tabular}}} & { \textbf{\begin{tabular}[c]{@{}c@{}}12 (20x20)\\ 6x12x5x5\\ 12\end{tabular}}} & { \textbf{\begin{tabular}[c]{@{}c@{}}6 (20x20)\\ 6x6x5x5\\ 6\end{tabular}}} \\ \\
+\textbf{Samp-2 Layer Maps (size)}                                                                                          & 12 (10x10)                                                                                         & 6 (10x10)                                                                                       \\ \\
+\textbf{R-Maps Layer (size)}                                                                                               & 12 (40x40)                                                                                         & 6 (40x40)                                                                                       \\ \\
+{ \textbf{\begin{tabular}[c]{@{}l@{}}Final Layer\\ Outputs\\ Weights\\ Biases\end{tabular}}}           & { \textbf{\begin{tabular}[c]{@{}c@{}}9\\ 12x40x40x9\\ 9\end{tabular}}}         & { \textbf{\begin{tabular}[c]{@{}c@{}}9\\ 6x40x40x9\\ 9\end{tabular}}}       \\ \\
+\textbf{Classification task}                                                                                               & 9 classes                                                                                          & 9 classes                                                                                       \\ \\ \bottomrule
+\end{tabular}}
+\end{table}
+
+ The overall pictorial view of this configuration is shown in Fig. \ref{FIG:RCNNPictorialView} with six number of maps in each layer. As shown, the input is propagated over the forward layers in which an additional rotational layer maps at previous to final classification layer is formed as a result of binning of DE against d plane which is responsible for improvement towards rotational invariance. Each map of convolutional layer-1 extracts different kind of features and sampling layer-1 does the job of giving small invariance to scaling, shifting, smaller distortions by means of 2$\times$2 average pooling. The maps of sampling layer-1 are convolved with kernels for the generation of convolutional layer-2 maps which are then fed to sampling layer-2 for further invariance towards scaling, shifting and other forms of smaller distortions. The maps of sampling layer-2 are used for the formation of R-Maps making use of differential excitation and distance from the center of the image. It is noted that there is one to one mapping connectivity between convolutional layers and sampling layers, sampling layers and rotational mapping layers; and many to many mapping connectivity between other layers like sampling layers followed by convolutional layers, rotational layer followed by fully connected layer. Non linear activation function (sigmoid) is applied at convolutional layer maps and final classification layer before propagating output to next stage during learning. It is observed that this configuration not only preserves the properties of the original configuration like smaller invariance to shifts, scaling and distortions but also adds a new dimension towards improvement in rotational invariance.\\
+ 
+\begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/BlockDiag/RCNNOverallView.eps}
+\caption{Pictorial view of the rotational maps as previous layer to final classification layer : RCNN Configuration}
+\label{FIG:RCNNPictorialView}
+\end{figure*}
+
+Standard gradient descent back propagation algorithm \cite{P14}\cite{RCNN15} is used for the updations of kernels, biases of convolutional layers and weights, biases of fully connected layer. Unlike original configuration, during back propagation the only difference is the error from different bins of R-Maps may be accumulated to the same locations of previous layer maps because R-Maps are formed by binning differential excitation and distance planes.\\
+
+   
+\subsection{Convolutional Rotational Maps for improvement in invariance to rotations (MCNN) }
+\label{MCNNConfig}
+
+As shown in Fig. \ref{TestErrDeg}(b), it is clear that the classification task is symmetry about $180^o$ of rotation and also to have comparison with the configuration given in Fig. \ref{FIG:OCNN}, a configuration shown in Fig. \ref{FIG:MCNN} is proposed maintaining the same number of maps at all layers (N1, N2 at convolutional layer-1 and convolutional layer-2 respectively) with each map being oriented in steps of $30^o$ starting from $0^o$ to $150^o$. This configuration is called Modified CNN (MCNN) configuration. The corresponding details of network are similar to that of details given in Table \ref{Tbl1}. \\
+%in section \ref{SecDemRVarCNN}
+
+\begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/BlockDiag/MCNN.eps}
+\caption{CNN Architecture with rotated convolutional maps}
+\label{FIG:MCNN}
+\end{figure*}
+
+The basic idea of this approach is extraction of rotational features by orienting the maps of the convolutional layer preserving invariance to small scaling, shifting and other forms of distortions as that of original configuration. The feature maps of convolutional layers are oriented to provide improvement in invariance to rotations and then feed to sampling layer for preserving the invariance as that of original case. The features so generated from sampling layer-1 are fed to convolutional layer-2 by means of convolutional operations using different kernels which is a many to many mapping, this forms the major layer of extraction of features circularly because each map at convolutional layer is obtained as a sum of all convolved results of input maps (each input map being oriented differently from the other). \\
+
+The samples of size 28$\times$28 are being centered in 52$\times$52 and initialised to zero, so considering the portion of 52$\times$52 around the center even after rotation by an angle $\theta$ doesn't loose information because maximum possible size of the 28$\times$28 sample after any degree of rotation will be $28\sqrt{2} \times 28\sqrt{2}$. So, considering the centralised 52$\times$52 portion of clockwise rotation and anti-clockwise rotation of convolved maps of convolutional layers during forward propagation and backward propagations is sufficient during training as a part of standard back propagation algorithm for updation of parameters of the network. \\
+
+% Unlike original configuration, the only difference during back propagation of error is re-orienting the maps by an angle of that convolved map to previous layer error calculation and this is happening only at the convolved maps which are oriented by an angle as said earlier.\\
+ 
+ The following describes the only difference of this configuration with that of original configuration: as the convolutional maps during forward propagation, are oriented in clockwise direction in steps of $\theta=30^o$ ranging from $0^o$ to $150^o$, the error at convolutional layers are re-oriented in anticlockwise direction by the same degree of orientation as that of forward pass for back propagation of error to previous layers.\\ 
+ 
+ The overall pictorial view of this configuration is shown in Fig. \ref{FIG:MCNNPictorialView}. As shown, the input is propagated over the forward layers in which oriented maps of the convolved results is fed as input to sampling layers for improvement of rotational invariance. Each map of convolutional layer-1 extracts different kind of features and oriented versions of the convolved maps so formed are fed to sampling layer-1 which does the job of giving small invariance to scaling, shifting and smaller distortions by means of 2$\times$2 average pooling. The maps of sampling layer-1 are convolved with kernels for the generation of convolutional layer-2 maps. Each map of Convolutional layer-2 is oriented differently from other maps in steps of 30$^o$ ranging from 0$^o$ to 50$^o$ to have some degree of rotational invariance and then these are fed to sampling layer-2 for further invariance towards scaling, shifting and other forms of smaller distortions. The maps of sampling layer-2 forms a fully connected configuration with the final classification layer. Non linear activation function (sigmoid) is applied at convolutional layer maps and final classification layer before propagating output to next stage during learning. It is noted that there is one to one mapping between convolutional layers and sampling layers, sampling layers and rotational mapping layers; and many to many mapping between other layers. \\ 
+ 
+ 
+\begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/BlockDiag/MCNNOverallView.eps}
+\caption{Pictorial view of the Convolved rotational maps at each layer : MCNN Configuration}
+\label{FIG:MCNNPictorialView}
+\end{figure*}
+The difference with original configuration is that the convolved maps are oriented from other by an angle step by 30$^o$ maintaining same six number of maps preserving invariance to smaller invariance to shifts, scaling and distortions.\\
+ 
+\section{Simulation Results}
+\label{SR}
+In this section, we discuss the performance comparison of different CNN configurations in terms of training time, testing time and error in classification considering different degree of orientations of the samples. The discussion for showing the improvement towards rotational invariancy is limited from 0$^o$ to 50$^o$ by considering the samples in steps of 5$^o$. The overall view of these configurations are given in Table \ref{TabDiffConfg}.\\
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table*}
+\centering
+\caption{Different configurations of CNNs}
+\resizebox{\linewidth}{!}{%
+\footnotesize
+\label{TabDiffConfg}
+\begin{tabular}{@{}cllclll@{}}
+\toprule
+\multicolumn{1}{l}{\textbf{Sl No}} & \textbf{Configuration} & \textbf{Reference} & \multicolumn{4}{c}{\textbf{Description}}                                                                                                \\ \midrule
+1                                  & \textbf{Case-1}        & Fig. \ref{FIG:OCNN}              & \multicolumn{4}{c}{\begin{tabular}[c]{@{}c@{}}Original configuration (N1=6, N2=6) \\ +\\  Training samples with different orientations\end{tabular}} \\ \\
+2                                  & \textbf{Case-2(a)}     & Fig. \ref{FIG:RCNN}              & \multicolumn{4}{c}{\begin{tabular}[c]{@{}c@{}}RCNN configuration (N1=6, N2=12)\\ +\\ Training samples without orientations\end{tabular}}      \\ \\
+3                                  & \textbf{Case-2(b)}     & Fig. \ref{FIG:RCNN}                 & \multicolumn{4}{c}{\begin{tabular}[c]{@{}c@{}}RCNN configuration (N1=6, N2=6)\\ +\\ Training samples without orientations\end{tabular}}       \\ \\
+4                                  & \textbf{Case-3}        & Fig. \ref{FIG:MCNN}                 & \multicolumn{4}{c}{\begin{tabular}[c]{@{}c@{}}MCNN configuration (N1=6, N2=6)\\ +\\ Training samples without orientations\end{tabular}}       \\ \\
+5                                  & \textbf{Case-4}        & Fig. \ref{FIG:OCNN}               & \multicolumn{4}{c}{\begin{tabular}[c]{@{}c@{}}Original configuration (N1=6, N2=6)\\  + \\ Training samples without orientations\end{tabular}}        \\ \bottomrule
+\end{tabular}}
+\end{table*}
+The details of the cases is discussed below
+\begin{enumerate} 
+\item [a)] Case-1 is an ideal case of training the network with different orientations of the training samples ranging from $0^0\ to\ 50^o$ in steps of $5^o$. So, it will give lower error in classifications compared to other cases but at the cost of training time. 
+\item [b)]Case-2(a) and Case-2(b) are configurations related to CNN with rotational invariant map with N2 of 12 and 6 respectively. These configurations takes lesser training time compared to the ideal Case-1. Because of additional rotational layer, it will take slightly more time for testing each sample and gives better improvement in rotational invariance compared to that of Case-4.
+\item [c)]Case-3 is the configuration related to convolutional maps being oriented in steps of $30^o$. This also provides better improvement towards rotational invariancy and training time is similar to that of Case-4. 
+\item [d)] Case-4 is general configuration where training is carried out considering only non rotated samples. 
+\end{enumerate}
+
+All the simulations were performed on Windows PC with Intel(R) Xenon(R) CPU at 3.07 GHz, 24 GB RAM with MATLAB version 8.2.0.701 (R2013b).  \\
+
+The experiments are repeated for different percentages of training (1, 10, 20, 30, 40, 50, 60, 70, 80, 90) and testing is carried out with different degrees or orientations. In all the test cases for comparison purpose: $i)$ orientation of the samples are limited to [$0^o$ $50^o$] in steps of $5^o$, $ii)$ number of iterations for training is choosen as 300 with a batch size of 180 samples. Training error profile in the case of 90$\%$ of training data for all these configurations is shown in Fig. \ref{FIG:TrainingErrProfile}. Standard gradient descent back propagation algorithm is used in all these cases for the updation of kernels, weights and biases.\\
+
+
+  \begin{figure*}
+ \centering
+ \includegraphics[width=1\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TrainingErrProfile.eps}
+\caption{ Training Error Profiles for all the cases under 90$\%$ of training data}
+\label{FIG:TrainingErrProfile}
+\end{figure*}
+
+ The training time comparisons among these different configurations with respect to percentage of training is shown in Fig. \ref{FIG:TrainingTime}. As Case-1 is ideal case with increased training samples, it takes more time compared to all other cases because of increased number of training samples (each sample being repeated 11 times with the orientation ranging from 0$^o$ to 50$^o$ in steps of 5$^o$). Case-3 and Case-4 have original configuration maps where former with convolved rotational maps takes almost same time and lesser than other cases. Case-2(a) and Case-2(b) takes moderate training time between Case-1 and Case-3/Case-4 because of additional R-Map layer at the end prior to classification layer.\\
+ 
+
+ \begin{figure*}
+ \centering
+ \includegraphics[width=1\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TrainingTimeComp1.eps}
+\caption{ Comparison of training time}
+\label{FIG:TrainingTime}
+\end{figure*}
+ 
+ Comparison of testing error with percentages of training data $\leq 50\%$ and $> 50\%$ are shown in Fig. \ref{TestingErrLessthan50} and Fig. \ref{FIG:TestingErrMorethan50} respectively. Case-1 being ideal case, giving lower bound in classification error. It is observed that, with the increase of percentage of training data beyond 50$\%$ Case-2(a), Case-2(b) are giving better results towards rotational invariance compared to Case-4 and Case-3. And also observed that, Case-3 is also showing better invariance than Case-4 but lesser invariance than that of Case-2 and Case-1. Comparison of percentage of testing error under different percentages of training data (1$\%$, 10$\%$, 20$\%$, 30$\%$, 40$\%$, 50$\%$, 60$\%$, 70$\%$, 80$\%$, 90$\%$) for all the four cases is provided in Fig. \ref{FIG:TestingErrwithPerTrain25deg} (0$^o$ to 25$^o$ in steps of 5$^o$) and Fig. \ref{FIG:TestingErrwithPerTrain50deg} (30$^o$ to 50$^o$ in steps of 5$^o$).\\
+ \begin{figure*}
+\begin{tabular}{cc}
+\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TE1pD.eps}&\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TE10pD.eps}\\
+(a)  & (b) \\
+\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TE20pD.eps}&\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TE30pD.eps}\\
+(c)  & (d) \\
+\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TE40pD.eps}&\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TE50pD.eps}\\
+(e)  & (f) \\
+\end{tabular}
+\caption{ Comparisons of testing error for different cases under different percentages of training data (not greater than 50$\%$); (a) Percentage of training data:1, (b) Percentage of training data:10, (c) Percentage of training data:20, (d) Percentage of training data:30, (e) Percentage of training data:40, (f) Percentage of training data:50}
+\label{TestingErrLessthan50}
+
+\end{figure*}
+ 
+ \begin{figure*}
+\begin{tabular}{cc}
+\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TE60pD.eps}&\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TE70pD.eps}\\
+(a)  & (b) \\
+\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TE80pD.eps}&\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TE90pD.eps}\\
+(c)  & (d) \\
+
+\end{tabular}
+\caption{ Comparisons of testing error for different cases under different percentages of training data  (greater than 50$\%$); (a) Percentage of training data:60, (b) Percentage of training data:70, (c) Percentage of training data:80, (d) Percentage of training data:90}
+\label{FIG:TestingErrMorethan50}
+
+\end{figure*}
+ 
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=1\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TestinErrWithPerTrain_25d.eps}
+\caption{Comparison of testing error among different cases with respect to different percentages of training data considering orientation of testing samples ranging from $0^o$ to $25^o$}
+\label{FIG:TestingErrwithPerTrain25deg}
+\end{figure}
+ 
+\begin{figure*}
+ \centering
+ \includegraphics[width=1\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TestinErrWithPerTrain_50d.eps}
+\caption{Comparison of testing error among different cases with respect to different percentages of training data considering orientation of testing samples ranging from $30^o$ to $50^o$}
+\label{FIG:TestingErrwithPerTrain50deg}
+\end{figure*} 
+ 
+ Testing time per sample among these configurations is provided as a bar chart shown in Fig. \ref{FIG:TestingTimePerSample}. Being the configurations are ideal except for training data set, the time taken for testing each sample (1.7 ms) remains same for Case-1 and Case-4. Because of additional operation of rotation over convolutional layer maps, Case-3 is taking slightly more testing time per sample (2.2 ms) compared to Case-1/Case-4. Case-2(a) and Case-2(b) having additional layer of R-Maps with different binning levels takes more testing time per sample compared to all other configurations (10.2 ms and 7.8 ms). \\
+ 
+ \begin{figure*}
+ \centering
+ \includegraphics[width=1\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/TestingTimeComp.eps}
+\caption{ Comparison of testing time per sample}
+\label{FIG:TestingTimePerSample}
+\end{figure*} 
+
+The overall comparison among these four cases for a particular case where the percentage of training data as 90 is presented in Table. \ref{Comp90perdata}. \\
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{multirow}
+\begin{table*}
+\centering
+\caption{Comparisons among different cases when the percentage of training data is 90}
+\resizebox{\linewidth}{!}{%
+\footnotesize
+\label{Comp90perdata}
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\multicolumn{1}{l}{\textbf{Parameter}}                             & Quantification & \textbf{Case-1}            & \textbf{Case-2(a)}        & \textbf{Case-2(b)}        & \textbf{Case-3}           & \textbf{Case-4}           \\ \midrule
+Training Samples                                                   & Number         & \multicolumn{1}{c}{534600} & \multicolumn{1}{c}{48600} & \multicolumn{1}{c}{48600} & \multicolumn{1}{c}{48600} & \multicolumn{1}{c}{48600} \\ \\
+Training time                                                      & HH:MM:SS       & 261:10:56                  & 176:54:02                 & 149:39:12                 & 29:39:13                  & {28:20:10}         \\ \\
+ Testing Samples                                                          & Number         & 99000                      & 99000                     & 99000                     & 99000                     & 99000                     \\ \\
+\begin{tabular}[c]{@{}c@{}}Testing time \\ per sample\end{tabular} & m sec          & 1.7                        & 10.2                      & 7.8                       & 2.2                       & \textbf{1.7}              \\ \\
+\bottomrule
+
+\end{tabular}}
+\end{table*}
+
+For configuration of Case-1 where the training is carried out by considering different orientations of the samples: the maps of different layers and learned kernels of convolutional layers are observed. A particular test sample as shown in Fig. \ref{FIG:ORL1L2L3L4L5Maps}(a) of size 52$\times$52 is fed to as input to the configuration. The input map is excited by the kernels weights shown in Fig. \ref{FIG:ORConvKernels}(a) producing Convolutional layer-1 maps. The convolutional layer-1 maps shown in Fig. \ref{FIG:ORL1L2L3L4L5Maps}(b) are of size 48$\times$48 and the corresponding sampling layer-1 maps shown in Fig. \ref{FIG:ORL1L2L3L4L5Maps}(c) are of size 24$ \times$24. These features so learned are complex features where we cannot correlate to simple features like horizontal/vertical/diagonal/any other. These feature maps of sampling layer-1 are excited by the kernels shown in Fig. \ref{FIG:ORConvKernels}(b) forming Convolutional layer-2 maps which are shown in Fig. \ref{FIG:ORL1L2L3L4L5Maps}(d). The corresponding sampling layer-2 maps are shown in Fig. \ref{FIG:ORL1L2L3L4L5Maps}(e).\\
+
+
+%************************* Start : Maps of OCNN configuration with training samples being Oriendted by some degree*********************
+\begin{figure*}
+\begin{tabular}{cc}
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/ORMaps/ORL1Input1.eps}\\
+(a)\\
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/ORMaps/ORL1L2Maps1.eps}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/ORMaps/ORL2L3Maps1.eps}\\
+(b)  & (c) \\
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/ORMaps/ORL3L4Maps1.eps}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/ORMaps/ORL4L5Maps1.eps}\\
+(d)  & (e) \\
+
+\end{tabular}
+\caption{ Maps at different layers of the original ideal configuration to have rotational invariancy i.e, Case-1 (training considering orientation of the samples); (a) Particular Input Map : Layer-1 Map, (b) Layer-2 Maps : Convolutional layer-1 maps, (c) Layer-3 Maps : Sampling layer-1 maps, (d) Layer-4 Maps : Convolutional layer-2 maps, (e) Layer-5 Maps : Sampling layer-2 maps}
+\label{FIG:ORL1L2L3L4L5Maps}
+\end{figure*}
+
+\begin{figure*}
+\begin{tabular}{cc}
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/ORMaps/ORL1L2Kernels1.eps}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/ORMaps/ORL3L4Kernels1.eps}\\
+(a)  & (b) \\
+\end{tabular}
+\caption{ Learned Kernels at different layers of the original ideal configuration to have rotational invariancy i.e, Case-1 (training considering orientation of the samples); (a) Layer-1 to Layer-2 Kernels : Convolutional layer-1 Kernels, (b) Layer-3 to Layer-4 Kernels : Convolutional layer-2 Kernels}
+\label{FIG:ORConvKernels}
+\end{figure*}
+
+
+%************************* End : Maps of OCNN configuration with training samples being Oriendted by some degree *********************
+For configuration of Case-2(a) where the training is carried out by the inclusion of additional layer R-Maps compared to original configuration and training is carried out without considering the oriented versions of training samples : the maps of different layers and learned kernels of convolutional layers are observed. A particular test sample as shown in Fig. \ref{FIG:RL1L2L3L4L5L6Maps}(a) of size 52$\times$52 is fed to as input to the configuration. The input map is excited by the kernels weights shown in Fig. \ref{FIG:RConvKernels}(a) producing Convolutional layer-1 maps. The convolutional layer-1 maps shown in Fig. \ref{FIG:RL1L2L3L4L5L6Maps}(b) are of size 48$\times$48 and the corresponding sampling layer-1 maps shown in Fig. \ref{FIG:RL1L2L3L4L5L6Maps}(c) are of size 24$ 
+\times$24. The feature so learnt are complex features which are not correlative to simple features like horizontal/vertical/diagonal/any other. These feature maps of sampling layer-1 are excited by the kernels shown in Fig. \ref{FIG:RConvKernels}(b) forming Convolutional layer-2 maps which are shown in Fig. \ref{FIG:RL1L2L3L4L5L6Maps}(d). The corresponding sampling layer-2 maps are shown in Fig. \ref{FIG:RL1L2L3L4L5L6Maps}(e). R-Maps for these sampling layer-2 maps are found using DE Vs d binning which forms the major maps which are providing better invariance to rotations shown in Fig. \ref{FIG:RL1L2L3L4L5L6Maps}(f). It is observed that the features so learned have very well discriminative power of classifying a particular sample to its original class; for example, first map of convolutional layer-2 for different class samples is shown in 3$^{rd}$ column of Fig. \ref{FIG:C2M1DiffConfgs0to4} and Fig. \ref{FIG:C2M1DiffConfgs5to8}. It is also noted that there is one to one mapping between convolutional layers and sampling layers, sampling layer and R-Maps layer.\\
+
+
+%%%%************************* Start : Maps of RCNN configuration : R-Map Additional Layer *********************
+
+\begin{figure*}
+\begin{tabular}{cc}
+\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/RCNNMaps/RL1Input1.eps}\\
+(a) & \\
+\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/RCNNMaps/RL1L2Maps1.eps}&\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/RCNNMaps/RL2L3Maps1.eps}\\
+(b)  & (c) \\
+\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/RCNNMaps/RL3L4Maps1.eps}&\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/RCNNMaps/RL4L5Maps1.eps}\\
+(d)  & (e) \\
+\includegraphics[width=0.45\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/RCNNMaps/RL5L6Maps1.eps}\\
+(f)   \\
+\end{tabular}
+\caption{ Maps at different layers of the RCNN configuration i.e, Case-2 (Additional R-Map layer in configuration); (a) Particular Input Map : Layer-1 Map, (b) Layer-2 Maps : Convolutional layer-1 maps, (c) Layer-3 Maps : Sampling layer-1 maps, (d) Layer-4 Maps : Convolutional layer-2 maps, (e) Layer-5 Maps : Sampling layer-2 maps, (f) Layer-6 Maps : R-Maps (DE Vs d binning)}
+\label{FIG:RL1L2L3L4L5L6Maps}
+\end{figure*}
+
+
+
+
+
+\begin{figure*}
+\begin{tabular}{cc}
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/RCNNMaps/RL1L2Kernels1.eps}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/RCNNMaps/RL3L4Kernels1.eps}\\
+(a)  & (b) \\
+\end{tabular}
+\caption{ Learned Kernels at different layers of the RCNN configuration i.e, Case-2 (Additional R-Map layer in configuration); (a) Layer-1 to Layer-2 Kernels : Convolutional layer-1 Kernels, (b) Layer-3 to Layer-4 Kernels : Convolutional layer-2 Kernels}
+\label{FIG:RConvKernels}
+\end{figure*}
+
+%%%%************************* End : Maps of RCNN Config *********************
+For configuration of Case-3 where the training is carried out by considering rotated versions of the convolved maps (oriented in 30$^o$ step from other layers) without considering the oriented versions from training : the maps of different layers and learned kernels of convolutional layers are observed. A particular test sample as shown in Fig. \ref{FIG:ML1L2L3L4L5Maps}(a) of size 52$\times$52 is fed to as input to the configuration. The input map is excited by the kernels weights shown in Fig. \ref{FIG:MConvKernels}(a) producing Convolutional layer-1 maps. The convolutional layer-1 maps shown in Fig. \ref{FIG:ML1L2L3L4L5Maps}(b) are of size 48$\times$48 and the corresponding sampling layer-1 maps shown in Fig. \ref{FIG:ML1L2L3L4L5Maps}(c) are of size 24$ 
+\times$24. These features so learned are complex features where each map is oriented differently from others and cannot be correlative to simple features like horizontal/vertical/diagonal/any other. These feature maps of sampling layer-1 are excited by the kernels shown in Fig. \ref{FIG:MConvKernels}(b) forming Convolutional layer-2 maps which are shown in Fig. \ref{FIG:ML1L2L3L4L5Maps}(d). The corresponding sampling layer-2 maps are shown in Fig. \ref{FIG:ML1L2L3L4L5Maps}(e). 
+It is observed that the features so learned in convolutional layer-2 for a particular class are more circularly extracted compared to original case and are discriminated from other class samples. For example, it can be seen clearly from the map1 of convolutional layer-2 which is shown in 4$^{th}$ columns of Fig. \ref{FIG:C2M1DiffConfgs0to4} and Fig. \ref{FIG:C2M1DiffConfgs5to8}. \\
+
+%************************* Start : Maps of Modified (MCNN) configuration : Convoluved maps oriented *********************
+
+\begin{figure*}
+\begin{tabular}{cc}
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/MCNNMaps/ML1Input1.eps}\\
+(a)\\
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/MCNNMaps/ML1L2Maps1.eps}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/MCNNMaps/ML2L3Maps1.eps}\\
+(b)  & (c) \\
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/MCNNMaps/ML3L4Maps1.eps}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/MCNNMaps/ML4L5Maps1.eps}\\
+(d)  & (e) \\
+\end{tabular}
+\caption{ Maps at different layers of the Modified CNN configuration i.e, Case-3 (Convolved maps being oriented by an angle 30$^o$ from each other map); (a) Particular Input Map : Layer-1 Map, (b) Layer-2 Maps : Convolutional layer-1 maps, (c) Layer-3 Maps : Sampling layer-1 maps, (d) Layer-4 Maps : Convolutional layer-2 maps, (e) Layer-5 Maps : Sampling layer-2 maps}
+\label{FIG:ML1L2L3L4L5Maps}
+\end{figure*}
+
+\begin{figure*}
+\begin{tabular}{cc}
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/MCNNMaps/ML1L2Kernels1.eps}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/MCNNMaps/ML3L4Kernels1.eps}\\
+(a)  & (b) \\
+\end{tabular}
+\caption{ Learned Kernels at different layers of the Modified CNN configuration i.e, Case-3 (Convolved maps being oriented by an angle 30$^o$ from each other map); (a) Layer-1 to Layer-2 Kernels : Convolutional layer-1 Kernels, (b) Layer-3 to Layer-4 Kernels : Convolutional layer-2 Kernels}
+\label{FIG:MConvKernels}
+\end{figure*}
+
+%************************* End : Maps of Original Configuration *********************
+
+For configuration of Case-4 which is a original case where the training is carried out without considering samples with different orientations : the maps of different layers and learned kernels of convolutional layers are observed. A particular test sample as shown in Fig. \ref{FIG:OL1L2L3L4L5Maps}(a) of size 52$\times$52 is fed to as input to the configuration. The input map is excited by the kernels weights shown in Fig. \ref{FIG:OConvKernels}(a) producing Convolutional layer-1 maps. The convolutional layer-1 maps shown in Fig. \ref{FIG:OL1L2L3L4L5Maps}(b) are of size 48$\times$48 and the corresponding sampling layer-1 maps shown in Fig. \ref{FIG:OL1L2L3L4L5Maps}(c) are of size 24$ 
+\times$24. It is clearly observed that the extracted features are not simple as that of horizontal/vertical/diagonal/any others. These feature maps of sampling layer-1 are excited by the kernels shown in Fig. \ref{FIG:OConvKernels}(b) forming Convolutional layer-2 maps which are shown in Fig. \ref{FIG:OL1L2L3L4L5Maps}(d). The corresponding sampling layer-2 maps are shown in Fig. \ref{FIG:OL1L2L3L4L5Maps}(e). \\
+
+%************************* Start : Maps of Original Configuration *********************
+\begin{figure}[t]
+\begin{tabular}{cc}
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/OMaps/OL1Input1.eps}\\
+(a) \\
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/OMaps/OL1L2Maps1.eps}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/OMaps/OL2L3Maps1.eps}\\
+(b)  & (c) \\
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/OMaps/OL3L4Maps1.eps}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/OMaps/OL4L5Maps1.eps}\\
+(d)  & (e) \\
+
+\end{tabular}
+\caption{ Maps at different layers of the original configuration i.e, Case-4 (training without orientation of the samples); (a) Particular Input Map : Layer-1 Map, (b) Layer-2 Maps : Convolutional layer-1 maps, (c) Layer-3 Maps : Sampling layer-1 maps, (d) Layer-4 Maps : Convolutional layer-2 maps, (e) Layer-5 Maps : Sampling layer-2 maps}
+\label{FIG:OL1L2L3L4L5Maps}
+\end{figure}
+
+\begin{figure}[t]
+\begin{tabular}{cc}
+\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/OMaps/OL1L2Kernels1.eps}&\includegraphics[width=0.5\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/OMaps/OL3L4Kernels1.eps}\\
+(a)  & (b) \\
+\end{tabular}
+\caption{ Learned Kernels at different layers of the original configuration i.e, Case-4 (training without orientation of the samples); (a) Layer-1 to Layer-2 Kernels : Convolutional layer-1 Kernels, (b) Layer-3 to Layer-4 Kernels : Convolutional layer-2 Kernels}
+\label{FIG:OConvKernels}
+\end{figure}
+
+%************************* End : Maps of Original Configuration *********************
+
+
+\begin{figure*}[t]
+\begin{tabular}{ccccc}
+\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR0_Inp.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR0_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/RC0_C2M1.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/MC0_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/O0_C2M1.eps}\\
+(a0)  & (a0\_1) & (a0\_2) & (a0\_3) & (a0\_4)\\
+
+\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR1_Inp.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR1_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/RC1_C2M1.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/MC1_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/O1_C2M1.eps}\\
+(b1)  & (b1\_1) & (b1\_2) & (b1\_3) & (b1\_4)\\
+
+\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR2_Inp.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR2_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/RC2_C2M1.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/MC2_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/O2_C2M1.eps}\\
+(c2)  & (c2\_1) & (c2\_2) & (c2\_3) & (c2\_4)\\
+
+\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR3_Inp.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR3_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/RC3_C2M1.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/MC3_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/O3_C2M1.eps}\\
+(d3)  & (d3\_1) & (d3\_2) & (d3\_3) & (d3\_4)\\
+
+\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR4_Inp.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR4_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/RC4_C2M1.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/MC4_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/O4_C2M1.eps}\\
+(e4)  & (e4\_1) & (e4\_2) & (e4\_3) & (e4\_4)\\
+
+\end{tabular}
+\caption{ Convolutional Layer-2 Map1 for different configurations for the inputs 0, 1, 2, 3, 4; Column-1 : Input sample; Column-2 : Case-1 Maps; Column-3 : Case-2 Maps; Column-4 : Case-3 Maps; Column-5 : Case-4 Maps}
+\label{FIG:C2M1DiffConfgs0to4}
+\end{figure*}
+
+
+\begin{figure*}[t]
+\begin{tabular}{ccccc}
+\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR5_Inp.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR5_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/RC5_C2M1.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/MC5_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/O5_C2M1.eps}\\
+(f5)  & (f5\_1) & (f5\_2) & (f5\_3) & (f5\_4)\\
+
+\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR6_Inp.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR6_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/RC6_C2M1.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/MC6_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/O6_C2M1.eps}\\
+(g6)  & (g6\_1) & (g6\_2) & (g6\_3) & (g6\_4)\\
+
+\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR7_Inp.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR7_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/RC7_C2M1.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/MC7_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/O7_C2M1.eps}\\
+(h7)  & (h7\_1) & (h7\_2) & (h7\_3) & (h7\_4)\\
+
+\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR8_Inp.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/OR8_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/RC8_C2M1.eps}&\includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/MC8_C2M1.eps} & \includegraphics[width=0.18\linewidth]{D:/HariDontDelete/ManuScript_RCNNNew/PlotsResults/Maps/O8_C2M1.eps}\\
+(i8)  & (i8\_1) & (i8\_2) & (i8\_3) & (i8\_4)\\
+
+\end{tabular}
+\caption{ Convolutional Layer-2 Map1 for different configurations for the inputs 5, 6, 7, 8; Column-1 : Input sample; Column-2 : Case-1 Maps; Column-3 : Case-2 Maps; Column-4 : Case-3 Maps; Column-5 : Case-4 Maps}
+\label{FIG:C2M1DiffConfgs5to8}
+\end{figure*}
+
+
+It is observed that the features learned by Case-2 (RCNN) are more different from all other cases which can be seen in the 3$^{rd}$ column of Fig. \ref{FIG:C2M1DiffConfgs0to4} and Fig. \ref{FIG:C2M1DiffConfgs5to8} because of an additional R-Map layer which was introduced in the configuration as last layer prior to final classification layer. Similarly the features learned by Case-3 (MCNN) are different from Case-2 and nearer to Case-1/Case-4 because the convolved maps are oriented with out introducing any new layer in the configuration. These two configurations, Case-2 and Case-3 are giving better improvement towards invariancy in rotations compared to Case-4 (original case). It is observed that, even though the network configurations are same for Case-1 and Case-4 the features so learned are not identical because of difference in training data (with and without orientations of the training samples). 

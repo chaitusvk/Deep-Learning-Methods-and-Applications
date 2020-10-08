@@ -1,0 +1,51 @@
+\chapter{Watermarking Quality Assessment metrics}\label{WMQAP}
+Perceptual quality of the watermarked image can be assessed using metrics like MSE, PSNR where as robustness of retrieved watermark can be assessed using the metrics like NC, BER and SSIM.
+Imperceptibility of the watermarked image can be assessed using the quality metrics like mean square error and peak signal to noise ratio where as robustness of the retrieved watermark can be assessed using the metrics like normalised correlation, bit error ratio and structure similarity index measurement.\\
+
+The following quality assessment metrics are employed to assesses the quality between original image(OI) and the watermarked image(WI).
+\section{Mean Square Error(MSE)}
+The Mean Square Error (MSE) between the images OI and WI which are of size  $M \times N$ is given by the following expression. Lower is the MSE, higher is the similarity between the images. MSE with value $0$ indicates the similarity between the images and $\inf $ indicates the dissimilarity  between the images.
+\begin{eqnarray}
+\nonumber
+\text{MSE}(OI,WI)&=&\frac{1}{MN}\sum_{i=0}^{M-1}\sum_{j=0}^{N-1}[OI(i,j)-WI(i,j)]^2
+\nonumber
+\end{eqnarray}
+\section{Peak Signal to Noise Ratio(PSNR))}
+The Peak Signal to Noise Ratio (PSNR) between the images OI and WI which are of size  $M \times N$ is given by the following expression. Higher is the PSNR, higher is the similarity between the images. It is expressed in dB.
+\begin{eqnarray}
+\nonumber
+\text{PSNR}(OI,WI)&=& 10log_{10}\bigl(\frac{255^2}{\text{MSE}(OI,WI)}\bigl)
+\nonumber
+\end{eqnarray}
+
+
+The following quality assessment metrics are employed to assesses the quality between original watermark(WM) and the extracted watermark(EM).
+\section{Normalised Correlation(NC)} 
+The Normalised Correlation (NC) between the images WM and EM which are of size $m \times n$ is given by the following expression.Its value ranges in the interval [0 1], closer the NC value to 1 indicates higher is the correlation between the two images.
+\begin{eqnarray}
+\nonumber
+\text{NC}(WM,EM)&=&\frac{1}{mn}\sum_{i=0}^{m-1}\sum_{j=0}^{n-1}\delta[WM(i,j), EM(i,j)] 
+\nonumber
+\end{eqnarray}
+where,
+\begin{equation}
+  \nonumber
+  \delta(\text{X},\text{Y}) = \left\{ \begin{matrix} 1  & \text{If X}=\text{Y} \\ 0 &  \text{else}   \end{matrix} \right. 
+  \end{equation}
+\section{Bit Error Ratio(BER)} 
+The Bit Error Ratio (BER) between the images WM and EM which are of size $m \times n$ is given by the following expression. Let each gray level of watermark is represented using 8bits. BER value ranges in the interval [0 100].
+\begin{eqnarray}
+\nonumber
+\text{BER}(WM,EM)&=&100 \times \frac{\text{Number of Bits in Error at Reception}}{\text{Total Number of Bits Transmitted}} \\
+&=& \frac{\text{Number of Bits in Error between (WM,EM)}}{(8/100)mn}
+\nonumber
+\end{eqnarray}
+
+\section{Structure Similarity Index Measure(SSIM)}
+The Structure Similarity Index Measure (SSIM) between the images OI and WI which are of size  $M \times N$ is given by the following expression. Closer the value of SSIM to one, higher is the similarity between the images. Let $\mu_x$ is the mean of image $x$, $\sigma_x$ is the standard deviation of the image $x$, $C1 and C2$ are constants to take care of $0/0$.
+\begin{eqnarray}
+\nonumber
+\text{SSIM}(OI,WI)&=& \frac{(2\mu_{OI}\mu_{WI}+C1)(2\sigma_{OI}\sigma_{WI}+C2)}{(\mu_{OI}^2+\mu_{WI}^2+C1)(\sigma_{OI}^2+\sigma_{WI}^2+C2)}
+\nonumber
+\end{eqnarray}
+\newline

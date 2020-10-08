@@ -1,0 +1,37 @@
+% Please add the following required packages to your document preamble:
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\begin{landscape}
+\begin{longtable}[c]{|c|c|c|c|c|}
+\caption{Station Log Format}
+\label{Table:StnLog}\\
+\hline
+\textbf{S.NO.} & \textbf{Data Variable}                                                      & \textbf{Data Type} & \textbf{Range}                                                                                                            & \textbf{Description}                                                                                    \\ \hline
+\endfirsthead
+%
+\multicolumn{5}{c}%
+{{\bfseries Table \thetable\ continued from previous page}} \\
+\hline
+\textbf{S.NO.} & \textbf{Data Variable}                                                      & \textbf{Data Type} & \textbf{Range}                                                                                                            & \textbf{Description}                                                                                    \\ \hline
+\endhead
+%
+1              & StationId                                                                   & unit               & \begin{tabular}[c]{@{}c@{}}1: TC1\\ 2: TC2\\ 3: TC3\\ 4: TC4\\ 5: TC5\end{tabular}                                        & Telecommand Chain Id                                                                                    \\ \hline
+2              & System\_In\_Use                                                             & unit               & \begin{tabular}[c]{@{}c@{}}0: INV\\ 1: TC1\\ 2: TC2\\ 3: TC3\\ 4: TC4\\ 5: TC5\end{tabular}                               & \begin{tabular}[c]{@{}c@{}}Radiating system \\ In Use/Bias \\ Selected chain status\end{tabular}        \\ \hline
+3              & ProcessCount                                                                & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}10Hz Process count at which application \\ Tcprocess is running\end{tabular} \\ \hline
+4              & Line1\_EHMS                                                                 & quint64            & -2\textasciicircum 63 to 2\textasciicircum 63-1                                                                           & EHMS of CDT chain1                                                                                      \\ \hline
+5              & Line2\_EHMS                                                                 & quint64            & -2\textasciicircum 63 to 2\textasciicircum 63-1                                                                           & EHMS of CDT chain2                                                                                      \\ \hline
+6              & Selected\_EHMS                                                              & quint64            & -2\textasciicircum 63 to 2\textasciicircum 63-1                                                                           & EHMS of selected CDT chain                                                                              \\ \hline
+7              & ext\_int                                                                    & char               & \begin{tabular}[c]{@{}c@{}}E : External Interrupt\\ I : Internal Interrupt\end{tabular}                                   & 100Hz Interrupt status                                                                                  \\ \hline
+8              & TcReadyNotReady\_TcProcess                                                  & bool               & \begin{tabular}[c]{@{}c@{}}1: Ready\\ 0 : Not Ready\end{tabular}                                                          & Telecommand Chain Readiness status                                                                      \\ \hline
+9              & TcRadiate\_NotRadiate\_TcProcess                                            & bool               & \begin{tabular}[c]{@{}c@{}}1 : Radiate\\ 0 : Not Radiate\end{tabular}                                                     & Telecommand Chain Readiness Status                                                                      \\ \hline
+10             & PowerStatus                                                                 & unit               & \begin{tabular}[c]{@{}c@{}}0 : INV\\ 1 : Off(NO RF)\\ 3 : LOW(\textless500W)\\ 6 : NORMAL(\textgreater=500W)\end{tabular} & Transmitter(Tx) Power Status                                                                            \\ \hline
+11             & PowerLevel                                                                  & float              & 0 to 5V                                                                                                                   & \begin{tabular}[c]{@{}c@{}}Tx Power Calibrated to \\ DC Voltage(0 to 5V)\end{tabular}                   \\ \hline
+12             & DCE\_RCU\_Health\_Tcprocess                                                 & bool               & \begin{tabular}[c]{@{}c@{}}0 : Not Healthy\\ 1 : Healthy\end{tabular}                                                     & DCE/RCU Health Status                                                                                   \\ \hline
+13             & \begin{tabular}[c]{@{}c@{}}DCE\_RCU\_ComdControl\_\\ TcProcess\end{tabular} & bool               & \begin{tabular}[c]{@{}c@{}}0 : Remote\\ 1 : Local\end{tabular}                                                            & DCE/RCU Command Control Status                                                                          \\ \hline
+14             & DCE\_RCU\_ComdWord\_Tcprocess                                               & unit               & \begin{tabular}[c]{@{}c@{}}0 : SAFE\\ 1 : ARM\\ 2 : DEST\\ 3 : COMD1\\ 10 : TEST\end{tabular}                             & DCE /RCU Command word Generated                                                                         \\ \hline
+15             & Cdm1\_RxCount                                                               & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & CDM Line1 Reception Count                                                                               \\ \hline
+16             & Cdm2\_RxCount                                                               & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & CDM Line2 Reception Count                                                                               \\ \hline
+17             & pres\_Cdm\_L1\_Src1\_Count                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}Present CDM Line1 Source1 \\ running count\end{tabular}                      \\ \hline
+\end{longtable}
+\end{landscape}

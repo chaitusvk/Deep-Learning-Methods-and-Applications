@@ -1,0 +1,77 @@
+\chapter{Decomposition description}
+\label{Chapter2}
+\section{Module decomposition}
+\subsection{main}
+\begin{enumerate}
+	\item [$\blacklozenge$] To create an object for this application.
+	\item [$\blacklozenge$] To initialize the settings instance for this application.	
+\end{enumerate}
+ 
+  \subsection{mainwindow}
+  
+  \begin{enumerate}
+  	\item [$\blacklozenge$] To create the objects for the process related  classes.
+  	\item [$\blacklozenge$] To read the configuration information from the input files and Network transmission.
+  	\item [$\blacklozenge$] To create and begin the threads for serial i/o threads (4 nos), network reception threads (2 nos), network transmission threads (2 nos), DIO parallel (1 nos), analog input (1 nos), analog output (1 nos) and logging (1 nos).
+  	\item [$\blacklozenge$] To facilitate the selection and updation of various toolbar buttons provided for user selectable functions.
+  	\item [$\blacklozenge$] To start a 100 msec timer to process the acquired data periodically.
+  	\item [$\blacklozenge$] To map the signals to the corresponding slots used in this class.
+  	\item [$\blacklozenge$] To update the parameters for logging and parameters for plotting.
+  	\item [$\blacklozenge$] To frame the data for transmission to MCC
+  	\item [$\blacklozenge$] To provide display updation and graphic user interface
+  		
+  \end{enumerate}
+
+    \subsection{IrigRead}
+    \begin{enumerate}
+    	\item [$\blacklozenge$] To read the config file "irig.txt".
+    	\item [$\blacklozenge$] To Initialize the PCI variables like No.of IRIG cards ,Interrupt Rate,etc .
+    \end{enumerate}
+    
+\section{Concurrent process decomposition}
+
+Nil. There is only one process running at a time in this project. But there are multiple threads running. The details are as follows.
+       \subsection{IrigThread} 
+       
+        \begin{enumerate}
+       	\item [$\blacklozenge$] This is a worker thread and does not need any user interface. 
+       	\item [$\blacklozenge$] This thread starts running immediately after it is created and stops only when the application is quit.  
+       	\item [$\blacklozenge$] It acquires Time Data from 4 IRIG-PCI cards.
+       	\item [$\blacklozenge$] The synchronization to the main thread is through signals.
+       	
+       \end{enumerate}	
+       
+       \subsection{networkTxThread} 
+   
+       \begin{enumerate}
+    \item [$\blacklozenge$] This is a worker thread and does not need any user interface.
+    \item [$\blacklozenge$] This thread starts running immediately after it is created and stops only when the application is quit.
+    \item [$\blacklozenge$] This Thread Initilises the ips address of the system
+   	\item [$\blacklozenge$] This Thread send the Data through Ethernet port
+   
+   \end{enumerate}
+	
+   \subsection{LogData}
+      \begin{enumerate}
+   	\item [$\blacklozenge$] Logs the Time data at specified rates to hard disk.
+   \end{enumerate}
+
+\section{Data decomposition}
+
+The data entities used in this project are grouped into the following categories:
+       \subsection{Input data files} 
+       
+        \begin{enumerate}
+        \item [$\blacklozenge$] irig.txt file contains parameters for the IRIG-PCI cards. The corresponding format of this input file is given in section. \ref{section:irig_card} 
+       	
+       	\item [$\blacklozenge$] Tx.txt file contains configuration Tx IPs . System Ip and corresponding Port numbers The corresponding format of this input file is given in section. \ref{section:tx.} 
+       	
+       \end{enumerate}	
+	
+       \subsection{Output data files} 
+       
+       \begin{enumerate}
+       	\item [$\blacklozenge$] Log File of Time Data 
+       	. \ref{Table:tim_Log_file}
+       	
+       \end{enumerate}		

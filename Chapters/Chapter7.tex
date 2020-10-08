@@ -1,0 +1,878 @@
+\chapter{Data Formats}
+\label{Chapter7}
+\section{RS-232 Pin assignment details}
+The details of 9pin d-type connector for 8 ports of serial communication used in PCI-1620B moxa serial card are
+	\begin{enumerate}
+		\item [$\rhd$] Pin-1: Data clear
+		\item [$\rhd$] Pin-2: Reception
+		\item [$\rhd$] Pin-3: Transmission
+		\item [$\rhd$] Pin-4: Data Send Ready
+		\item [$\rhd$] Pin-5: Ground
+		\item [$\rhd$] Pin-6: Data Terminal Ready
+		\item [$\rhd$] Pin-7: Clear To Send
+		\item [$\rhd$] Pin-8: Request To Send
+		\item [$\rhd$] Pin-9: NC
+	\end{enumerate}
+\textbf{Note:} For loop back testing the following pins are to be shorted so that whatever is transmitted can be received and verified.
+\begin{enumerate}
+	\item [i)] Pin-1, Pin-4, Pin-6 are to be shorted
+	\item [ii)] Pin-2, Pin-3 are to be shorted
+	\item [iii)] Pin-7, Pin-8 are to be shorted
+\end{enumerate}
+\section{Input File formats}
+\label{Section:InpFileFormat}
+
+\subsection{Input file: ``tcconstants.inp" format} \label{section:tcconstants}
+This is a constants file where user can define the following parameters. These parameters are used for programmable limits/values for the following TC chain information, wild sample tolerance for azimuth as well as elevation, bias for azimuth and elevation of both encoder chains, slope values for CDM and PROG mode errors, analog channel number to which power amplifier level is extended, limits of power levels, trajectory file information, DIO port numbers for statuses of servo, DCE/RCU, chain selection with chain readiness information, software limits for azimuth and elevation in either directions, device numbers and item numbers for DIO and AI cards, plotting interval, folder to which data can be saved.
+\begin{table}[H]
+	\centering
+	
+%	\caption{Constants}
+	\label{Table:Constants}
+	\resizebox{420pt}{300pt}{
+		\caption{Constants}
+		\begin{tabular}{|l|l|l|l|}
+			\hline
+			\textbf{S.No} & \textbf{Data variable}           & \textbf{Data type} & \textbf{Description}                                                                                                        \\ \hline
+			1             & tc\_chain                        & unsignedchar       & telecommandChain no.                                                                                                        \\ \hline
+			2             & az\_enc\_wild\_sample\_tolerance & float              & \begin{tabular}[c]{@{}l@{}}Azimuth Encoder Wild\\ sample rejection tolerance\end{tabular}                                   \\ \hline
+			3             & el\_enc\_wild\_sample\_tolerance & float              & \begin{tabular}[c]{@{}l@{}}Elevation Encoder Wild\\ sample rejection tolerance\end{tabular}                                 \\ \hline
+			4             & enc1\_az\_bias                   & float              & Encoder1 Azimuth Bias                                                                                                       \\ \hline
+			5             & enc1\_el\_bias                   & float              & Encoder1 Elevation Bias                                                                                                     \\ \hline
+			6             & enc2\_az\_bias                   & float              & Encoder2 Azimuth Bias                                                                                                       \\ \hline
+			7             & enc2\_el\_bias                   & float              & Encoder2 Elevation Bias                                                                                                     \\ \hline
+			8             & az\_cdm\_slope                   & float              & Azimuth CDM Mode Slope                                                                                                      \\ \hline
+			9             & az\_prog\_slope                  & float              & Azimuth Program mode slope                                                                                                  \\ \hline
+			10            & el\_cdm\_slope                   & float              & Elevation CDM Mode Slope                                                                                                    \\ \hline
+			11            & el\_prog\_slope                  & float              & Elevation Program mode Slope                                                                                                \\ \hline
+			12            & analog\_channel\_no              & unsigned short     & Analog Output Channel no.                                                                                                   \\ \hline
+			13            & PA\_upper\_limit                 & float              & \begin{tabular}[c]{@{}l@{}}PowerAmplifier(PA)\\ Power StatusUpperLimit\end{tabular}                                         \\ \hline
+			14            & PA\_lower\_limit                 & float              & \begin{tabular}[c]{@{}l@{}}PowerAmplifier(PA)\\ Power Status LowerLimit\end{tabular}                                        \\ \hline
+			15            & prog\_file1                      & QString            & Trajectory  file name                                                                                                       \\ \hline
+			16            & DIO\_PortNo\_Servo\_Opmodes      & uint               & \begin{tabular}[c]{@{}l@{}}DIO Card Input Port No\\ to acquire servo opmodes status\end{tabular}                            \\ \hline
+			17            & DIO\_PortNo\_ServoDrive\_RCU3Bit & uint               & \begin{tabular}[c]{@{}l@{}}DIO Card Input Port No\\ to acquire Servo drive\&RCU 3bit \\ Acknowledgement status\end{tabular} \\ \hline
+			18            & DIO\_PortNo\_DCERCU\_Status      & uint               & \begin{tabular}[c]{@{}l@{}}DIO Card Input Port No\\ to acquire DCE/RCU parameters status\end{tabular}                       \\ \hline
+			19            & DIO\_PortNo\_TxBiasSys           & uint               & \begin{tabular}[c]{@{}l@{}}DIO Card Input Port No\\ to acquire Transmitter(Tx) Bias status\end{tabular}                     \\ \hline
+			20            & DIO\_PortNo\_CRI\_PBLRHealth     & uint               & \begin{tabular}[c]{@{}l@{}}DIO Card Input Port No\\ to acquire SHAR CRI health status\end{tabular}                          \\ \hline
+			21            & DIO\_PortNo\_CRI\_SHARHealth     & uint               & \begin{tabular}[c]{@{}l@{}}DIO Card Input Port No\\ to acquire PBLR CRI health status\end{tabular}                          \\ \hline
+			22            & DIO\_NoOf\_Ports                & uint     & Number of active configurable ports                                        \\ \hline
+			23            & Az\_UpperLimit                & float     & Az programmable upper limit.                                                                                              \\ \hline
+			24            & Az\_LowerLimit                & float     & Az programmable lower limit.                                                                                              \\ \hline
+			25            & El\_UpperLimit                & float     & El programmable upper limit.                                                                                               \\ \hline
+			26            & El\_LowerLimit                & float     & El programmable lower limit.                                                                                               \\ \hline
+			27	& Dio\_Devicenumber & int & Device number for DIO card
+			\\ \hline
+			28 & Dio\_Item & qint32 & item number for DIO card
+			\\ \hline
+			29 & Ai\_Devicenumber & qint32 & Device number for AI card
+			\\ \hline
+			30 & Ai\_Item & qint32 & item number for AI card
+			\\ \hline
+			31 & LogCnterDelay & quint8 & plotting is defined by this interval \footnote{10 means each segment plots with 1s interval}.
+			\\ \hline
+			32            & logfolder                & QString     & Logging folder name.                 \\ \hline
+	\end{tabular}}
+\end{table}
+\subsection{Input file: ``pio.txt" format}
+\label{section:pio}
+This is a parallel input and output (DIO) file where user can define 12 port details of DIO. 
+Ports Total number of ports
+
+\begin{enumerate}
+	\item [a)] Define Total number of ports as given below\\
+	PORTS 12
+	\item [b)] Configure all 12 ports\\ (Start/Stop, Port No, Input/Output, Port Name)\\
+	All 12 ports are defined as given below\\
+	START 1 Input PA0\\
+	START 2 Input PB0\\
+	START 3 Input PC0\\
+	START 4 Input PA1\\
+	START 5 Input PB1\\
+	START 6 Input PC1\\
+	START 7 Input PA2\\
+	START 8 Input PB2\\
+	START 9 Input PC2\\
+	START 10 Input PA3\\
+	START 11 Input PB3\\
+	START 12 Input PC3\\
+\end{enumerate}
+
+\subsection{Input file: ``sio.txt" format}
+\label{section:sio}
+This is a serial input and output (SIO) file where user can define serial port details for each port (2 ports for EDAU data and two ports for TCR data). This details which among 8 ports of DPS are connected to other systems along with configuration of ports. 
+\begin{enumerate}
+	\item [a)] Define Total number of ports as given below\\
+	PORTS 4
+	\item [b)] Configure all 4 ports\\ (Sync for Start, Port number, System, ttyName, BaudRate, DataBits, Parity, StopBits, TotalBytes, FrameStartByte, Termination Character)\\
+	All 4 ports are defined as given below\\
+	START	1	TIME$\_$CDT1	ttyAP0	115200	8	NO	1	17	0	0X0A\\
+	START	2	TIME$\_$CDT2	ttyAP1	115200	8	NO	1	17	0	0X0A\\
+	START	3	ANGLE$\_$EDAU1	ttyAP2	38400	8	NO	1	14	0	0X10\\
+	START	4	ANGLE$\_$EDAU2	ttyAP3	38400	8	NO	1	14	0	0X20\\
+\end{enumerate}
+
+
+\subsection{Input file: ``xxxx.trj/pgm/txt" format}
+\label{section:pgm}
+This is a trajectory file which contains program mode trajectory information i.e., AZ and EL with a resolution of 100msec. It will be mission dependent. 
+\subsection{Input file: ``UdpRxSocket.inp" format}
+\label{Label:RXSoc}
+This is the configuration details of socket for reception of data. Using the following configuration, CDM data is received over two sockets from RSP servers during real time. This is TC DPS dependent. The details are given below
+
+\begin{enumerate}
+	\item [a)] Define Total number of sockets for reception as given below\\
+	2
+	\item [b)] Configuration details of each socket\\
+	(PacketName, Service, ProtocolMode, BlockNonBlock, ForeignHost, LocalHost, ForeignPort, LocalPort, PacketSize)\\
+RSS1	UDP	UNICAST	Y	172.19.100.51	172.19.100.43	5319	0	48\\
+RSS2	UDP	UNICAST	Y	172.21.100.51	172.21.100.43	5369	0	48\\
+\end{enumerate}
+The above one is explained taking TC3 chain details into account. Table. \ref{Table:NetRxTcChains} details all five chains IP and port assignments for reception of data from RSP servers.
+
+\subsection{Input file: ``UDpTxSocket.inp" format}
+\label{Label:TXSoc}
+This is the configuration details of socket for transmission of data. Using the following configuration, status data is transmitted over two sockets to MCC servers during real time. This is TC DPS dependent. The details are given below
+\begin{enumerate}
+	\item [a)] Define Total number of sockets for transmission as given below\\
+	2
+	\item [b)] Configuration details of each socket\\
+	(PacketName, Service, ProtocolMode, BlockNonBlock, ForeignHost, LocalHost, ForeignPort, LocalPort, PacketSize)\\
+	MCC1	UDP	UNICAST	Y	172.19.100.52	172.19.100.43	5106	0	25 \\
+	MCC2	UDP	UNICAST	Y	172.21.100.52	172.21.100.43	5203	0	25\\ 
+	\end{enumerate}
+The above one is explained taking TC3 chain details into account. Table. \ref{Table:NetTxTcChains} details all five chains IP and port assignments for transmission of data to MCC servers.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\tiny
+\begin{longtable}[c]{|c|c|c|c|c|c|c|}
+	\caption{Network reception details of all TC chains }
+	\label{Table:NetRxTcChains}\\
+	\hline
+	\multicolumn{7}{|c|}{\textbf{NETWORK RECEVICED}} \\ \hline
+	\endfirsthead
+	%
+	\multicolumn{7}{c}%
+	{{\bfseries Table \thetable\ continued from previous page}} \\
+	\hline
+	\multicolumn{7}{|c|}{\textbf{NETWORK RECEVICED}} \\ \hline
+	\endhead
+	%
+	\textbf{TC CHAIN} & \multicolumn{3}{c|}{\textbf{NETWORK CH1}} & \multicolumn{3}{c|}{\textbf{NETWORK CH2}} \\ \hline
+	\textbf{} & \textbf{System CH1 IP} & \textbf{RSP CH1 IP} & \textbf{Port no.} & \textbf{System CH1 IP} & \textbf{RSP CH2 IP} & \textbf{Port no.} \\ \hline
+	\textbf{1} & 172.19.100.41 & 172.19.100.51 & 5306 & 172.21.100.41 & 172.21.100.51 & 5356 \\ \hline
+	\textbf{2} & 172.19.100.42 & 172.19.100.51 & 5307 & 172.21.100.42 & 172.21.100.51 & 5357 \\ \hline
+	\textbf{3} & 172.19.100.43 & 172.19.100.51 & 5319 & 172.21.100.43 & 172.21.100.51 & 5369 \\ \hline
+	\textbf{4} & 192.168.102.51 & 172.18.100.51 & 7008 & 192.168.104.51 & 172.20.100.51 & 7009 \\ \hline
+	\textbf{5} & 192.168.102.52 & 172.18.100.51 & 7108 & 192.168.104.52 & 172.20.100.51 & 7109 \\ \hline
+\end{longtable}
+% Please add the following required packages to your document preamble:
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+%\begin{landscape}
+\tiny
+\begin{longtable}[c]{|c|c|c|c|c|c|c|}
+	\caption{Network transmission details of all TC chains }
+	\label{Table:NetTxTcChains}\\
+	\hline
+	\multicolumn{7}{|c|}{\textbf{NETWORK TRANSMITTER}}                                                                                                      \\ \hline
+	\endfirsthead
+	%
+	\endhead
+	%
+	\textbf{TC CHAIN} & \multicolumn{3}{c|}{\textbf{NETWORK CH1}}                        & \multicolumn{3}{c|}{\textbf{NETWORK CH2}}                        \\ \hline
+	\textbf{}         & \textbf{System CH1 IP} & \textbf{MCC CH1 IP} & \textbf{Port no.} & \textbf{System CH1 IP} & \textbf{MCC CH2 IP} & \textbf{Port no.} \\ \hline
+	\textbf{1}        & 172.19.100.41          & 172.19.100.52       & 5108              & 172.21.100.41          & 172.21.100.52       & 5195              \\ \hline
+	\textbf{2}        & 172.19.100.42          & 172.19.100.52       & 5118              & 172.21.100.42          & 172.21.100.52       & 5192              \\ \hline
+	\textbf{3}        & 172.19.100.43          & 172.19.100.52       & 5106              & 172.21.100.43          & 172.21.100.52       & 5203              \\ \hline
+	\textbf{4}        & 192.168.102.51        & 230.6.181.3         & 6103              & 192.168.104.51        & 230.6.182.4         & 6104              \\ \hline
+	\textbf{5}        & 192.168.102.52        & 230.6.171.3       & 6203                & 192.168.104.52            & 230.6.172.4       & 6204                \\ \hline
+\end{longtable}
+%\end{landscape}
+
+
+\section{Connectivity data port formats}
+\label{Section:ConnectDataPortsFormat}
+\subsection{DIO Ports}
+\label{SectionDIOPorts}
+PCI-1753 is one of the add-on cards  employed in the systems to acquire status of various subsystems. It has 12 (8bit) ports of which only 9 ports are actually useful considering both external and internal interrupts. Out of which 6 ports are reserved for status acquiring from different subsystems and the details are given in this section \ref{SectionDIOPorts}.\\
+
+\textbf{Byte-0 : Servo op-modes}
+		\begin{enumerate}
+		\item [$\rhd$] bit-0: Azimuth Standby
+		\item [$\rhd$] bit-1: Azimuth Manual
+		\item [$\rhd$] bit-2: Azimuth Slew
+		\item [$\rhd$] bit-3: Elevation Standby
+		\item [$\rhd$] bit-4: Elevation Manual
+		\item [$\rhd$] bit-5: Elevation Slew
+		\item [$\rhd$] bit-6: CDM Mode
+		\item [$\rhd$] bit-7: Program Mode
+		\end{enumerate}
+	Active high (5V DC) corresponds to particular bit excitation and vice-versa. The excitation is based on the operator`s selection on antenna operator control console for driving the antenna in either azimuth or elevation or both directions.\\
+	
+	\textbf{Byte-1 : Drive status and RCU 3-bit status}
+	\begin{enumerate}
+		\item [$\rhd$] bit-0: NC
+		\item [$\rhd$] bit-1: Emergency Stop
+		\item [$\rhd$] bit-2: Azimuth drive on
+		\item [$\rhd$] bit-3: Elevation drive on
+		\item [$\rhd$] bit-4: RCU bit-5
+		\item [$\rhd$] bit-5: RCU bit-6
+		\item [$\rhd$] bit-6: RCU bit-7
+		\item [$\rhd$] bit-7: NC
+	\end{enumerate}
+Active high (5V DC) corresponds to particular bit excitation and vice-versa. The drive on excitation is based on the antenna control operation by the console operator for driving the antenna in particular direction. RCU bits (5,6,7) gives the information of command which is actually residing in RCU before uplinking at PBLR. These RCU 3bit status is only applicable to PBLR data systems. \\
+
+\textbf{Byte-2 : DCE/RCU status}
+\begin{enumerate}
+	\item [$\rhd$] bit-0: Synthesised power health status
+	\item [$\rhd$] bit-1: Comd-2 (GND)
+	\item [$\rhd$] bit-2: Comd-1
+	\item [$\rhd$] bit-3: Overall health of DCE/RCU
+	\item [$\rhd$] bit-4: Remote(0V)/Local(5V) 
+	\item [$\rhd$] bit-5: Destruct
+	\item [$\rhd$] bit-6: Arm
+	\item [$\rhd$] bit-7: Safe
+\end{enumerate}
+Active high (5V DC) corresponds to particular bit excitation and vice-versa. The excitations are based on the command being decoded in DCE/RCU along with overall health of the module. Remote only applicable for PBLR where as both local and remote mode of commanding are possible at SHAR end. However, the control is in the hands of RSO.\\
+
+\textbf{Byte-3 : System in use, bias and readiness status}
+\begin{enumerate}
+	\item [$\rhd$] bit-0: TC1 system in use
+	\item [$\rhd$] bit-1: TC2 system in use
+	\item [$\rhd$] bit-2: TC3 system in use
+	\item [$\rhd$] bit-3: TC4 system in use
+	\item [$\rhd$] bit-4: TC5 system in use
+	\item [$\rhd$] bit-5: NC
+	\item [$\rhd$] bit-6: Radiate
+	\item [$\rhd$] bit-7: Ready/Not ready
+\end{enumerate}
+Active high (5V DC) corresponds to particular bit excitation and vice-versa. The excitations are based on the selections from bias \& status control panel positioned at SHAR and PBLR.  \\
+
+\textbf{Byte-4 : SHAR CRI PLC Healths }
+\begin{enumerate}
+	\item [$\rhd$] bit-0: Processor Health
+	\item [$\rhd$] bit-1: Ethernet-1 Health
+	\item [$\rhd$] bit-2: Ethernet-2 Health
+	\item [$\rhd$] bit-3: DI Health
+	\item [$\rhd$] bit-4: DO Health
+	\item [$\rhd$] bit-5: RUN status
+	\item [$\rhd$] bit-6: NC
+	\item [$\rhd$] bit-7: NC
+\end{enumerate}
+Active high (5V DC) corresponds to particular bit excitation and vice-versa. The excitations are based on the health of the modules of PLCs housed at SHAR. This byte will be applicable only for PBLR Telecommand.\\
+
+\textbf{Byte-5 : PBLR CRI PLC Healths }
+\begin{enumerate}
+	\item [$\rhd$] bit-0: Processor Health
+	\item [$\rhd$] bit-1: Ethernet-1 Health
+	\item [$\rhd$] bit-2: Ethernet-2 Health
+	\item [$\rhd$] bit-3: DI Health
+	\item [$\rhd$] bit-4: DO Health
+	\item [$\rhd$] bit-5: RUN status
+	\item [$\rhd$] bit-6: NC
+	\item [$\rhd$] bit-7: NC
+\end{enumerate}
+Active high (5V DC) corresponds to particular bit excitation and vice-versa. The excitations are based on the health os the modules of PLCs housed at PBLR. This byte will be applicable only for PBLR Telecommand.\\
+
+\textbf{Note:} Any status byte can be given in any of the 9 ports and the locations can be defined in constants.inp file.
+
+\subsection{Analog Input Channel}
+\label{SectionAI}
+PCI-1716 is one of the add-on cards  employed in the systems to acquire analog input which is equivalent to RF power being outputted from 1KW SSPA. It has 16nos of analog input channels (AI0, AI1, AI2, AI3, AI4, AI5, AI6, AI7, AI8, AI9, AI10, AI11, AI12, AI13, AI14, AI15), out of which one channel (AI0-AI1) is reserved for acquiring analog equivalent RF power from SSPA and the details are given in this section \ref{SectionAI}.
+\begin{enumerate}
+	\item [$\rhd$] Channel0 : AI0, Pin No-68; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel0 : AI1, Pin No-34; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel1 : AI2, Pin No-67; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel1 : AI3, Pin No-33; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel2 : AI4, Pin No-66; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel2 : AI5, Pin No-32; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel3 : AI6, Pin No-65; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel3 : AI7, Pin No-31; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel4 : AI8, Pin No-64; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel4 : AI9, Pin No-30; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel5 : AI10, Pin No-63; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel5 : AI11, Pin No-29; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel6 : AI12, Pin No-62; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel6 : AI13, Pin No-28; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel7 : AI14, Pin No-61; GND Pin No(s)-26,60
+	\item [$\rhd$] Channel7 : AI15, Pin No-27; GND Pin No(s)-26,60
+\end{enumerate}
+Equivalent analog power voltage is in the range [0.0V 5.0V]. The excitation analog voltage is based on the level of RF being outputted from Power Amplifier. It is advised to ground all other channels if they are not in use to avoid floating voltage variations.
+
+\subsection{Analog Output Channels}
+\label{SectionAO}
+PCI-1716 is one of the add-on cards  employed in the systems to output analog voltage to servo drive system either in CDM mode or Program mode of operation. The error is independently generated both for azimuth and elevation based on the antenna position and command angle. It has 2nos of analog output channels (AO0, AO1), and both are reserved for outputting azimuth and elevation errors. Output set voltage in either channel is the range [-10V 10V]. Here, 10V corresponds to ${15}^{o}$/sec. The details are given in this section \ref{SectionAO}.
+\begin{enumerate}
+	\item [$\rhd$] Channel0 : AO0, Pin No-58, GND Pin No-57
+	\item [$\rhd$] Channel1 : AO1, Pin No-24, GND Pin No(s)-23
+\end{enumerate}
+$\boldsymbol{}$
+\subsection{Serial Input Ports}
+\label{SectionSIO}
+PCI-1620B is one of the add-on cards  employed in the systems to acquire serial data from TCRs and EDAU units employed in the station. It has 8 nos of serial (RS232) ports, out of which only 4 ports are reserved. 2 ports for time information acquisition and 2 ports for antenna information acquisition. The serial formats are different for time information and angle information and the details are given in this section \ref{SectionSIO}.
+\begin{enumerate}
+	\item [$\rhd$] ttyAP0 : TCR1, Serial Data format:SDF1
+	\item [$\rhd$] ttyAP1 : TCR2, Serial Data format:SDF1
+	\item [$\rhd$] ttyAP2 : EDAU1, Serial Data format:SDF2
+	\item [$\rhd$] ttyAP3 : EDAU2, Serial Data format:SDF2
+	\item [$\rhd$] ttyAP4 : NC
+	\item [$\rhd$] ttyAP5 : NC
+	\item [$\rhd$] ttyAP6 : NC
+	\item [$\rhd$] ttyAP7 : NC
+\end{enumerate}
+TCR information for Port0, Port1 are defined by the format SDF1 and EDAU information for Port2, Port3 are defined by the fornmat SDF2. Out of 8 ports, it is possible to configure any four ports for the purpose and can be defined in 'sio' input file. The formats are given below\\
+\textbf{Serial Data Format : SDF1 for TCR information}
+\begin{enumerate}
+	\item [a)] Interface Standard: RS232
+	\item [b)] Data Rate:   115200 bps
+	\item [c)] Data bits: 8
+	\item [d)] Parity: No parity
+	\item [e)] Stop bits: No
+	\item [f)] Total bytes: 17
+	\item [g)] Frame refresh rate: 10 msec
+	\item [h)] Frame start byte: 0
+	\item [i)] End byte: 0X0A
+	\item [j)] Frame format: 
+		\begin{enumerate}
+			\item [$\rhd$] Byte0: Sign +/-
+			\item [$\rhd$] Byte1: Tens of Hours
+			\item [$\rhd$] Byte2: units of hours
+			\item [$\rhd$] Byte3: spare byte
+			\item [$\rhd$] Byte4: Tens of minutes
+			\item [$\rhd$] Byte5: units of minutes
+			\item [$\rhd$] Byte6: spare byte
+			\item [$\rhd$] Byte7: Tens of seconds
+			\item [$\rhd$] Byte8: units of seconds
+			\item [$\rhd$] Byte9: spare byte
+			\item [$\rhd$] Byte10: Hundreds of milli seconds
+			\item [$\rhd$] Byte11: Tens of milli seconds
+			\item [$\rhd$] Byte12: units of milli seconds
+			\item [$\rhd$] Byte13: spare byte
+			\item [$\rhd$] Byte14: H-Hold / R-Running
+			\item [$\rhd$] Byte15: 0X0D
+			\item [$\rhd$] Byte16: 0X0A
+		\end{enumerate}
+\end{enumerate}
+\textbf{Serial Data Format : SDF2 for EDAU information}
+\begin{enumerate}
+	\item [a)] Interface Standard: RS232
+	\item [b)] Data Rate:   38400 bps
+	\item [c)] Data bits: 8
+	\item [d)] Parity: No parity
+	\item [e)] Stop bits: 1
+	\item [f)] Total bytes: 14
+	\item [g)] Frame refresh rate: 100 msec
+	\item [h)] Frame start byte: 0X11 for EDAU chain-1 and Ox12 for EDAU chain-2
+	\item [i)] End byte: 0X10 for EDAU chain-1 and 0X20 for EDAU chain-2
+	\item [j)] Frame format: 
+	\begin{enumerate}
+		\item [$\rhd$] Byte0: Chain ID 0X11 for EDAU chain-1 and 0X12 for EDAU chain-2
+		\item [$\rhd$] Byte1: Az ${100}^{th}$ digit (ASCII)
+		\item [$\rhd$] Byte2: Az ${10}^{th}$ digit (ASCII)
+		\item [$\rhd$] Byte3: Az ${1}^{th}$ digit (ASCII)
+		\item [$\rhd$] Byte4: Az ${1/10}^{th}$ digit (ASCII)
+		\item [$\rhd$] Byte5: Az ${1/100}^{th}$ digit (ASCII)
+		\item [$\rhd$] Byte6: El ${100}^{th}$ digit (ASCII)
+		\item [$\rhd$] Byte7: El ${10}^{th}$ digit (ASCII)
+		\item [$\rhd$] Byte8: El ${1}^{th}$ digit (ASCII)
+		\item [$\rhd$] Byte9: El ${1/10}^{th}$ digit (ASCII)
+		\item [$\rhd$] Byte10: El ${1/100}^{th}$ digit (ASCII)
+		\item [$\rhd$] Byte11: EXT/INT Status  0X45 for EXT and 0X49 for INT
+		\item [$\rhd$] Byte12: Encoder Status byte
+		\begin{enumerate}
+			\item [b0] Not used
+			\item [b1] Not used
+			\item [b2] Not used
+			\item [b3] Not used
+			\item [b4] Not used
+			\item [b5] Not used
+			\item [b6] EL encoder data status : 1- Normal; 0-Abnormal
+			\item [b7] AZ encoder data status : 1- Normal; 0-Abnormal
+		\end{enumerate}
+		\item [$\rhd$] Byte13: End of transmission (Stop Byte). 0X10 for EDAU chain-1 and 0X20 for EDAU chain-2
+	\end{enumerate}
+\end{enumerate}
+\subsection{Network Ports}
+Two inbuilt ethernet ports (100/1000Ethernet) are available for mother board. Both CDM reception and MCC transmission are done using these two ports at different rates. The network configuration details both for reception and transmission are given in section \ref{Label:RXSoc} and \ref{Label:TXSoc} respectively.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\section{Various logging formats}
+\label{section:LogFormats}
+% Please add the following required packages to your document preamble:
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+
+\begin{landscape}
+	\begin{longtable}[c]{|c|c|c|c|c|}
+		\caption{Antenna Log Format}
+		\label{Table:AntLog}\\
+		\hline
+		\textbf{S NO.} & \textbf{Data Variable}                                                   & \textbf{Data Type} & \textbf{Range}                                                                                                                                                                            & \textbf{Description}                                                                                    \\ \hline
+		\endfirsthead
+		%
+		\multicolumn{5}{c}%
+		{{\bfseries Table \thetable\ continued from previous page}} \\
+		\hline
+		\textbf{S NO.} & \textbf{Data Variable}                                                   & \textbf{Data Type} & \textbf{Range}                                                                                                                                                                            & \textbf{Description}                                                                                    \\ \hline
+		\endhead
+		%
+		1              & ProcessCount                                                             & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & \begin{tabular}[c]{@{}c@{}}10Hz process count at which \\ application Tcprocess is running\end{tabular} \\ \hline
+		2              & Selected\_EHMS                                                           & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & Selected CDT chain for Tcprocess                                                                        \\ \hline
+		3              & Line1\_EHMS                                                              & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & \begin{tabular}[c]{@{}c@{}}Elapsed Hours Milliseconds of \\ line1\_CDT\end{tabular}                     \\ \hline
+		4              & Line2\_EHMS                                                              & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & \begin{tabular}[c]{@{}c@{}}Elapsed Hours Milliseconds of\\  line2\_CDT\end{tabular}                     \\ \hline
+		5              & CDT\_SelectedLine                                                        & int                & \begin{tabular}[c]{@{}c@{}}1 : Chain1\\ 2 : Chain2\end{tabular}                                                                                                                           & CDT chain in use                                                                                        \\ \hline
+		6              & Ext\_int                                                                 & char               & \begin{tabular}[c]{@{}c@{}}'E' : External\\ 'I' : Internal\end{tabular}                                                                                                                   & Process count Internal/ External Status                                                                 \\ \hline
+		7              & Az\_Driveon\_Tcprocess                                                   & unit               & \begin{tabular}[c]{@{}c@{}}'0' : Off\\ '1' : On\end{tabular}                                                                                                                              & Azimuth Drive On/Off Status                                                                             \\ \hline
+		8              & El\_Driveon\_Tcprocess                                                   & unit               & \begin{tabular}[c]{@{}c@{}}'0' : Off\\ '1' : On\end{tabular}                                                                                                                              & Elevation Drive On/Off Status                                                                           \\ \hline
+		9              & Emstop\_Tcprocess                                                        & unit               & \begin{tabular}[c]{@{}c@{}}'0' : Off\\ '1' : On\end{tabular}                                                                                                                              & Emergency Stop On/Off status                                                                            \\ \hline
+		10             & Az\_Opmode\_Tcprocess                                                    & unit               & \begin{tabular}[c]{@{}c@{}}Azimuth Modes\\ '1' : Slew\\ '2': Program\\ '3' : CDM\\ '4' : StandBy\end{tabular}                                                                             & Azimuth Servo Operating modes                                                                           \\ \hline
+		11             & El\_Opmode\_Tcprocess                                                    & unit               & \begin{tabular}[c]{@{}c@{}}Elevation Modes\\ '1' : Slew\\ '2':Program\\ '3': CDM\\ '4' :StandBy\end{tabular}                                                                              & Elevation Servo Operating modes                                                                         \\ \hline
+		12             & CommandedAz\_El\_Tcprocess{[}0{]}                                        & float              & 30deg to 330deg                                                                                                                                                                           & Azimuth Commanded Angle                                                                                 \\ \hline
+		13             & CommandedAz\_El\_Tcprocess{[}1{]}                                        & float              & 5deg to 180deg                                                                                                                                                                            & Elevation Commanded Angle                                                                               \\ \hline
+		14             & Antenna Position\_Az\_El\_Tcprocess{[}0{]}                               & float              & 30deg to 330deg                                                                                                                                                                           & \begin{tabular}[c]{@{}c@{}}Antenna Azimuth Current \\ Positioned Angle\end{tabular}                     \\ \hline
+		15             & Antenna Position\_Az\_El\_Tcprocess{[}1{]}                               & float              & 5deg to 180deg                                                                                                                                                                            & \begin{tabular}[c]{@{}c@{}}Antenna Elevation Current \\ Positioned Angle\end{tabular}                   \\ \hline
+		16             & Error\_Az\_El\_Tcprocess{[}0{]}                                          & float              & -10v to +10v                                                                                                                                                                              & Azimuth Error                                                                                           \\ \hline
+		17             & Error\_Az\_El\_Tcprocess{[}1{]}                                          & float              & -10v to +10v                                                                                                                                                                              & Elevation Error                                                                                         \\ \hline
+		18             & Az\_ch1                                                                  & float              & 30deg to 330deg                                                                                                                                                                           & \begin{tabular}[c]{@{}c@{}}Azimuth Positioned Angle Acquired \\ from EDAU1\end{tabular}                 \\ \hline
+		19             & El\_ch1                                                                  & float              & 5deg to 180deg                                                                                                                                                                            & \begin{tabular}[c]{@{}c@{}}Elevation Positioned Angle Acquired \\ from EDAU1\end{tabular}               \\ \hline
+		20             & Az\_ch2                                                                  & float              & 30deg to 330deg                                                                                                                                                                           & \begin{tabular}[c]{@{}c@{}}Azimuth Positioned Angle Acquired \\ from EDAU2\end{tabular}                 \\ \hline
+		21             & El\_ch2                                                                  & float              & 5deg to 180deg                                                                                                                                                                            & \begin{tabular}[c]{@{}c@{}}Elevation Positioned Angle Acquired \\ from EDAU2\end{tabular}               \\ \hline
+		22             & \begin{tabular}[c]{@{}c@{}}EDAUCurrentChainSelected \\ flag\end{tabular} & bool               & \begin{tabular}[c]{@{}c@{}}'0' : EDAU1\\ '1' : EDAU2\end{tabular}                                                                                                                         & \begin{tabular}[c]{@{}c@{}}Selected EDAU chain for processing antenna \\ angle information\end{tabular} \\ \hline
+		23             & EDAUch1\_OverallHealth                                                   & bool               & \begin{tabular}[c]{@{}c@{}}'0' : Not ok\\ '1' : Ok\end{tabular}                                                                                                                           & EDAU chain1 health status                                                                               \\ \hline
+		24             & EDAUch2\_OverallHealth                                                   & bool               & \begin{tabular}[c]{@{}c@{}}'0' : Not ok\\ '1' : Ok\end{tabular}                                                                                                                           & EDAU chain2 health status                                                                               \\ \hline
+		25             & EDAUch1\_IntExtStatusProc                                                & bool               & \begin{tabular}[c]{@{}c@{}}'0' : Internal 'I'\\ '1' : External 'E'\end{tabular}                                                                                                           & EDAU chain1 Internal/External Status                                                                    \\ \hline
+		26             & EDAUch2\_IntExtStatusProc                                                & bool               & \begin{tabular}[c]{@{}c@{}}'0' : Internal 'I'\\ '1': External 'E'\end{tabular}                                                                                                            & EDAU chain2 Internal/External Status                                                                    \\ \hline
+		27             & CDM\_SelectedLine                                                        & int                & \begin{tabular}[c]{@{}c@{}}'1' : Line1\\ '2' : Line2\end{tabular}                                                                                                                         & Selected CDM line                                                                                       \\ \hline
+		28             & CDM\_SelectedSource                                                      & int                & \begin{tabular}[c]{@{}c@{}}'1' : Source1\\ '2' : Source2\end{tabular}                                                                                                                     & Selected CDM Source                                                                                     \\ \hline
+		29             & Az\_CDM1\_Src1                                                           & float              & 30deg to 330deg                                                                                                                                                                           & \begin{tabular}[c]{@{}c@{}}CDM line1 Source1 \\ Azimuth Information\end{tabular}                        \\ \hline
+		30             & El\_CDM1\_Src1                                                           & float              & 5deg to 180deg                                                                                                                                                                            & \begin{tabular}[c]{@{}c@{}}CDM Line1 Source1 \\ Elevation Information\end{tabular}                      \\ \hline
+		31             & Az\_CDM1\_Src2                                                           & float              & 30deg to 330deg                                                                                                                                                                           & \begin{tabular}[c]{@{}c@{}}CDM Line1 Source2 \\ Azimuth Information\end{tabular}                        \\ \hline
+		32             & El\_CDM1\_Src2                                                           & float              & 5deg to 180deg                                                                                                                                                                            & \begin{tabular}[c]{@{}c@{}}CDM Line1 Source2 \\ Elevation Information\end{tabular}                      \\ \hline
+		33             & Az\_CDM2\_Src1                                                           & float              & 30deg to 330deg                                                                                                                                                                           & \begin{tabular}[c]{@{}c@{}}CDM Line2 Source1\\ Azimuth Information\end{tabular}                         \\ \hline
+		34             & El\_CDM2\_Src1                                                           & float              & 5deg to 180deg                                                                                                                                                                            & \begin{tabular}[c]{@{}c@{}}CDM Line2 Sorurce1\\ Elevation Information\end{tabular}                      \\ \hline
+		35             & Az\_CDM2\_Src2                                                           & float              & 30deg to 330deg                                                                                                                                                                           & \begin{tabular}[c]{@{}c@{}}CDM Line2 Source2\\ Azimuth Information\end{tabular}                         \\ \hline
+		36             & El\_CDM2\_Src2                                                           & float              & 5deg to 180deg                                                                                                                                                                            & \begin{tabular}[c]{@{}c@{}}CDM Line2 Source2\\ Elevation Information\end{tabular}                       \\ \hline
+		37             & ID\_CDM1\_Src1                                                           & unit               & \multirow{4}{*}{\begin{tabular}[c]{@{}c@{}}Source Id\\ '0':DC; '1':NC; '2':R2; '3':R3;\\ '4':P4; '5':S; '6':INS; '7':P1;\\ '8':P2; '9':P3; '99':INV\end{tabular}} & CDM Line1 Source1 Id                                                                                    \\ \cline{1-3} \cline{5-5} 
+		38             & ID\_CDM1\_Src2                                                           & unit               &                                                                                                                                                                                           & CDM Line1 Source2 Id                                                                                    \\ \cline{1-3} \cline{5-5} 
+		39             & ID\_CDM2\_Src1                                                           & unit               &                                                                                                                                                                                           & CDM Line2 Source1 Id                                                                                    \\ \cline{1-3} \cline{5-5} 
+		40             & ID\_CDM2\_Src2                                                           & unit               &                                                                                                                                                                                           & CDM Line2 Source2 Id                                                                                    \\ \hline
+		41             & Comp Flag\_CDM1                                                          & unit               & \multirow{2}{*}{0,1,2,3) }                                                                                                                                                                  & Comparision flag for CDM1 Sources                                                                       \\ \cline{1-3} \cline{5-5} 
+		42             & Comp Flag\_CDM2                                                          & unit               &                                                                                                                                                                                           & Comparision flag for CDM2 Sources                                                                       \\ \hline
+		43             & CDM1\_RxCount                                                            & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & CDM Line1 Data Received Count                                                                           \\ \hline
+		44             & CDM2\_RxCount                                                            & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & CDM Line2 Data Received Count                                                                           \\ \hline
+		45             & Pres\_CDM1\_L1\_Src1\_Count                                              & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & \begin{tabular}[c]{@{}c@{}}Present Receiving Data Count in\\  CDM Line1 Source1\end{tabular}            \\ \hline
+		46             & Pres\_CDM1\_L1\_Src2\_Count                                              & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & \begin{tabular}[c]{@{}c@{}}Present Receiving Data Count in \\ CDM Line1 source2\end{tabular}            \\ \hline
+		47             & Pres\_CDM2\_L2\_Src1\_Count                                              & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & \begin{tabular}[c]{@{}c@{}}Present Receiving Data Count in \\ CDM Line2 Source1\end{tabular}            \\ \hline
+		48             & Pres\_CDM2\_L2\_Src2\_Count                                              & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & \begin{tabular}[c]{@{}c@{}}Present Receiving Data Count in \\ CDM Line2 source2\end{tabular}            \\ \hline
+		49             &          
+		line1\_MCC\_Cnt
+	                                             & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & Line-1 MCC transmitted count            \\ \hline
+		50             & line1\_MCC\_Cnt                                              & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & Line-2 MCC transmitted count             \\ \hline
+		
+		51             & AntennaSelectionflag                                                     & bool               & \begin{tabular}[c]{@{}c@{}}'0': Antenna Logging \\ Off\\ '1': Antenna Logging \\ On\end{tabular}                                                                                          & Antenna log selected status flag                                                                        \\ \hline
+		52            & AntennaLogCounter                                                        & quint64            & 0 to 2\textasciicircum 64-1                                                                                                                                                               & Antenna logging data counter                                                                            \\ \hline
+	\end{longtable}
+\footnote{Details of CDM format and sources for Sl. no. 37 to Sl. no. 42 are given in \ref{CDMRecpFor}}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+
+	\begin{longtable}[c]{|l|l|l|l|l|}
+		\caption{CDM Log Format}
+		\label{Table:CDMLog}\\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{S.No}} & \multicolumn{1}{c|}{\textbf{Data Variable}} & \multicolumn{1}{c|}{\textbf{Type}} & \multicolumn{1}{c|}{\textbf{Range}}                                                                                                                & \multicolumn{1}{c|}{\textbf{Description}}                                                              \\ \hline
+		\endfirsthead
+		%
+		\multicolumn{5}{c}%
+		{{\bfseries Table \thetable\ continued from previous page}} \\
+		\hline
+		\multicolumn{1}{|c|}{\textbf{S.No}} & \multicolumn{1}{c|}{\textbf{Data Variable}} & \multicolumn{1}{c|}{\textbf{Type}} & \multicolumn{1}{c|}{\textbf{Range}}                                                                                                                & \multicolumn{1}{c|}{\textbf{Description}}                                                              \\ \hline
+		\endhead
+		%
+		1                                   & ProcessCount                                & quint64                            & 0 to 2\textasciicircum 64-1                                                                                                                        & \begin{tabular}[c]{@{}l@{}}1oHz Process count at which\\ application Tcprocess is running\end{tabular} \\ \hline
+		2                                   & Line1\_EHMS                                 & qint64                             & - 2\textasciicircum 63 to 2\textasciicircum 63 -1                                                                                                  & EHMS of CDT chain1                                                                                     \\ \hline
+		3                                   & Line2\_EHMS                                 & qint64                             & - 2\textasciicircum 63 to 2\textasciicircum 63 -1                                                                                                  & EHMS of CDT chain2                                                                                     \\ \hline
+		4                                   & Selected\_EHMS                              & qint64                             & - 2\textasciicircum 63 to 2\textasciicircum 63 -1                                                                                                  & EHMS of selected CDT chain                                                                             \\ \hline
+		5                                   & ext\_int                                    & char                               & \begin{tabular}[c]{@{}l@{}}'E' - External Interrupt\\ 'I'  - Internal Interrupt\end{tabular}                                                       & \begin{tabular}[c]{@{}l@{}}100Hz Interrupt Internal/External\\ Status\end{tabular}                     \\ \hline
+		6                                   & range1                                      & int                                &                                                                                                                                                    & Tracking Range1                                                                                        \\ \hline
+		7                                   & azimuth1                                    & int                                & 30deg to 330deg                                                                                                                                    & \begin{tabular}[c]{@{}l@{}}CDM line1 Azimuth\\  AngleInformation\end{tabular}                          \\ \hline
+		8                                   & elevation1                                  & int                                & 5deg to 180deg                                                                                                                                     & \begin{tabular}[c]{@{}l@{}}CDM line1 Eelvation\\  AngleInformation\end{tabular}                        \\ \hline
+		9                                   & Radartime                                   & int                                &                                                                                                                                                    & Radar timing                                                                                           \\ \hline
+		10                                  & cdm\_source1                                & int                                & \begin{tabular}[c]{@{}l@{}}0 -    DC\\ 1 -    P1\\ 2 -    P2\\ 3 -    P3\\ 4 -    P4\\  5 -   INS\\ 6 -    R2\\ 7 -    R3\\ 99 -  INV\end{tabular} & CDMLine1 Data  source                                                                                  \\ \hline
+		11                                  & range2                                      & int                                &                                                                                                                                                    & Tracking Range2                                                                                        \\ \hline
+		12                                  & azimuth2                                    & int                                & 30deg to 330deg                                                                                                                                    &                                                                                                        \\ \hline
+		13                                  & elevation2                                  & int                                & 5deg to 180deg                                                                                                                                     &                                                                                                        \\ \hline
+		14                                  & Rangetime                                   & int                                &                                                                                                                                                    & Range Timing                                                                                           \\ \hline
+		15                                  & cdm\_source2                                & int                                & \begin{tabular}[c]{@{}l@{}}0 - DC\\ 1 - P1\\ 2 - P2\\ 3 - P3\\ 4 - P4 \\ 5 - INS\\ 6 - R2\\ 7 - R3\\ 99 - INV\end{tabular}                         & CDMLine2 Data Source                                                                                   \\ \hline
+		16                                  & sys\_id                                     & int                                &                                                                                                                                                    & SystemId                                                                                               \\ \hline
+		17                                  & Comp\_flag                                  & int                                & \begin{tabular}[c]{@{}l@{}}0 - No CDM Source\\ 1 - Only  Radar Source\\ 2 - only INS Source\\ 3 - Both\end{tabular}                                & \begin{tabular}[c]{@{}l@{}}Comparision flag\\ for INS data and Radar source data\end{tabular}          \\ \hline
+		18                                  & packetsize                                  & quint8                             & 48Bytes                                                                                                                                            & CDM packet size                                                                                        \\ \hline
+		19                                  & cdm1\_RxCount                               & quint64                            & 0 to  2\textasciicircum 64-1                                                                                                                       & CDM Line1 Reception Count                                                                              \\ \hline
+		20                                  & pres\_cdm\_L1\_Src1\_Count                  & quint64                            & 0 to 2\textasciicircum 64 -1                                                                                                                       & \begin{tabular}[c]{@{}l@{}}CDM Line1 Source1\\ Present running count\end{tabular}                      \\ \hline
+		21                                  & pres\_cdm\_L1\_Src2\_Count                  & quint64                            & 0 to 2\textasciicircum 64 -1                                                                                                                       & \begin{tabular}[c]{@{}l@{}}CDM Line1 Source2\\ Present running count\end{tabular}                      \\ \hline
+		22                                  & cdm1logCounter                              & quint64                            & 0 to 2\textasciicircum 64 -1                                                                                                                       & CDM1logging counter                                                                                    \\ \hline
+	\end{longtable}
+
+\begin{longtable}[c]{|l|l|l|l|l|}
+	\caption{EDAU Logging Format}
+	\label{Table:EDAULog}\\
+	\hline
+	S.No & Data variable                    & Data Type & Range                                                                    & Description                                                                                              \\ \hline
+	\endfirsthead
+	%
+	\multicolumn{5}{c}%
+	{{\bfseries Table \thetable\ continued from previous page}} \\
+	\hline
+	S.No & Data variable                    & Data Type & Range                                                                    & Description                                                                                              \\ \hline
+	\endhead
+	%
+	1    & Line1\_EHMS                      & qint64    & - 2\textasciicircum 63 to 2\textasciicircum 63 -1                        & EHMS of CDT line1                                                                                        \\ \hline
+	2    & Line2\_EHMS                      & qint64    & - 2\textasciicircum 63 to 2\textasciicircum 63 -1                        & EHMS of CDT line2                                                                                        \\ \hline
+	3    & Selected\_EHMS                   & qint64    & - 2\textasciicircum 63 to 2\textasciicircum 63 -1                        & EHMS of Selected CDT                                                                                     \\ \hline
+	4    & EDAUChain1\_id                   & int       &                                                                          & EDAU chain1 Id                                                                                           \\ \hline
+	5    & Az\_hnds\_ch1                    & float     & 0.0 to 3.0                                                               & \begin{tabular}[c]{@{}l@{}}EDAU Chain1\\ Hundreds of Azimuth Angle\end{tabular}                          \\ \hline
+	6    & Az\_tens\_ch1                    & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain1\\ tens of Azimuth Angle\end{tabular}                              \\ \hline
+	7    & Az\_ones\_ch1                    & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain1\\ ones of Azimuth Angle\end{tabular}                              \\ \hline
+	8    & Az\_1tenth\_ch1                  & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain1\\ one tenth of Azimuth Angle\end{tabular}                         \\ \hline
+	9    & Az\_1hundredth\_ch1              & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain1\\ one hundred of Azimuth Angle\end{tabular}                       \\ \hline
+	10   & El\_hnds\_ch1                    & float     & 0 to 1                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain1\\ Hundreds of Elevation Angle\end{tabular}                        \\ \hline
+	11   & El\_tens\_ch1                    & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain1\\ tens of Elevation Angle\end{tabular}                            \\ \hline
+	12   & El\_ones\_ch1                    & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain1\\ ones of Elevation Angle\end{tabular}                            \\ \hline
+	13   & El\_1tenth\_ch1                  & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain1\\ one tenth of Elevation Angle\end{tabular}                       \\ \hline
+	14   & El\_1hundredth\_ch1              & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain1\\ one hundred of Eelvation Angle\end{tabular}                     \\ \hline
+	15   & EDAU1\_ExtIntlog                 & char      & \begin{tabular}[c]{@{}l@{}}'E' - External\\ 'I'  - Internal\end{tabular} & \begin{tabular}[c]{@{}l@{}}EDAU chain1\\ Internal/External Status\end{tabular}                           \\ \hline
+	16   & EDAUchain1\_HealthByte           & int       &                                                                          & \begin{tabular}[c]{@{}l@{}}EDAUchain1\\ health Byte\end{tabular}                                         \\ \hline
+	17   & EDAUchain1\_EndByte              & int       &                                                                          & \begin{tabular}[c]{@{}l@{}}EDAUchain1\\ End Byte\end{tabular}                                            \\ \hline
+	18   & Az\_Ch1                          & float     & 0deg to 360deg                                                           & \begin{tabular}[c]{@{}l@{}}EDAU chain1\\ Azimutuh angle\end{tabular}                                     \\ \hline
+	19   & El\_Ch1                          & float     & 0deg to 180deg                                                           & \begin{tabular}[c]{@{}l@{}}EDAU chain1\\ Elevation angle\end{tabular}                                    \\ \hline
+	20   & EDAUchain2\_id                   & int       &                                                                          & EDAU chain2 Id                                                                                           \\ \hline
+	21   & Az\_hnds\_ch2                    & float     & 0.0 to 3.0                                                               & \begin{tabular}[c]{@{}l@{}}EDAU Chain2 \\ Hundreds of Azimuth Angle\end{tabular}                         \\ \hline
+	22   & Az\_tens\_ch2                    & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain2 \\ tens of Azimuth Angle\end{tabular}                             \\ \hline
+	23   & Az\_ones\_ch2                    & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain2 \\ ones of Azimuth Angle\end{tabular}                             \\ \hline
+	24   & Az\_1tenth\_ch2                  & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain2\\ one tenth of Azimuth Angle\end{tabular}                         \\ \hline
+	25   & Az\_1hundredth\_ch2              & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain2 \\ one hundred of Azimuth Angle\end{tabular}                      \\ \hline
+	26   & El\_hnds\_ch2                    & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain2\\ Hundreds of Elevation Angle\end{tabular}                        \\ \hline
+	27   & El\_tens\_ch2                    & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain2 \\ tens of Elevation Angle\end{tabular}                           \\ \hline
+	28   & El\_ones\_ch2                    & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain2 \\ ones of Elevation Angle\end{tabular}                           \\ \hline
+	29   & El\_1tenth\_ch2                  & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain2 \\ one tenth of Elevation Angle\end{tabular}                      \\ \hline
+	30   & El\_1hundredth\_ch2              & float     & 0 to 9                                                                   & \begin{tabular}[c]{@{}l@{}}EDAU Chain2 \\ one hundred of Eelvation Angle\end{tabular}                    \\ \hline
+	31   & EDAU2\_ExtIntlog                 & char      & \begin{tabular}[c]{@{}l@{}}'E' - External\\ 'I',- Internal\end{tabular}  & \begin{tabular}[c]{@{}l@{}}EDAU chain2\\ Internal/External Status\end{tabular}                           \\ \hline
+	32   & EDAUchain2\_HealthByte           & int       &                                                                          & \begin{tabular}[c]{@{}l@{}}EDAUchain2 \\ health Byte\end{tabular}                                        \\ \hline
+	33   & EDAUchain2\_EndByte              & int       &                                                                          & \begin{tabular}[c]{@{}l@{}}EDAUchain2 \\ End Byte\end{tabular}                                           \\ \hline
+	34   & Az\_Ch2                          & float     & 0deg to 360deg                                                           & \begin{tabular}[c]{@{}l@{}}EDAU chain2 \\ Azimutuh angle\end{tabular}                                    \\ \hline
+	35   & El\_Ch2                          & float     & 0deg to 360deg                                                           & \begin{tabular}[c]{@{}l@{}}EDAU chain2 \\ Elevation angle\end{tabular}                                   \\ \hline
+	36   & EDAUch1\_OverallHealth           & bool      & \begin{tabular}[c]{@{}l@{}}0 - Not healthy\\ 1 - Healthy\end{tabular}    & \begin{tabular}[c]{@{}l@{}}EDAU Chain1\\ Overall health\end{tabular}                                     \\ \hline
+	37   & EDAUch2\_OverallHealth           & bool      & \begin{tabular}[c]{@{}l@{}}0 - Not healthy\\ 1 - Healthy\end{tabular}    & \begin{tabular}[c]{@{}l@{}}EDAU Chain2\\ Overall health\end{tabular}                                     \\ \hline
+	38   & EDAUch1\_NotHealthCnt            & quint32   & -2\textasciicircum 15 to 2\textasciicircum 16 -1                         & \begin{tabular}[c]{@{}l@{}}EDAU chain1\\ Not helathy count\end{tabular}                                  \\ \hline
+	39   & EDAUch2\_NotHealthCnt            & quint32   & -2\textasciicircum 15 to 2\textasciicircum 16 -1                         & \begin{tabular}[c]{@{}l@{}}EDAU chain2\\ Not helathy count\end{tabular}                                  \\ \hline
+	40   & EDAUch1\_Dat\_Not\_processedCnt  & quint32   & -2\textasciicircum 15 to 2\textasciicircum 16 -1                         & \begin{tabular}[c]{@{}l@{}}EDAU chain1 data\\ Not Processed count\end{tabular}                           \\ \hline
+	41   & EDAUch2\_Dat\_Not\_processedCnt  & quint32   & -2\textasciicircum 15 to 2\textasciicircum 16 -1                         & \begin{tabular}[c]{@{}l@{}}EDAU chain2 data\\ Not Processed count\end{tabular}                           \\ \hline
+	42   & EDAUch1\_IntextStatus\_forProc   & bool      & \begin{tabular}[c]{@{}l@{}}0 - Internal\\ 1 - External\end{tabular}      & \begin{tabular}[c]{@{}l@{}}EDAU chain1 Internal/External\\ Status for Processing angle Info\end{tabular} \\ \hline
+	43   & EDAUch2\_IntextStatus\_forProc   & bool      & \begin{tabular}[c]{@{}l@{}}0 - Internal\\ 1 - External\end{tabular}      & \begin{tabular}[c]{@{}l@{}}EDAU chain1 Internal/External\\ Status for Processing angle Info\end{tabular} \\ \hline
+	44   & EDAU\_currentchain\_selectedflag & bool      & \begin{tabular}[c]{@{}l@{}}0- Chain1\\ 1 - Chain2\end{tabular}           & EDAU current chain selected                                                                              \\ \hline
+	45   & EDAUData\_forProc\_Az            & float     & 0deg to 360 deg                                                          & \begin{tabular}[c]{@{}l@{}}EDAU data for Processing\\ Azimuth Current position\end{tabular}              \\ \hline
+	46   & EDAUData\_forProc\_El            & float     & 0deg to 180 deg                                                          & \begin{tabular}[c]{@{}l@{}}EDAU data for Processing\\ Elevation Current position\end{tabular}            \\ \hline
+	47   &  EDAUCh1\_InitialisedFlag            & bool     & 0 or 1 deg                                                          & EDAU chain1 initialisation flag\\ \hline
+	48   &  EDAUCh2\_InitialisedFlag            & bool     & 0 or 1 deg                                                          & EDAU chain2 initialisation flag\\ \hline 
+	49   &   EDAUCh1\_JumpsFlag            & bool     & 0 or 1 deg                                                          & EDAU chain1 jumps flag\\ \hline
+	50   &   EDAUCh2\_JumpsFlag            & bool     & 0 or 1 deg                                                          & EDAU chain2 jumps flag\\ \hline
+	51   &   EDAUCh1\_WildSampleCnt            & quint64     & 0 or 2\textasciicircum 64 -1  deg                                                          & EDAU chain1 Wild Sample counter\\ \hline
+	52   &   EDAUCh2\_WildSampleCnt            & quint64     & 0 or 2\textasciicircum 64 -1  deg                                                          & EDAU chain2 Wild Sample counter\\ \hline
+\end{longtable}
+%\end{landscape}
+
+
+% ******************************************************
+% ******************************************************
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+
+% Please add the following required packages to your document preamble:
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+
+% Please add the following required packages to your document preamble:
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+%\begin{landscape}
+	\begin{longtable}[c]{|c|c|c|c|c|}
+		\caption{DCE RCU Log Format}
+		\label{Table:DCERCULog}\\
+		\hline
+		\textbf{S.No} & \textbf{Data Variable} & \textbf{Data Type} & \textbf{Range}                                                                                                    & \textbf{Description}     \\ \hline
+		\endfirsthead
+		%
+		\endhead
+		%
+		1             & ch1\_sign              & char               & - / +/H                                                                                                           & CDT1 sign information    \\ \hline
+		2             & ch1\_hrs               & quint8             & 0 to 2\textasciicircum 8 -1                                                                                       & CDT1 Hours Infromation   \\ \hline
+		3             & ch1\_min               & quint8             & 0 to 59                                                                                                           & CDT1 minutes Information \\ \hline
+		4             & ch1\_sec               & quint8             & o to 59                                                                                                           & CDT1 Seconds Information \\ \hline
+		5             & ch1\_hmsec             & quint8             & 0 to 9                                                                                                            & CDT1 hmsec information   \\ \hline
+		6             & ch2\_sign              & quint8             & -/+/H                                                                                                             & CDT2 sign information    \\ \hline
+		7             & ch2\_hrs               & quint8             & 0 to 2\textasciicircum 8 -1                                                                                       & CDT2 hours information   \\ \hline
+		8             & ch2\_min               & quint8             & 0 to 59                                                                                                           & CDT2 minutes information \\ \hline
+		9             & ch2\_sec               & quint8             & 0 to 59                                                                                                           & CDT2 seconds information \\ \hline
+		10            & ch2\_hmsec             & quint8             & 0 to 9                                                                                                            & CDT2 hmsec information   \\ \hline
+		11            & DCE\_RCU\_ComdWord     & quint8             & \begin{tabular}[c]{@{}c@{}}0 : Safe\\ 1 : Arm\\ 2 : Destruct\\ 3 ; command1\\ 5 : Not Ok\\ 10 : Test\end{tabular} & DCE/RCU CommandWord      \\ \hline
+		12            & DCE\_RCU\_Health       & bool               & \begin{tabular}[c]{@{}c@{}}0 - Not Healthy\\ 1 - Healthy\end{tabular}                                             & DCE/RCU health Status    \\ \hline
+		13            & DCE\_RCU\_LocalRemote  & bool               & \begin{tabular}[c]{@{}c@{}}0 - Remote\\ 1 - Local\end{tabular}                                                    & DCE Command Control      \\ \hline
+		14            & SynthesisedPowerHealth  & bool               & \begin{tabular}[c]{@{}c@{}}0 - NothHealthy\\ 1 - Healthy\end{tabular}                                                    & DCE synthesised power health     \\ \hline
+	\end{longtable}
+%\end{landscape}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+%\begin{landscape}
+	\begin{longtable}[c]{|c|c|c|c|c|}
+		\caption{Station Log Format}
+		\label{Table:StnLog}\\
+		\hline
+		\textbf{S.NO.} & \textbf{Data Variable}                                                      & \textbf{Data Type} & \textbf{Range}                                                                                                            & \textbf{Description}                                                                                    \\ \hline
+		\endfirsthead
+		%
+		\multicolumn{5}{c}%
+		{{\bfseries Table \thetable\ continued from previous page}} \\
+		\hline
+		\textbf{S.NO.} & \textbf{Data Variable}                                                      & \textbf{Data Type} & \textbf{Range}                                                                                                            & \textbf{Description}                                                                                    \\ \hline
+		\endhead
+		%
+		1              & StationId                                                                   & unit               & \begin{tabular}[c]{@{}c@{}}1: TC1\\ 2: TC2\\ 3: TC3\\ 4: TC4\\ 5: TC5\end{tabular}                                        & Telecommand Chain Id                                                                                    \\ \hline
+		2              & System\_In\_Use                                                             & unit               & \begin{tabular}[c]{@{}c@{}}0: INV\\ 1: TC1\\ 2: TC2\\ 3: TC3\\ 4: TC4\\ 5: TC5\end{tabular}                               & \begin{tabular}[c]{@{}c@{}}Radiating system \\ In Use/Bias \\ Selected chain status\end{tabular}        \\ \hline
+		3              & ProcessCount                                                                & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}10Hz Process count at which application \\ Tcprocess is running\end{tabular} \\ \hline
+		4              & Line1\_EHMS                                                                 & quint64            & -2\textasciicircum 63 to 2\textasciicircum 63-1                                                                           & EHMS of CDT chain1                                                                                      \\ \hline
+		5              & Line2\_EHMS                                                                 & quint64            & -2\textasciicircum 63 to 2\textasciicircum 63-1                                                                           & EHMS of CDT chain2                                                                                      \\ \hline
+		6              & Selected\_EHMS                                                              & quint64            & -2\textasciicircum 63 to 2\textasciicircum 63-1                                                                           & EHMS of selected CDT chain                                                                              \\ \hline
+		7              & ext\_int                                                                    & char               & \begin{tabular}[c]{@{}c@{}}E : External Interrupt\\ I : Internal Interrupt\end{tabular}                                   & 100Hz Interrupt status                                                                                  \\ \hline
+		8              & TcReadyNotReady\_TcProcess                                                  & bool               & \begin{tabular}[c]{@{}c@{}}1: Ready\\ 0 : Not Ready\end{tabular}                                                          & Telecommand Chain Readiness status                                                                      \\ \hline
+		9              & TcRadiate\_NotRadiate\_TcProcess                                            & bool               & \begin{tabular}[c]{@{}c@{}}1 : Radiate\\ 0 : Not Radiate\end{tabular}                                                     & Telecommand Chain Readiness Status                                                                      \\ \hline
+		10             & PowerStatus                                                                 & unit               & \begin{tabular}[c]{@{}c@{}}0 : INV\\ 1 : Off(NO RF)\\ 3 : LOW(\textless500W)\\ 6 : NORMAL(\textgreater=500W)\end{tabular} & Transmitter(Tx) Power Status                                                                            \\ \hline
+		11             & PowerLevel                                                                  & float              & 0 to 5V                                                                                                                   & \begin{tabular}[c]{@{}c@{}}Tx Power Calibrated to \\ DC Voltage(0 to 5V)\end{tabular}                   \\ \hline
+		12             & DCE\_RCU\_Health\_Tcprocess                                                 & bool               & \begin{tabular}[c]{@{}c@{}}0 : Not Healthy\\ 1 : Healthy\end{tabular}                                                     & DCE/RCU Health Status                                                                                   \\ \hline
+		13             & \begin{tabular}[c]{@{}c@{}}DCE\_RCU\_ComdControl\_\\ TcProcess\end{tabular} & bool               & \begin{tabular}[c]{@{}c@{}}0 : Remote\\ 1 : Local\end{tabular}                                                            & DCE/RCU Command Control Status                                                                          \\ \hline
+		14             & DCE\_RCU\_ComdWord\_Tcprocess                                               & unit               & \begin{tabular}[c]{@{}c@{}}0 : SAFE\\ 1 : ARM\\ 2 : DEST\\ 3 : COMD1\\ 10 : TEST\end{tabular}                             & DCE /RCU Command word Generated                                                                         \\ \hline
+		15             & Cdm1\_RxCount                                                               & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & CDM Line1 Reception Count                                                                               \\ \hline
+		16             & Cdm2\_RxCount                                                               & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & CDM Line2 Reception Count                                                                               \\ \hline
+		17             & pres\_Cdm\_L1\_Src1\_Count                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}Present CDM Line1 Source1 \\ running count\end{tabular}                      \\ \hline
+		18             & pres\_Cdm\_L1\_Src2\_Count                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}Present CDM Line1 Source2 \\ running count\end{tabular}                      \\ \hline
+		19             & pres\_Cdm\_L2\_Src1\_Count                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}Present CDM Line1 Source1 \\ running count\end{tabular}                      \\ \hline
+		20             & pres\_Cdm\_L2\_Src2\_Count                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}Present CDM Line2 Source2 \\ running count\end{tabular}                      \\ \hline
+		21             & line1\_MCC\_Cnt                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}} MCC Line-1 counter \end{tabular}                      \\ \hline
+		22             & line2\_MCC\_Cnt                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}} MCC Line-2 counter \end{tabular}                      \\ \hline
+		23             & CRI\_SHAR\_Health\_Processor\_TcProcess                                                  & quint8            & 0 to 2\textasciicircum 8-1                                                                                               & \begin{tabular}[c]{@{}c@{}} CRI SHAR Processor Health \end{tabular}                      \\ \hline
+		24             & CRI\_SHAR\_Health\_Eth1\_TcProcess                                                  & quint8            & 0 to 2\textasciicircum 8-1                                                                                               & \begin{tabular}[c]{@{}c@{}} CRI SHAR Ethernet1 Health \end{tabular}                      \\ \hline
+		25             & CRI\_SHAR\_Health\_Eth2\_TcProcess                                                  & quint8            & 0 to 2\textasciicircum 8-1                                                                                               & \begin{tabular}[c]{@{}c@{}} CRI SHAR Ethernet2 Health \end{tabular}                      \\ \hline
+		26             & CRI\_SHAR\_Health\_DI\_TcProcess                                                  & quint8            & 0 to 2\textasciicircum 8-1                                                                                               & \begin{tabular}[c]{@{}c@{}} CRI SHAR DI Health \end{tabular}                      \\ \hline
+		27             & CRI\_SHAR\_Health\_DO\_TcProcess                                                  & quint8            & 0 to 2\textasciicircum 8-1                                                                                               & \begin{tabular}[c]{@{}c@{}} CRI SHAR DO Health \end{tabular}                      \\ \hline
+		28             & CRI\_SHAR\_Health\_RUN\_TcProcess                                                  & quint8            & 0 to 2\textasciicircum 8-1                                                                                               & \begin{tabular}[c]{@{}c@{}} CRI SHAR Run Health \end{tabular}                      \\ \hline
+		29             & CRI\_PBLR\_Health\_Processor\_TcProcess                                                  & bool            & 0 or 1                                                                                               & \begin{tabular}[c]{@{}c@{}} CRI PBLR Processor Health \end{tabular}                      \\ \hline
+		30             & CRI\_PBLR\_Health\_Eth1\_TcProcess                                                  & bool            & 0 or 1                                                                                                & \begin{tabular}[c]{@{}c@{}} CRI SHAR Ethernet1 Health \end{tabular}                      \\ \hline
+		31             & CRI\_PBLR\_Health\_Eth2\_TcProcess                                                  & bool            & 0 or 1                                                                                               & \begin{tabular}[c]{@{}c@{}} CRI PBLR Ethernet2 Health \end{tabular}                      \\ \hline
+		32             & CRI\_PBLR\_Health\_DI\_TcProcess                                                  & bool            & 0 or 1                                                                                               & \begin{tabular}[c]{@{}c@{}} CRI SHAR DI Health \end{tabular}                      \\ \hline
+		33             & CRI\_PBLR\_Health\_DO\_TcProcess                                                  & bool            & 0 or 1                                                                                              & \begin{tabular}[c]{@{}c@{}} CRI SHAR DO Health \end{tabular}                      \\ \hline
+		34             & CRI\_PBLR\_Health\_RUN\_TcProcess                                                  & bool            & 0 or 1                                                                                              & \begin{tabular}[c]{@{}c@{}} CRI SHAR Run Health \end{tabular}                      \\ \hline
+		35             & RCU\_3Bit\_Status\_TcProcess                                                  & quint8          & 0 to 2\textasciicircum 8-1                                                                                       & \begin{tabular}[c]{@{}c@{}} RCU 3bit status \end{tabular}                      \\ \hline
+		36             & Stnlog\_Selection\_Flag                                     & bool          & 0 or 1                                                                        & \begin{tabular}[c]{@{}c@{}} Station log selection flag \end{tabular}                      \\ \hline
+		
+		37             & Dio\_OkStatus\_flag                                                  & bool            & 0 or 1                                                                                               & \begin{tabular}[c]{@{}c@{}}DIO OK Status \\  \end{tabular}                      \\ \hline
+		38             & AO\_WriteSuccessCount                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}Analog Output writing success counter \\  \end{tabular}                      \\ \hline
+		39             & AO\_WriteErrorCount                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}Analog Output writing error counter \\  \end{tabular}                      \\ \hline
+		40             & Sio1\_datanormalcount                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}SIO port1 data normal counter\\  \end{tabular}                      \\ \hline
+		41             & Sio1\_dataabsentcount                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}SIO port1 data absent counter\\  \end{tabular}                      \\ \hline
+		42             & Sio2\_datanormalcount                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}SIO port2 data normal counter\\  \end{tabular}                      \\ \hline
+		43             & Sio2\_dataabsentcount                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}SIO port2 data absent counter\\  \end{tabular}                      \\ \hline
+		44            & Sio3\_datanormalcount                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}SIO port3 data normal counter\\  \end{tabular}                      \\ \hline
+		45             & Sio3\_dataabsentcount                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}SIO port3 data absent counter\\  \end{tabular}                      \\ \hline
+		46             & Sio4\_datanormalcount                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                              & \begin{tabular}[c]{@{}c@{}}SIO port4 data normal counter\\  \end{tabular}                      \\ \hline
+		47             & Sio4\_dataabsentcount                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}SIO port4 data absent counter\\  \end{tabular}                      \\ \hline
+	48            & nopacketRxCount\_L1                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}Line-1 packets not reception counter\\  \end{tabular}                      \\ \hline
+		49             & nopacketRxCount\_L2                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & \begin{tabular}[c]{@{}c@{}}Line-2 packets not reception counter\\  \end{tabular}                      \\ \hline
+		50             & StnlogCounter                                                  & quint64            & 0 to 2\textasciicircum 64-1                                                                                               & log counter incremented by 1 at 100ms rate                      \\ \hline
+	\end{longtable}
+%\end{landscape}
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+%\begin{landscape}
+	\begin{longtable}[c]{|l|l|l|l|l|l|l|l|l|}
+		\caption{MCC Logging Format}
+		\label{Table:MCCLog}\\
+		\hline
+		\textbf{S.No}       & \multicolumn{1}{c|}{\textbf{MccTxByte}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Data \\ Variable\end{tabular}}}          & \multicolumn{1}{c|}{\textbf{Type}} & \multicolumn{4}{c|}{\textbf{Range}}                                                                                                                                                                                                                                                                                                      & \multicolumn{1}{c|}{\textbf{Description}}                                                                                                                                                                                                 \\ \hline
+		\endfirsthead
+		%
+		\multicolumn{9}{c}%
+		{{\bfseries Table \thetable\ continued from previous page}} \\
+		\hline
+		\textbf{S.No}       & \multicolumn{1}{c|}{\textbf{MccTxByte}} & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Data \\ Variable\end{tabular}}}          & \multicolumn{1}{c|}{\textbf{Type}} & \multicolumn{4}{c|}{\textbf{Range}}                                                                                                                                                                                                                                                                                                      & \multicolumn{1}{c|}{\textbf{Description}}                                                                                                                                                                                                 \\ \hline
+		\endhead
+		%
+		1                   & Mcc\_Tx\_Byte{[}0{]}                    & Stationid                                                                                       & quint8                             & \multicolumn{4}{l|}{\begin{tabular}[c]{@{}l@{}}0x41: TC1\\ 0x42: TC2\\ 0x40: TC3\\ 0x3F: TC4\\ 0x3E: TC5\end{tabular}}                                                                                                                                                                                                                   & \begin{tabular}[c]{@{}l@{}}Telecommand \\ Station  Id\end{tabular}                                                                                                                                                                        \\ \hline
+		\multirow{6}{*}{2}  & \multirow{6}{*}{Mcc\_Tx\_Byte{[}1{]}}   & \multirow{6}{*}{Chain Id}                                                                       & \multirow{6}{*}{quint8}            & \textbf{\begin{tabular}[c]{@{}l@{}}Chain\\ Name\end{tabular}}                         & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Chain Id\\ OnMcc\_Tx\\ \_Line1\end{tabular}}}             & \multicolumn{2}{l|}{\textbf{\begin{tabular}[c]{@{}l@{}}Chainid on \\ MCC\_\\ Tx\_Line2\end{tabular}}}                         & \multirow{6}{*}{\begin{tabular}[c]{@{}l@{}}Telecommand \\ Chain Id on Tx Lien1 \\ \& Tx Line2 for \\ Packet identification\end{tabular}}                                                                                                  \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & TC1                                                                                   & 0x11                                                                                                             & \multicolumn{2}{l|}{0x12}                                                                                                     &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & TC2                                                                                   & 0x21                                                                                                             & \multicolumn{2}{l|}{0x22}                                                                                                     &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & TC3                                                                                   & 0x31                                                                                                             & \multicolumn{2}{l|}{0x32}                                                                                                     &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & TC4                                                                                   & 0x41                                                                                                             & \multicolumn{2}{l|}{0x42}                                                                                                     &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & TC5                                                                                   & 0x51                                                                                                             & \multicolumn{2}{l|}{0x52}                                                                                                     &                                                                                                                                                                                                                                           \\ \hline
+		\multirow{7}{*}{3}  & \multirow{7}{*}{Mcc\_Tx\_Byte{[}2{]}}   & \multirow{7}{*}{tcchainsts}                                                                     & \multirow{7}{*}{quint8}            & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Bit\\ Position\end{tabular}}}  & \multicolumn{3}{c|}{\textbf{status}}                                                                                                                                                                                                             & \multirow{7}{*}{\begin{tabular}[c]{@{}l@{}}Telecommand Station\\ parametrs Status\\ ready/Not ready, Radiate/\\ Not radiate,Systeminuse,\\ CDM Selected Line,\\ EDAU Current Chain \\ Selected,CDT chain \\ selected status\end{tabular}} \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}Ready/Not ready\\ 0 - Not ready\\ 1- Ready\end{tabular}}                                                                                                                                          &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 1                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}Radite/Not radiate\\ 0 - Not Radiate\\ 1- Radiate\end{tabular}}                                                                                                                                   &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 2,3,4                                                                                 & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}System in use\\ 0x00 INV\\ 0x01 TC1\\ 0x02 TC2\\ 0x04 TC3\\ 0x05 TC4\\ 0x06  TC5\end{tabular}}                                                                                                    &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 5                                                                                     & \multicolumn{3}{l|}{CDM Selected Line}                                                                                                                                                                                                           &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 6                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}EDAU Current \\ Chain Selected\end{tabular}}                                                                                                                                                      &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 7                                                                                     & \multicolumn{3}{l|}{CDT chain Selected}                                                                                                                                                                                                          &                                                                                                                                                                                                                                           \\ \hline
+		\multirow{5}{*}{4}  & \multirow{5}{*}{Mcc\_Tx\_Byte{[}3{]}}   & \multirow{5}{*}{comdencsts}                                                                     & \multirow{5}{*}{quint8}            & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Bit\\ Position\end{tabular}}}  & \multicolumn{3}{c|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{5}{*}{\begin{tabular}[c]{@{}l@{}}Commadn Encoders \\ Status\\ DCE health,Command \\ Control,Command \\ Word status\end{tabular}}                                                                                                \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}DCE/RCU Health\\ 0 - Not Healthy\\ 1 - Healthy\end{tabular}}                                                                                                                                      &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 1                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}DCE/RCU Command \\ Control\\ 0 - Remote\\ 1 - Local\end{tabular}}                                                                                                                                 &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 2,3,4                                                                                 & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}Commadn Word:\\ 0x00  : Test\\ 0x01  :  Safe\\ 0x02  :  Arm\\ 0x03  :  Dest\\ 0x04  :  Comd1\end{tabular}}                                                                                        &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 5,6,7                                                                                 & \multicolumn{3}{l|}{xxx  Unused}                                                                                                                                                                                                                 &                                                                                                                                                                                                                                           \\ \hline
+		\multirow{3}{*}{5}  & \multirow{3}{*}{Mcc\_Tx\_Byte{[}4{]}}   & \multirow{3}{*}{txpwrsts}                                                                       & \multirow{3}{*}{quint8}            & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Bit\\ Position\end{tabular}}}  & \multicolumn{3}{c|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}Transimitter power \\ level status\end{tabular}}                                                                                                                                               \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0,1                                                                                   & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}0x00 : INV\\ 0x01 :  OFF\\ 0x02  :  LOW\\ 0x03  :  NOR\end{tabular}}                                                                                                                              &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 2,3,4,5,6,7                                                                           & \multicolumn{3}{l|}{xxxxxx Unused}                                                                                                                                                                                                               &                                                                                                                                                                                                                                           \\ \hline
+		\multirow{5}{*}{6}  & \multirow{5}{*}{Mcc\_Tx\_Byte{[}5{]}}   & \multirow{5}{*}{servosts}                                                                       & \multirow{5}{*}{quint8}            & \multicolumn{1}{c|}{\textbf{\begin{tabular}[c]{@{}c@{}}Bit \\ Position\end{tabular}}} & \multicolumn{3}{c|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{5}{*}{\begin{tabular}[c]{@{}l@{}}Servo system status\\ Az Drive On/off status,\\ El Drive On/off Status,\\ Azimuth drive Opmodes,\\ Elevation Drive Opmodes\end{tabular}}                                                       \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}Servo status\\ 0 - Not Ok   1- Ok\end{tabular}}                                                                                                                                                   &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 1,2,3                                                                                 & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}Azimuth Opmodes\\ 0x00 : StandBy\\ 0x01 : Manual\\ 0x02 : Slew\\ 0x03 : Program\\ 0x07 : CDM\end{tabular}}                                                                                        &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 4,5,6                                                                                & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}Elevation Opmodes\\ 0x00 : StandBy\\ 0x01 : Manual\\ 0x02 : Slew\\ 0x03 : Program\\ 0x07 : CDM\end{tabular}}                                                                                      &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 7                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}1 CDM Available,\\ 0 CDM Un-available\end{tabular}}                                                                                                                                                           &                                                                                                                                                                                                                                           \\ \hline
+		7                   & Mcc\_Tx\_Byte{[}6{]}                    & azcdmDecimalUnits                                                                                        & quint8                             & \multicolumn{4}{l|}{$A1$ }                                                                                                                                                                                                                                                                                                            & \begin{tabular}[c]{@{}l@{}}Azimuth Commanded \\ BCD angle decimal \\ and ones part for \\ Mcc Transmission\end{tabular}                                                                                                               \\ \hline
+		8                   & Mcc\_Tx\_Byte{[}7{]}                    & azcdmTensHundreds                                                                                        & quint8                             & \multicolumn{4}{l|}{$A2$}                                                                                                                                                                                                                                                                                                            & \begin{tabular}[c]{@{}l@{}}Azimuth Commanded mode\\ BCD angle  tens \\ and hundreds part for \\ Mcc Transmission\end{tabular}                                                                                                              \\ \hline
+		9                   & Mcc\_Tx\_Byte{[}8{]}                    & azposDecimalUnits                                                                                        & quint8                             & \multicolumn{4}{l|}{$A3$}                                                                                                                                                                                                                                                                                                             & \begin{tabular}[c]{@{}l@{}}Azimuth Current Position \\ BCD angle decimal \\ and units  part for\\ Mcc Transmission\end{tabular}                                                                                                       \\ \hline
+		10                  & Mcc\_Tx\_Byte{[}9{]}                    & azposTensbundreds                                                                                       & quint8                             & \multicolumn{4}{l|}{$A4$}                                                                                                                                                                                                                                                                                                            & \begin{tabular}[c]{@{}l@{}}Azimuth Current Position \\ BCD angle Tens \\ and hundreds part for \\ Mcc Transmission\end{tabular}                                                                                                      \\ \hline
+		11                  & Mcc\_Tx\_Byte{[}10{]}                   & azerrDecimalunits                                                                                        & quint8                             & \multicolumn{4}{l|}{$A5$}                                                                                                                                                                                                                                                                                                            & \begin{tabular}[c]{@{}l@{}}Azimuth Error angle \\ Decimal and \\ units for Mcc Transmission\end{tabular}                                                                                                                           \\ \hline
+		12                  & Mcc\_Tx\_Byte{[}11{]}                   & azerrTensHundreds                                                                                       & quint8                             & \multicolumn{4}{l|}{$A6$}                                                                                                                                                                                                                                                                                                       & \begin{tabular}[c]{@{}l@{}}Azimuth Error angle \\ Tens and \\ hundreds part for Mcc \\ Transmission\end{tabular}                                                                                                                  \\ \hline
+		13                  & Mcc\_Tx\_Byte{[}12{]}                   & elcdmDecimalUnits                                                                                       & quint8                             & \multicolumn{4}{l|}{$A7$}                                                                                                                                                                                                                                                                                                            & \begin{tabular}[c]{@{}l@{}}Elevation Commanded angle\\ BCD decimal and \\ units part for \\ Mcc Transmission\end{tabular}                                                                                                             \\ \hline
+		14                  & Mcc\_Tx\_Byte{[}13{]}                   & elcdmTensHundreds                                                                                        & quint8                             & \multicolumn{4}{l|}{$A8$}                                                                                                                                                                                                                                                                                                            & \begin{tabular}[c]{@{}l@{}}Elevation Commanded angle\\ BCD angle Tens and\\ hundreds part for\\ Mcc Transmission\end{tabular}                                                                                                              \\ \hline
+		15                  & Mcc\_Tx\_Byte{[}14{]}                   & elposDecimalUnits                                                                                        & quint8                             & \multicolumn{4}{l|}{$A9$}                                                                                                                                                                                                                                                                                                            & \begin{tabular}[c]{@{}l@{}}Elevation Current Position \\ BCD angle decimal and \\ units part for\\ Mcc Transmission\end{tabular}                                                                                                     \\ \hline
+		16                  & Mcc\_Tx\_Byte{[}15{]}                   & elposTensHundreds                                                                                        & quint8                             & \multicolumn{4}{l|}{$A10$}                                                                                                                                                                                                                                                                                                            & \begin{tabular}[c]{@{}l@{}}Elevation Current Position \\ BCD angle Tens and\\ hundreds part for\\ Mcc Transmission\end{tabular}                                                                                                      \\ \hline
+		\multirow{4}{*}{17} & \multirow{4}{*}{Mcc\_Tx\_Byte{[}16{]}}  & \multirow{4}{*}{encochaininfo}                                                                  & \multirow{4}{*}{quint8}            & \textbf{\begin{tabular}[c]{@{}l@{}}Bit\\ Position\end{tabular}}                       & \multicolumn{3}{l|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}Encoder Chains\\ Internal / External Status \\ for Processing\\ Antenna angles\\ information\end{tabular}}                                                                                     \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0,1,2,3,6,7                                                                               & \multicolumn{3}{l|}{xxxx Not used}                                                                                                                                                                                                               &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 4                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}EDAU chain1 Int/Ext\\ Status for Processing\\ 0 - internal \\ 1 - External\end{tabular}}                                                                                                          &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 5                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}EDAU chain2 Int/Ext \\ Status for Processing\\ 0 - internal \\ 1 - External\end{tabular}}                                                                                                         &                                                                                                                                                                                                                                           \\ \hline
+		\multirow{4}{*}{18} & \multirow{4}{*}{Mcc\_Tx\_Byte{[}17{]}}  & \multirow{4}{*}{cdtSecsUnitsTens}                                                                         & quint8                             & \textbf{\begin{tabular}[c]{@{}l@{}}Bit\\ Position\end{tabular}}                       & \multicolumn{3}{l|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}CDT Seconds information \\ (units \& Tens of seconds)\end{tabular}}                                                                                                                            \\ \cline{4-8}
+		&                                         &                                                                                                 & \multirow{3}{*}{}                  & 0,1,2,3                                                                               & \multicolumn{3}{l|}{units of seconds with 1,2,3,4 wgt}                                                                                                                                                                                                            &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 4,5,6                                                                                 & \multicolumn{3}{l|}{Tens of seconds with 10, 20, 40 wgt}                                                                                                                                                                                                             &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 7                                                                                     & \multicolumn{3}{l|}{Hold Bit: unused}                                                                                                                                                                                                                    &                                                                                                                                                                                                                                           \\ \hline
+		\multirow{4}{*}{19} & \multirow{4}{*}{Mcc\_Tx\_Byte{[}18{]}}  & \multirow{4}{*}{cdtMinTensUnits}                                                                         & \multirow{4}{*}{quint8}            & \textbf{\begin{tabular}[c]{@{}l@{}}Bit\\ Position\end{tabular}}                       & \multicolumn{3}{l|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}CDT Minutes information\\ (units \& Tens of minutes)\end{tabular}}                                                                                                                             \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0,1,2,3                                                                               & \multicolumn{3}{l|}{units of minutes with 1, 2, 4, 8 wgt}                                                                                                                                                                                                            &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 4,5,6                                                                                 & \multicolumn{3}{l|}{Tens of minutes with 10, 20, 30 wgt}                                                                                                                                                                                                             &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 7                                                                                     & \multicolumn{3}{l|}{Count up : UnUnsed}                                                                                                                                                                                                                    &                                                                                                                                                                                                                                           \\ \hline
+		\multirow{4}{*}{20} & \multirow{4}{*}{Mcc\_Tx\_Byte{[}19{]}}  & \multirow{4}{*}{cdtHrsUnitsTens}                                                                         & \multirow{4}{*}{quint8}            & \textbf{\begin{tabular}[c]{@{}l@{}}Bit\\ Position\end{tabular}}                       & \multicolumn{3}{l|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{4}{*}{\begin{tabular}[c]{@{}l@{}}CDT Hours information\\ (units \& tens of hours)\end{tabular}}                                                                                                                                 \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0,1,2,3                                                                               & \multicolumn{3}{l|}{units of hours with 1, 2, 4, 8 wgt}                                                                                                                                                                                                              &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 4,5,6,7                                                                                 & \multicolumn{3}{l|}{Tens of hours with 10,20,40,80 wgt}                                                                                                                                                                                                               &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & -                                                                                     & \multicolumn{3}{l|}{-}                                                                                                                                                                                                                    &                                                                                                                                                                                                                                           \\ \hline
+		\multirow{3}{*}{21} & \multirow{3}{*}{Mcc\_Tx\_Byte{[}20{]}}  & \multirow{3}{*}{cdt\_hmsec}                                                                     & \multirow{3}{*}{quint8}            & \textbf{\begin{tabular}[c]{@{}l@{}}Bit\\ Position\end{tabular}}                       & \multicolumn{3}{l|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{3}{*}{\begin{tabular}[c]{@{}l@{}}CDT Hmseconds \\ Information\\ (Hundreds of \\ hoursmilliseconds)\end{tabular}}                                                                                                                \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0,1,2,3                                                                               & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}Hundreds of milli \\ seconds\end{tabular}}                                                                                                                                                        &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 4,5,6,7                                                                               & \multicolumn{3}{l|}{xxxx Unused}                                                                                                                                                                                                                 &                                                                                                                                                                                                                                           \\ \hline
+		22                  & Mcc\_Tx\_Byte{[}21{]}                   & elerrDecimalUnits{[}21{]}                                                                                & quint8                             & \multicolumn{4}{l|}{$A11$}                                                                                                                                                                                                                                                                                                            & \begin{tabular}[c]{@{}l@{}}Elevation Error angle \\ BCD Decimal and \\ Units part for Mcc \\ Transmission\end{tabular}                                                                                                                 \\ \hline
+		23                  & Mcc\_Tx\_Byte{[}22{]}                   & elerrTensHundreds{[}22{]}                                                                                & quint8                             & \multicolumn{4}{l|}{$A12$}                                                                                                                                                                                                                                                                                                       & \begin{tabular}[c]{@{}l@{}}Elevation Error angle \\ BCD Tends and\\ Hundreds part for Mcc \\ Transmission\end{tabular}                                                                                                                  \\ \hline
+		\multirow{3}{*}{24} & \multirow{3}{*}{Mcc\_Tx\_Byte{[}23{]}}  & \multirow{3}{*}{block\_id\_lsb}                                                                 & \multirow{3}{*}{quint8}            & \textbf{\begin{tabular}[c]{@{}l@{}}Bit \\ Position\end{tabular}}                      & \multicolumn{3}{l|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{3}{*}{Block Id for Lsb Byte}                                                                                                                                                                                                    \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0,1,2,3                                                                               & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}Units Postion  of \\ Line1 Mcc Count\end{tabular}}                                                                                                                                                &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 4,5,6,7                                                                               & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}Tens Position of \\ Line 1Mcc Count\end{tabular}}                                                                                                                                                 &                                                                                                                                                                                                                                           \\ \hline
+		\multirow{3}{*}{25} & \multirow{3}{*}{Mcc\_Tx\_Byte{[}24{]}}  & \multirow{3}{*}{block\_id\_msb}                                                                 & \multirow{3}{*}{quint8}            & \textbf{\begin{tabular}[c]{@{}l@{}}Bit \\ Postion\end{tabular}}                       & \multicolumn{3}{l|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{3}{*}{Block Id for Msb Byte}                                                                                                                                                                                                    \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0,1,2,3                                                                               & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}Hundreds position \\ of Line1 Mcc Count\end{tabular}}                                                                                                                                             &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 4,5,6,7                                                                               & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}Thousands Position \\ of  Line1 Mcc Count\end{tabular}}                                                                                                                                           &                                                                                                                                                                                                                                           \\ \hline
+		\multicolumn{9}{|c|}{\textbf{/*********** Only For Port Blair chains TC 4 \& TC 5    *************/}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       \\ \hline
+		26                  & Mcc\_Tx\_Byte{[}25{]}                   & \begin{tabular}[c]{@{}l@{}}tx\_PLC\_Status\\ \_SHAR\end{tabular}                                & quint8                             & \textbf{\begin{tabular}[c]{@{}l@{}}Bit\\ Position\end{tabular}}                       & \multicolumn{3}{l|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{5}{*}{\begin{tabular}[c]{@{}l@{}}SHAR PLC Individual\\ Module health status;\\ Processor,Ethernet1,\\ Ethernet2,DI card \\ health status\end{tabular}}                                                                          \\ \cline{1-8}
+		&                                         &                                                                                                 &                                    & 0,1                                                                                   & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}SHAR PLC Processor\\  Health\\ 0x01 : Ok\\ 0x02 : Notok\\ 0x03 : Invalid\end{tabular}}                                                                                                            &                                                                                                                                                                                                                                           \\ \cline{1-8}
+		&                                         &                                                                                                 &                                    & 2,3                                                                                   & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}SHAR PLC Eth1 \\ Health\\ 0x01 : Ok\\ 0x02 : Notok\\ 0x03 : Invalid\end{tabular}}                                                                                                                 &                                                                                                                                                                                                                                           \\ \cline{1-8}
+		&                                         &                                                                                                 &                                    & 4,5                                                                                   & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}SHAR PLC Eth2 \\ Health\\ 0x01 : Ok\\ 0x02 : Notok\\ 0x03 : Invalid\end{tabular}}                                                                                                                 &                                                                                                                                                                                                                                           \\ \cline{1-8}
+		&                                         &                                                                                                 &                                    & 6,7                                                                                   & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}SHAR PLC DI \\ Status\\ 0x01 : Ok\\ 0x02 : Notok\\ 0x03 : Invalid\end{tabular}}                                                                                                                   &                                                                                                                                                                                                                                           \\ \hline
+		\multirow{8}{*}{27} & \multirow{8}{*}{Mcc\_Tx\_Byte{[}26{]}}  & \multirow{8}{*}{\begin{tabular}[c]{@{}l@{}}tx\_PLC\_Status\\ \_PBLR\end{tabular}}               & \multirow{8}{*}{quint8}            & \textbf{\begin{tabular}[c]{@{}l@{}}Bit\\ Position\end{tabular}}                       & \multicolumn{3}{l|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{8}{*}{\begin{tabular}[c]{@{}l@{}}PBLR PLC Individual\\ Module health status;\\ Processor,Ethernet1,\\ Ethernet2,DI card,\\ DO card,Processor \\ Running health \\ status\end{tabular}}                                          \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}PBLR PLC Processor \\ Health\\ 0  :  Not Ok\\ 1  : Ok\end{tabular}}                                                                                                                               &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 1                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}PBLR PLC Eth1  Health\\ 0 : Not Ok\\ 1 : Ok\end{tabular}}                                                                                                                                         &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 2                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}PBLR PLC Eth2 Health\\ 0 : Not Ok\\ 1 :  Ok\end{tabular}}                                                                                                                                         &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 3                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}PBLR PLC DI Health\\  0 : Not Ok\\ 1 : Ok\end{tabular}}                                                                                                                                           &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 4                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}PBLR PLC DO Health\\ 0 : Not Ok\\ 1 : Ok\end{tabular}}                                                                                                                                            &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 5                                                                                     & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}PBLR PLC Running \\ Status\\ 0 : ,Not Running \\ 1 : Running\end{tabular}}                                                                                                                        &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 6,7                                                                                   & \multicolumn{3}{l|}{xx un used}                                                                                                                                                                                                                  &                                                                                                                                                                                                                                           \\ \hline
+		\multirow{5}{*}{28} & \multirow{5}{*}{Mcc\_Tx\_Byte{[}27{]}}  & \multirow{5}{*}{\begin{tabular}[c]{@{}l@{}}tx\_PLC\_Status\\ \_SHAR\_RCU\\ \_3bit\end{tabular}} & \multirow{5}{*}{quint8}            & \textbf{\begin{tabular}[c]{@{}l@{}}Bit \\ Position\end{tabular}}                      & \multicolumn{3}{l|}{\textbf{Status}}                                                                                                                                                                                                             & \multirow{5}{*}{\begin{tabular}[c]{@{}l@{}}RCU 3bit \\ Acknowledgement \\ byte status to Mcc\end{tabular}}                                                                                                                                \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 0,1                                                                                   & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}SHAR PLC DO Status \\ 0x01 : Ok\\ 0x02 : Nok\\ 0x03 : Invalid\end{tabular}}                                                                                                                       &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 2,3                                                                                   & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}SHAR PLC Running \\ status\\ 0x01 :  Running\\ 0x02 : Not Running\\ 0x03 : Invalid\end{tabular}}                                                                                                  &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 4                                                                                     & \multicolumn{3}{l|}{x Unused}                                                                                                                                                                                                                    &                                                                                                                                                                                                                                           \\ \cline{5-8}
+		&                                         &                                                                                                 &                                    & 5,6,7                                                                                 & \multicolumn{3}{l|}{\begin{tabular}[c]{@{}l@{}}RCU 3bit \\ Acknowledgement \\ Byte \\ Status0x00 : Invalid\\ 0x01 :Safe\\ 0x02 :Arm\\ 0x03 :Destruct\\ 0x04 :Comd1\\ 0x05 : Rso\_Seq\\ 0x06 :Self Test fail\\ 0x07 :Self test pass\end{tabular}} &                                                                                                                                                                                                                                           \\ \hline
+		\multicolumn{9}{|c|}{\textbf{/************* MCC  Transmission Packet format Ends here**********/}}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          \\ \hline
+		29                  &                                         & \begin{tabular}[c]{@{}l@{}}MCC\_Txline\\ \_Count\end{tabular}                                   & quint64                            & \multicolumn{4}{c|}{0 to 2\textasciicircum 64 -1}                                                                                                                                                                                                                                                                                        & \begin{tabular}[c]{@{}l@{}}MCC Transmission \\ Count for logging\end{tabular}                                                                                                                                                             \\ \hline
+	\end{longtable}
+\end{landscape}
+\begin{enumerate}
+	\item [$A1:$] Azimuth Commanded decimal units of degrees- bo, b1, b2, b3 with weights 0.1, 0.2, 0.4, 0.8; Azimuth Commanded units of degrees-b4, b5, b6, b7 with weights 1, 2, 4, 8
+	\item [$A2:$] Azimuth Commanded Tens of degrees- bo, b1, b2, b3 with weights 10, 20, 40, 80; Azimuth Commanded Hundreds of degrees-b4, b5, b6, b7 with weights 100, 200, NA, NA
+	\item [$A3:$] Azimuth position decimal units of degrees- bo, b1, b2, b3 with weights 0.1, 0.2, 0.4, 0.8; Azimuth position units of degrees-b4, b5, b6, b7 with weights 1, 2, 4, 8 
+	\item [$A4:$] Azimuth position Tens of degrees- bo, b1, b2, b3 with weights 10, 20, 40, 80; Azimuth position Hundreds of degrees-b4, b5, b6, b7 with weights 100, 200, NA, NA
+	\item [$A5:$] Azimuth error decimal units of degrees- bo, b1, b2, b3 with weights 0.1, 0.2, 0.4, 0.8; Azimuth error units of degrees-b4, b5, b6, b7 with weights 1, 2, 4, 8 
+	\item [$A6:$] Azimuth error Tens of degrees- bo, b1, b2, b3 with weights 10, 20, 40, 80; Azimuth error Hundreds of degrees-b4, b5, b6, b7 with weights NA, NA, NA, NA
+	\item [$A7:$] Elevation Commanded decimal units of degrees- bo, b1, b2, b3 with weights 0.1, 0.2, 0.4, 0.8; Elevation Commanded units of degrees-b4, b5, b6, b7 with weights 1, 2, 4, 8 
+	\item [$A8:$] Elevation Commanded Tens of degrees- bo, b1, b2, b3 with weights 10, 20, 40, 80; Elevation Commanded Hundreds of degrees-b4, b5, b6, b7 with weights NA, NA, NA, NA 
+	\item [$A9:$] Elevation position decimal units of degrees- bo, b1, b2, b3 with weights 0.1, 0.2, 0.4, 0.8; Elevation position units of degrees-b4, b5, b6, b7 with weights 1, 2, 4, 8
+	\item [$A10:$] Elevation position Tens of degrees- bo, b1, b2, b3 with weights 10, 20, 40, 80; Elevation position Hundreds of degrees-b4, b5, b6, b7 with weights 100, 200, NA, NA
+	\item [$A11:$] Elevation error decimal units of degrees- bo, b1, b2, b3 with weights 0.1, 0.2, 0.4, 0.8; Elevation error units of degrees-b4, b5, b6, b7 with weights 1, 2, 4, 8 
+	\item [$A12:$] Elevation error Tens of degrees- bo, b1, b2, b3 with weights 10, 20, 40, 80; Elevation error Hundreds of degrees-b4, b5, b6, b7 with weights NA, NA, NA, NA 
+\end{enumerate}
+ 
+\subsection{CDM reception format}
+\label{CDMRecpFor}
+CDM data will be received from RSP servers (RSP1, RSP2) at 10HZ rate. Total of 48 bytes of data will be received on both lines. All the parameters are intezer type. The CDM reception format is given below
+\begin{enumerate}
+	\item [$\rhd$] \textbf{byte 0} Range1 in meters (value divided by 1000 gives actual value in KM)
+	\item [$\rhd$] \textbf{byte 1} Azimuth1 in deg upto two decimal places (value divided by 100 gives actual value in deg)
+	\item [$\rhd$] \textbf{byte 2} Elevation1 in deg upto two decimal places (value divided by 100 gives actual value in deg)
+	\item [$\rhd$] \textbf{byte 3} Time in cent seconds (value divided by 10 gives actual value in seconds)
+	\item [$\rhd$] \textbf{byte 4} Source-1 ID, any one of the sources as given below in this section
+	\item [$\rhd$] \textbf{byte 5} Range2 in meters (value divided by 1000 gives actual value in KM)
+	\item [$\rhd$] \textbf{byte 6} Azimuth2 in deg upto two decimal places (value divided by 100 gives actual value in deg)
+	\item [$\rhd$] \textbf{byte 7} Elevation2 in deg upto two decimal places (value divided by 100 gives actual value in deg)
+	\item [$\rhd$] \textbf{byte 8} Time in cent seconds (value divided by 10 gives actual value in seconds)
+	\item [$\rhd$] \textbf{byte 9} Source-2 ID, any one of the sources as given below in this section
+	\item [$\rhd$] \textbf{byte 10} System ID, either 0 or 1 based on line1 or line2 data
+	\item [$\rhd$] \textbf{byte 11} Comparison Flag, either 0 or 1 0r 2 or 3 which can be computed as given  in this section.
+\end{enumerate}
+	
+Comparison flag is computed as given in Eq. \ref{Eq11}
+\begin{equation}
+Comparison flags =  INS comparison * 2 +  Radar comparison \label{Eq11}
+\end{equation}
+
+The corresponding source IDs are given below
+\begin{enumerate}
+	\item [$\rhd$] \textbf{ID 0} DC
+	\item [$\rhd$] \textbf{ID 1} NC
+	\item [$\rhd$] \textbf{ID 2} R2
+	\item [$\rhd$] \textbf{ID 3} R3
+	\item [$\rhd$] \textbf{ID 4} P4
+	\item [$\rhd$] \textbf{ID 5} S
+	\item [$\rhd$] \textbf{ID 6} INS
+	\item [$\rhd$] \textbf{ID 7} P1
+	\item [$\rhd$] \textbf{ID 8} P2
+	\item [$\rhd$] \textbf{ID 9} P3
+	\item [$\rhd$] \textbf{ID 99} INV
+\end{enumerate}
+
+
+
+

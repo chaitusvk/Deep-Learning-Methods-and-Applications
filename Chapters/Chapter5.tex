@@ -1,0 +1,1159 @@
+\chapter{Detailed design}
+\label{Chapter5}
+\section{Module Detailed design}
+
+\subsection{Main }
+This function is created by the QT creator. It contains the QApplication object and the Mainwindow objects. This function shows the main GUI page. 
+\subsubsection{Attributes}
+Nil
+\subsubsection{Member Functions }
+Nil
+\subsubsection{Slots}
+Nil
+\subsubsection{Signals}
+Nil
+\subsubsection{Internal design details }
+Nil
+
+\subsection{MainWindow}
+\subsubsection{Attributes}
+\begin{enumerate}
+\item [$\rhd$] class NetworkTx;
+\item [$\rhd$] class irig;
+\item [$\rhd$] class IRIG$\_$THREAD;
+\item [$\rhd$] class LogData;
+\item [$\rhd$]QThread NetworkTxThread1;
+\item [$\rhd$]QThread NetworkTxThread2;
+\item [$\rhd$]QThread LogThread;
+\item [$\rhd$]NetworkTx* m$\_$NetTx;
+\item [$\rhd$] NetworkTxThread* m$\_$NetTx1;
+\item [$\rhd$] NetworkTxThread* m$\_$NetTx2;
+\item [$\rhd$] LogData* m$\_$DLog;
+\item [$\rhd$] 
+\item [$\rhd$] irig* m$\_$irig;
+\item [$\rhd$] IRIG$\_$THREAD* m$\_$irig1;
+\item [$\rhd$] IRIG$\_$THREAD* m$\_$irig2;
+\item [$\rhd$] IRIG$\_$THREAD* m$\_$irig3;
+\item [$\rhd$] IRIG$\_$THREAD* m$\_$irig4;
+\item [$\rhd$] IRIG$\_$THREAD* m$\_$irig4;
+\item [$\rhd$] QTimer *Timer10Hz;
+\item [$\rhd$] Ui::MainWindow *ui;
+\item [$\rhd$] QTimer *timer;
+\item [$\rhd$] int ret;
+\item [$\rhd$] int Hmsecs$\_$Count;
+\item [$\rhd$] int SecondsCount;
+\item [$\rhd$] quint8 LogDataFlag;
+\item [$\rhd$] quint8 LogOverallFlag;
+\item [$\rhd$] int irigStatus[8];
+
+\end{enumerate}
+
+\subsubsection{Member Functions }
+\begin{enumerate}
+	\item [$\blacklozenge$] void ExitOnError(void);
+	\item [$\blacklozenge$] void InitializeIrigCards(void);
+	\item [$\blacklozenge$] void DisScreen(void);
+	\item [$\blacklozenge$] int  OpenFiles(void);
+	
+\end{enumerate}
+
+\subsubsection{Slots}
+\begin{enumerate}
+	\item [$\blacklozenge$] void on$\_$APP$\_$EXIT$\_$clicked();
+	\item [$\blacklozenge$] void on$\_$LOGenable$\_$clicked();
+	\item [$\blacklozenge$] void on$\_$LOGoverall$\_$clicked();
+	\item [$\blacklozenge$] void on$\_$irig1DataRxd(int NoOfBytes);
+	\item [$\blacklozenge$] void on$\_$irig2DataRxd(int NoOfBytes);
+	\item [$\blacklozenge$] void on$\_$irig3DataRxd(int NoOfBytes);
+	\item [$\blacklozenge$] void on$\_$irig4DataRxd(int NoOfBytes);
+	\item [$\blacklozenge$] void on$\_$irig4DataRxd(int NoOfBytes);
+	\item [$\blacklozenge$] void TimerTicked();
+	
+	
+\end{enumerate}
+
+\subsubsection{Signals}
+\begin{enumerate}
+	\item [$\blacklozenge$] void ExitOnError(void);
+
+	
+\end{enumerate}
+
+\subsubsection{Internal design details }
+\begin{enumerate}
+	\item  \textbf{MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil.
+		\item \textit{Functional details:} The constructor is derived from the QObject class.
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} In this function all IRIG threads and network threads are initilised by reading config files and made to run 
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{MainWindow::$ \sim $MainWindow()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil
+		\item \textit{Functional details:} 
+		\item \textit{Outputs:} Nil
+		\item \textit{Implementation details:} This function is Desctructor for main window class.all threads are stopped and deleted 
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{void MainWindow::ExitOnError(void)}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil
+		\item \textit{Functional details:} This function is called to exit the program . this function exits all running thread ,delete thier instances  and also deleted all pointers to avoid memory leaks
+		\item \textit{Outputs:} NIl
+		\item \textit{Implementation details:} 
+		\item \textit{File operations:} Nil
+	\end{enumerate}
+	
+	\item  \textbf{int MainWindow::OpenFiles(void)}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil 
+		\item \textit{Functional details:} 
+		\item \textit{Outputs:} file opened status
+		\item \textit{Implementation details:}  This function opens the config files
+		\item \textit{File operations:} opens config file namely "irigcards.txt" "TxSocket".
+	\end{enumerate}
+	
+	\item  \textbf{void MainWindow::on$\_$irig1DataRxd(int NoOfBytes)}
+	\begin{enumerate}
+		\item \textit{Inputs :} No of Bytes of Time code data received from card
+		\item \textit{Functional details:} 
+		\item \textit{Outputs:} read status 
+		\item \textit{Implementation details:} This function takes the time data and logs UT-1 time
+		\item \textit{File operations:} Nil
+	\end{enumerate}
+	
+	\item  \textbf{void MainWindow::on$\_$irig2DataRxd(int NoOfBytes)}
+	\begin{enumerate}
+		\item \textit{Inputs :} No of Bytes of Time code data received from card
+		\item \textit{Functional details:} 
+		\item \textit{Outputs:} read status 
+		\item \textit{Implementation details:} This function takes the time data and logs UT-2 time
+		\item \textit{File operations:} Nil
+	\end{enumerate}
+	
+	\item  \textbf{void MainWindow::on$\_$irig3DataRxd(int NoOfBytes)}
+	\begin{enumerate}
+		\item \textit{Inputs :} No of Bytes of Time code data received from card
+		\item \textit{Functional details:} 
+		\item \textit{Outputs:} read status 
+		\item \textit{Implementation details:} This function takes the time data and logs CDT-1 time
+		\item \textit{File operations:} Nil
+	\end{enumerate}
+	
+	\item  \textbf{void MainWindow::on$\_$irig4DataRxd(int NoOfBytes)}
+	\begin{enumerate}
+		\item \textit{Inputs :} No of Bytes of Time code data received from card
+		\item \textit{Functional details:} 
+		\item \textit{Outputs:} read status 
+		\item \textit{Implementation details:} This function takes the time data and logs CDT-2 time
+		\item \textit{File operations:} Nil
+	\end{enumerate}
+	
+	
+	\item  \textbf{void MainWindow::on$\_$LOGenable$\_$clicked()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil
+		\item \textit{Functional details:} 
+		\item \textit{Outputs:} Nil
+		\item \textit{Implementation details:} This slot function called when LOG button pressed in gui.this function enables the log.
+		\item \textit{File operations:} Nil
+	\end{enumerate}
+	
+	
+
+	
+\end{enumerate}
+
+
+\subsection{irig}
+\subsubsection{Attributes}
+\begin{enumerate}
+\item [$\rhd$]struct IRIG$\_$NODE;
+\item [$\rhd$]QList$<$IRIG$\_$NODE*$>$ irig$\_$list;
+\item [$\rhd$] uint NoOfIrigCards;
+\item [$\rhd$] uint InterruptRate;
+\item [$\rhd$] int irigb$\_$size;
+
+\end{enumerate}
+
+\subsubsection{Member Functions }
+\begin{enumerate}
+	\item [$\blacklozenge$] irig::irig(QObject *parent)
+	\item [$\blacklozenge$] irig::irig()
+	\item [$\blacklozenge$] int irig::Read$\_$IRIG$\_$File(QString file$\_$name)
+\end{enumerate}
+
+\subsubsection{Slots}
+Nil
+\subsubsection{Signals}
+Nil
+\subsubsection{Internal design details }
+\begin{enumerate}
+	\item  \textbf{irig::irig(QObject *parent)}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil.
+		\item \textit{Functional details:} The constructor is derived from the QObject class.
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} It is a constructor for irig class.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{irig::irig()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil
+		\item \textit{Functional details:} 
+		\item \textit{Outputs:} Nil
+		\item \textit{Implementation details:} This function is Desctructor for irig class.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{int irig::Read$\_$IRIG$\_$File(QString file$\_$name)}
+	\begin{enumerate}
+		\item \textit{Inputs :} File name of irig configuraion file //"irigcards.txt"
+		\item \textit{Functional details:} 
+		\item \textit{Outputs:} file read status 
+		\item \textit{Implementation details:} This function reads the irigcards configuration file and initialises the irig node class.
+		\item \textit{File operations:} opens "irigcards.txt" file and closes it after reading.
+	\end{enumerate}
+	
+
+	
+\end{enumerate}
+
+
+
+\subsection{IRIG$\_$THREAD}
+\subsubsection{Attributes}
+\begin{enumerate}
+	\item [$\rhd$] int fp;
+	\item [$\rhd$] int fd[6]; 
+	\item [$\rhd$] int NoOfCards;
+	\item [$\rhd$] quint8 UT1[10],UT2[10], CDT1[10],CDT2[10],CDT3[10];
+	\item [$\rhd$] int gDevNo;;
+	\item [$\rhd$] int sfd[6];
+	\item [$\rhd$] sigset$\_$t mask;
+	\item [$\rhd$] int modevalue[8];
+\end{enumerate}
+
+
+\subsubsection{Member Functions }
+\begin{enumerate}
+	\item [$\blacklozenge$] int ConfigureIrigCard(int CardNo, QList$<$IRIG$\_$NODE*$>$ irig$\_$list, uint NoOfIrigCards,uint InterruptRate);	
+	\item [$\blacklozenge$] void SelectDevice(int CardNo);
+	\item [$\blacklozenge$] void run();
+	\item [$\blacklozenge$] void read1();
+
+	
+\end{enumerate}
+\subsubsection{Slots}
+Nil
+
+
+\subsubsection{Signals}
+\begin{enumerate}
+
+	\item [$\blacklozenge$] void Irig$\_$Rxd$\_$Flag(int NoOfBytes);
+
+\end{enumerate}
+\subsubsection{Internal design details }
+\begin{enumerate}
+	\item  \textbf{IRIG$\_$THREAD::IRIG$\_$THREAD()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil.
+		\item \textit{Functional details:} The constructor is derived from the QObject class.it initialises various variables in the class 
+		\item \textit{Outputs:} Connects signals to slots.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+
+\item  \textbf{IRIG$\_$THREAD::$\sim$ IRIG$\_$THREAD()}
+\begin{enumerate}
+	\item \textit{Inputs :} Nil
+	\item \textit{Functional details:} This function is Destructor for the class
+	\item \textit{Outputs:} Nil.
+	\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+	\item \textit{File operations:} Nil.
+\end{enumerate}
+\item  \textbf{int IRIG$\_$THREAD::ConfigureIrigCard(int CardNo,QList$<$IRIG$\_$NODE*$>$ irig$\_$list, uint NoOfIrigCards, uint InterruptRate)}
+\begin{enumerate}
+	\item \textit{Inputs :} Cardno, irigcard list,numofcards interruptrate
+	\item \textit{Functional details:} This function opens the device and configures the device with parameters read from config file ie,"irigcard.txt"
+	\item \textit{Outputs:} Nil.
+	\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+	\item \textit{File operations:} Opens the irig device  and writes the config parameters.
+\end{enumerate}
+
+\item  \textbf{IRIG$\_$THREAD::run()}
+\begin{enumerate}
+	\item \textit{Inputs :} Nil
+	\item \textit{Functional details:} This function is reads the time data from device
+	\item \textit{Outputs:} Nil.
+	\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+	\item \textit{File operations:} Opens the irig device and reads the time data to UT1,UT2,CD1,CD2 arrays.
+\end{enumerate}
+
+
+
+
+%\end{enumerate}
+
+
+\subsection{LogData}
+\subsubsection{Attributes}
+\begin{enumerate}
+\item [$\blacklozenge$] QString TimFileName1,TimFileName2,TimFileName3;
+\item [$\blacklozenge$] QString TimFileName4,TimFileName5;
+	\item [$\blacklozenge$] int TimeSamplesCount1,TimeSamplesCount2,TimeSamplesCount3
+   \item [$\blacklozenge$] int 	TimeSamplesCount4,TimeSamplesCount5;
+	\item [$\blacklozenge$] quint8 AppExitFlag;
+	\item [$\blacklozenge$] QFile  TimFile1;
+	\item [$\blacklozenge$] qint64 TimFileSize1;
+	\item [$\blacklozenge$] QFile  TimFile2;
+	\item [$\blacklozenge$] qint64 TimFileSize2;
+	\item [$\blacklozenge$] QFile  TimFile3;
+	\item [$\blacklozenge$] qint64 TimFileSize3;
+	\item [$\blacklozenge$] QFile  TimFile4;
+	\item [$\blacklozenge$] qint64 TimFileSize4;
+	\item [$\blacklozenge$] QFile  TimFile5;
+	\item [$\blacklozenge$] qint64 TimFileSize5;
+\end{enumerate}
+\subsubsection{Member Functions }
+\begin{enumerate}
+	\item [$\blacklozenge$] void GetFileName(QString Suffix);
+	\item [$\blacklozenge$] void LogCode1Data(quint8 Data[]);
+	\item [$\blacklozenge$] void LogCode2Data(quint8 Data[]);
+	\item [$\blacklozenge$] void LogCode3Data(quint8 Data[]);
+	\item [$\blacklozenge$] void LogCode4Data(quint8 Data[]);
+	\item [$\blacklozenge$] void LogCode5Data(quint8 Data[]);
+	\item [$\blacklozenge$] QString GetDataString(quint8 Data[], int UT$\_$CDT);
+	
+	
+\end{enumerate}
+
+
+\subsubsection{Slots}
+\begin{enumerate}
+	\item [$\blacklozenge$] int CopyTime1File();
+	\item [$\blacklozenge$] int CopyTime2File();
+	\item [$\blacklozenge$] int CopyTime3File();
+	\item [$\blacklozenge$] int CopyTime4File();
+	\item [$\blacklozenge$] int CopyTime5File();
+	
+\end{enumerate}
+
+\subsubsection{Signals}
+\begin{enumerate}
+	\item [$\blacklozenge$] int TimCopyFlag1();
+	\item [$\blacklozenge$] int TimCopyFlag2();
+	\item [$\blacklozenge$] int TimCopyFlag3();
+	\item [$\blacklozenge$] int TimCopyFlag4();
+	
+\end{enumerate}
+
+\subsubsection{Internal design details }
+\begin{enumerate}
+	\item  \textbf{void GetFileName(QString Suffix)}
+	\begin{enumerate}
+		\item \textit{Inputs :} Suffix - current time in string format.
+		\item \textit{Functional details:} This function reads current data time ,initilises the file name variables 
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{QString LogData::GetDataString(quint8 Data[], int UT$\_$CDT)}
+	\begin{enumerate}
+		\item \textit{Inputs :} Time data in structured format.
+		\item \textit{Functional details:} This function formats the time in struct to string  
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+
+	
+	\item  \textbf{void LogData::LogCode1Data(quint8 Data[])}
+	\begin{enumerate}
+		\item \textit{Inputs :} Time data .
+		\item \textit{Functional details:} This function insert the UT-1time data in array which will be written to disk.
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{void LogData::LogCode2Data(quint8 Data[])}
+	\begin{enumerate}
+		\item \textit{Inputs :} Time data .
+		\item \textit{Functional details:} This function insert the UT-2 time data in array which will be written to disk.
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{void LogData::LogCode3Data(quint8 Data[])}
+	\begin{enumerate}
+		\item \textit{Inputs :} Time data .
+		\item \textit{Functional details:} This function insert the CDT-1 time data in array which will be written to disk.
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{void LogData::LogCode4Data(quint8 Data[])}
+	\begin{enumerate}
+		\item \textit{Inputs :} Time data .
+		\item \textit{Functional details:} This function insert the CDT-2 time data in array which will be written to disk.
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{void LogData::LogCode5Data(quint8 Data[])}
+	\begin{enumerate}
+		\item \textit{Inputs :} Time data .
+		\item \textit{Functional details:} This function insert the time data in array which will be written to disk.
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	
+	\item  \textbf{int LogData::CopyTime1File()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil .
+		\item \textit{Functional details:} This Slot function which will be called on emission of signal TimCopyFlag1,it will write the array of time samples to disk.
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{int LogData::CopyTime2File()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil .
+		\item \textit{Functional details:} This Slot function which will be called on emission of signal TimCopyFlag1.it will write the array of time samples to disk.
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{int LogData::CopyTime3File()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil .
+		\item \textit{Functional details:} This Slot function which will be called on emission of signal TimCopyFlag1,it will write the array of time samples to disk.
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	\item  \textbf{int LogData::CopyTime4File()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil .
+		\item \textit{Functional details:} This Slot function which will be called on emission of signal TimCopyFlag1.it will write the array of time samples to disk.
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Qt Creator 5.4, C++ language.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+\end{enumerate}
+
+
+\subsection{NetworkTx}
+
+
+\subsubsection{Attributes}
+\begin{enumerate}
+	\item [$\rhd$] QByteArray datagram;;
+	\item [$\rhd$] int socketEnable;
+	\item [$\rhd$] int Socket;
+	
+	\item [$\rhd$] QHostAddress ForeignHost;
+	
+	
+	\item [$\rhd$] int ForeignPort;
+	
+	\item [$\rhd$] unsigned long int MCCserTxCount;
+	\item [$\rhd$] unsigned long int MCCserErrCount;
+	\item [$\rhd$] quint8 SerTxFlag;
+	\item [$\rhd$] int NoOf$\_$TxSockets;
+	
+	
+\end{enumerate}
+\subsubsection{Member Functions }
+\begin{enumerate}
+	\item [$\blacklozenge$] int NetworkTxInit(int socketNo, QList$<$TXSOCKETNODE*$>$ net$\_$TxList, int NoOfTxSockets);
+\end{enumerate}
+
+\subsubsection{Slots}
+\begin{enumerate}
+	\item [$\blacklozenge$] void sendDatagram(QByteArray datagram);
+\end{enumerate}
+\subsubsection{Signals}
+\begin{enumerate}
+	\item [$\blacklozenge$] void netTxdFlag(QByteArray sup$\_$sys$\_$data);
+\end{enumerate}
+
+\subsubsection{Internal design details }
+\begin{enumerate}
+	\item  \textbf{ int NetworkTxInit(int socketNo, QList<TXSOCKETNODE*> net$\_$TxList, int NoOfTxSockets)}
+	\begin{enumerate}
+		\item \textit{Inputs :} Socket no, list of socket interfaces ,No of sockets
+		\item \textit{Functional details:} This function intilises the network interface accoding to the config file "TxSocket.txt"
+		\item \textit{Outputs:} Nil.
+		\item \textit{Implementation details:} Nil.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+
+\item  \textbf{void sendDatagram(QByteArray datagram)}
+\begin{enumerate}
+	\item \textit{Inputs :} Time packet data in QByte array format.
+	\item \textit{Functional details:} Sends the Ethernet packet 
+	\item \textit{Outputs:} Nil.
+	\item \textit{Implementation details:} Nil.
+	\item \textit{File operations:} Nil.
+\end{enumerate}
+\end{enumerate}
+
+
+\subsection{Network Reception: NetworkRx} 
+
+This class is derived from the QObject class. It is instantiated in the MainWindow class.
+\subsubsection{Attributes}
+\begin{enumerate}
+	\item [$\rhd$] int NoOfRxSockets
+	\item [$\rhd$] QList$<$RXSOCKETNODE*$>$ net$\_$RxList
+	\item [$\rhd$] int messageNo
+\end{enumerate}
+
+\subsubsection{Member Functions }
+\begin{enumerate}
+	\item [$\blacklozenge$] int ReadNetworkRxFile(QString file$\_$name)
+\end{enumerate}
+
+
+\subsubsection{Slots}
+Nil
+
+\subsubsection{Signals}
+Nil
+
+
+\subsubsection{Internal design details }
+\begin{enumerate}
+	\item  \textbf{NetworkRx::NetworkRx()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil.
+		\item \textit{Functional details:} The constructor is derived from the QThread class.
+		\item \textit{Outputs:} Network Thread class generated.
+		\item \textit{Implementation details:} Nil.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	\item  \textbf{NetworkRx :: ReadNetworkRxFile(char* file$\_$name)}
+	\begin{enumerate}
+		\item \textit{Inputs :} Configuration file name.
+		\item \textit{Functional details:} The configuration file containing the number of sockets and the network configuration parameters for each socket is opened and read. A linked list containing the configuration details of each socket is created.
+		\item \textit{Outputs:} Socket configuration details read and stored. 
+		\item \textit{Implementation details:} QT Linux 5.4 calls are used to implement this function.
+		\item \textit{File operations:} UdpRxSocket.inp
+	\end{enumerate}   
+\end{enumerate}
+
+\subsection{Network Transmission: NetworkTx}
+
+\subsubsection{Attributes}
+\begin{enumerate}
+	\item [$\rhd$] int NoOfTxSockets
+	\item [$\rhd$] QList$<$TXSOCKETNODE*$>$ net$\_$TxList
+\end{enumerate}
+
+\subsubsection{Member Functions }
+\begin{enumerate}
+	\item [$\blacklozenge$] int ReadNetworkTxFile(QString file$\_$name)
+	\end{enumerate}
+
+
+\subsubsection{Slots}
+Nil
+
+\subsubsection{Signals}
+Nil
+
+\subsubsection{Internal design details }
+\begin{enumerate}
+	\item  \textbf{NetworkRx :: ReadNetworkTxFile(QString file$\_$name)}
+	\begin{enumerate}
+		\item \textit{Inputs:} Configuration file name
+		\item \textit{Functional details:} The configuration file containing the number of sockets and the network configuration parameters for each socket is opened and read. A linked list containing the configuration details of each socket is created.
+		\item \textit{Outputs:} Socket configuration details read and stored. 
+		\item \textit{Implementation details:} QT Linux 5.4 calls are used to implement this function.
+		\item \textit{File operations:} UdpTxSocket.inp
+	\end{enumerate}  
+\end{enumerate}
+
+
+\section{Threads detailed design}
+
+\subsection{Network Reception Thread: NetworkRxThread} \label{NtWkRxThd}
+\begin{enumerate}
+	\item [$\rhd$] This is a worker thread and does not need any user interface.
+	\item [$\rhd$] This thread starts running immediately after it is created and stops when the application is quit.
+	\item [$\rhd$] It acquires UDP/IP packets in UNICAST mode i.e., receives CDM data.
+	\item [$\rhd$] Data to be received from two sockets.
+	\item [$\rhd$] The synchronization to the main thread is through signals.
+\end{enumerate}
+This class is derived from the QThread class. It is instantiated and started in the MainWindow class.
+\subsubsection{Attributes}
+\begin{enumerate}
+	\item [$\rhd$] QUdpSocket *udpRxSocket
+	\item [$\rhd$] int messageNo
+	\item [$\rhd$] QByteArray RxSocketData
+	\item [$\rhd$] bool NetworkRxInit(int,QList$<$RXSOCKETNODE*$>$)
+	\item [$\rhd$] quint8 rxsocketno
+	\item [$\rhd$] bool NetRx$\_$OK$\_$flag
+	\item [$\rhd$] quint64 nopacketreceptioncount$\_$L1;
+	\item [$\rhd$] quint64 nopacketreceptioncount$\_$L2;
+	\item [$\rhd$] uint Line1packetSize;
+	\item [$\rhd$] uint Line2packetSize;
+\end{enumerate}
+
+\subsubsection{Member Functions }
+\begin{enumerate}
+	\item [$\blacklozenge$] bool NetworkRxInit(int,QList $<$RXSOCKETNODE*$>$)
+\end{enumerate}
+
+
+\subsubsection{Slots}
+\begin{enumerate}
+	\item [$\blacklozenge$] void readPendingDatagrams()
+	\item [$\blacklozenge$] void closesocket()
+\end{enumerate}
+
+\subsubsection{Signals}
+\begin{enumerate}
+	\item [$\blacklozenge$] void Line1CDMDataRxd(int,QByteArray)
+	\item [$\blacklozenge$] void Line2CDMDataRxd(int,QByteArray)
+\end{enumerate}
+
+
+\subsubsection{Internal design details }
+\begin{enumerate}
+	\item  \textbf{NetworkRxThread::NetworkRxThread()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil.
+		\item \textit{Functional details:} The constructor is derived from the QThread class.
+		\item \textit{Outputs:} Network Thread class generated.
+		\item \textit{Implementation details:} Nil.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{NetworkRxThread :: NetworkRxInit()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil.
+		\item \textit{Functional details:} The required number of UDP sockets are created and configured as per the details read and stored. A slot is identified to service the readyread signal generated on reception of data.
+		\item \textit{Outputs:} Sockets are configured. 
+		\item \textit{Implementation details:} QT Linux 5.4 calls are used to implement this function.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	\item \textbf{NetworkRxThread :: readPendingDatagrams()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Readyread signal.
+		\item \textit{Functional details:} On the occurrence of readyread signal, the socket which raised the signal is identified and the corresponding data is copied to a QByteArray variable. A signal is then raised to the Mainwindow indicating the reception of new CDM data frame along with the socket number (1 or 2).
+		\item \textit{Outputs:} CDM data is received.
+		\item \textit{Implementation details:} QT Linux 5.4 calls are used to implement this function.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}   
+\end{enumerate}
+
+
+
+
+
+\subsection{Network Transmission Threads: NetworkTx }
+
+\subsubsection{Attributes}
+\begin{enumerate}
+	\item [$\rhd$] NetrxMc$\_$Txn datagram
+	\item [$\rhd$] QByteArray mcc$\_$Tx$\_$Buf2
+	\item [$\rhd$] QByteArray mcc$\_$Tx$\_$Buf1
+	\item [$\rhd$] quint64 line2$\_$MCC$\_$Cnt
+	\item [$\rhd$] quint64 line1$\_$MCC$\_$Cnt	
+	\item [$\rhd$] QUdpSocket *udpTxSocket
+	\item [$\rhd$] int messageNo
+	\item [$\rhd$] QByteArray RxSocketData
+	\item [$\rhd$] bool NetTx$\_$OK$\_$flag
+	\item [$\rhd$] quint64 line1$\_$No$\_$Tx$\_$Count
+	\item [$\rhd$] quint64 line2$\_$No$\_$Tx$\_$Count	
+\end{enumerate}
+
+\subsubsection{Member Functions }
+\begin{enumerate}
+	\item [$\blacklozenge$] void NetworkTxInit()
+\end{enumerate}
+
+
+\subsubsection{Slots}
+\begin{enumerate}
+	\item [$\blacklozenge$] void sendDatagram1(QByteArray ,int,quint8)
+	\item [$\blacklozenge$] void sendDatagram2(QByteArray ,int,quint8)
+\end{enumerate}
+
+\subsubsection{Signals}
+\begin{enumerate}
+	\item [$\blacklozenge$] void SignalForTx2MCC(QByteArray ,int,quint8 )
+\end{enumerate}
+
+\subsubsection{Internal design details }
+\begin{enumerate}
+	\item  \textbf{NetworkRx :: NetworkTxInit()}
+	\begin{enumerate}
+		\item \textit{Inputs:} Nil.
+		\item \textit{Functional details:} Nil.
+		\item \textit{Outputs:} Nil. 
+		\item \textit{Implementation details:} Nil.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	\item \textbf{NetworkRx :: sendDatagrams1(QByteArray mcc$\_$buf$\_$Txn,  int i, quint8 Tx$\_$Packetsize)}
+	\begin{enumerate}
+		\item \textit{Inputs :} Byte array to be transmitted, line number, packet size to be transmitted, 
+		\item \textit{Functional details:}  writeDatagram writes data on to the socket-1 and returns number of bytes transmitted if successful, else -1 will be returned. 
+		\item \textit{Outputs:} Writes data on to the socket-1 for transmission.
+		\item \textit{Implementation details:} QT Linux 5.4 calls are used to implement this function.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}  
+	\item \textbf{NetworkRx :: sendDatagrams2(QByteArray mcc$\_$buf$\_$Txn,  int i, quint8 Tx$\_$Packetsize)}
+	\begin{enumerate}
+	\item \textit{Inputs :} Byte array to be transmitted, line number, packet size to be transmitted, 
+	\item \textit{Functional details:}  writeDatagram writes data on to the socket-2 and returns number of bytes transmitted if successful, else -1 will be returned. 
+	\item \textit{Outputs:} Writes data on to the socket-2 for transmission.
+	\item \textit{Implementation details:} QT Linux 5.4 calls are used to implement this function.
+	\item \textit{File operations:} Nil.
+	\end{enumerate}  
+\end{enumerate}
+
+
+%************************************
+\subsection{siothreads: SioThread, SioThreadE}
+
+
+
+\subsubsection{Attributes}
+
+\textbf{SioThread : For CDT and EDAU}\\
+\begin{enumerate}
+	\item [$\rhd$] QSerialPort *serial	
+	\item [$\rhd$] QByteArray sio$\_$data
+	\item [$\rhd$] quint8 SIO$\_$Status
+	\item [$\rhd$] qint64 Total$\_$Bytes
+	\item [$\rhd$] quint8 sio1$\_$ret
+	\item [$\rhd$] quint8 sioPort
+	\item [$\rhd$] bool serialclear
+	\item [$\rhd$] bool sio$\_$OK$\_$ststus$\_$flag
+	\item [$\rhd$] quint64 data1normalcount
+	\item [$\rhd$] quint64 data2normalcount
+	\item [$\rhd$] quint64 data1absentcount
+	\item [$\rhd$] quint64 data2absentcount
+	\item [$\rhd$] uint Rxd1Bytes
+	\item [$\rhd$] uint Rxd2Bytes
+\end{enumerate}
+
+\subsubsection{Member Functions } 
+\begin{enumerate}
+	\item [$\rhd$] Sio()
+	\item [$\rhd$] int Read$\_$Sio$\_$File(QString file$\_$name)
+\end{enumerate}
+\textbf{SioThread : For CDT and EDAU}\\
+\begin{enumerate}
+	\item [$\blacklozenge$] int ConfigureSioCard(int i, QList$<$SIO$\_$Node*$>$ sio$\_$list, qint64 TotalBytes)
+\end{enumerate}
+\subsubsection{Slots}
+\textbf{SioThread : For CDT and EDAU}\\
+\begin{enumerate}
+	\item [$\blacklozenge$] void readData1()
+\end{enumerate}
+\begin{enumerate}
+	\item [$\blacklozenge$] void readData2()
+\end{enumerate}
+
+\subsubsection{Signals}
+\textbf{SioThread : For CDT and EDAU}\\
+\begin{enumerate}
+	\item [$\blacklozenge$] void CDT1$\_$recvd(int,QByteArray)
+	\item [$\blacklozenge$]void CDT2$\_$recvd(int,QByteArray)
+	\item [$\blacklozenge$] void EDAU1$\_$recvd(int,QByteArray)
+	\item [$\blacklozenge$]void EDAU2$\_$recvd(int,QByteArray)
+\end{enumerate}
+
+\subsubsection{Internal design details }
+\begin{enumerate}
+	\item  \textbf{Sio :: Sio()}
+	\begin{enumerate}
+		\item \textit{Inputs :} Nil.
+		\item \textit{Functional details:} Objects of type QSerialPort are instantiated for 8 serial ports.
+		\item \textit{Outputs:} 8 serial port objects are created.
+		\item \textit{Implementation details:} 	QT Linux 5.4 libraries are used to implement the above.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+	
+	\item  \textbf{Sio :: Read$\_$Sio$\_$File(QString file$\_$name)}
+	\begin{enumerate}
+		\item \textit{Inputs :} Configuration input file name.
+		\item \textit{Functional details:} The number of serial ports and the corresponding configuration details are read and a linked list of serial port details is generated. 
+		\item \textit{Outputs:} Serial port configuration details read and stored.
+		\item \textit{Implementation details:} QT Linux 5.4 libraries are used to implement the above.
+		\item \textit{File operations:} sio.txt.
+	\end{enumerate}
+	
+	\item  \textbf{SioThread :: int ConfigureSioCard(int i, QList$<$SIO$\_$Node*$>$ sio$\_$list, qint64 TotalBytes)}
+	\begin{enumerate}
+		\item \textit{Inputs :} Serial port number, total bytes, serial linked list.
+		\item \textit{Functional details:} The required number of serial ports are as per the details stored in the linked list. 
+		\item \textit{Outputs:} Serial ports configured. 
+		\item \textit{Implementation details:} QT Linux 5.4 libraries are used to implement the above.
+		\item \textit{File operations:} Nil.
+	\end{enumerate}
+
+\end{enumerate}
+
+\section{Data detailed design}
+
+\subsection{Data structures}
+\subsubsection{CDT}
+\begin{enumerate}
+	\item quint8 units$\_$10Hz 
+	\item quint8 sign       
+	\item quint8 lift$\_$off  
+	\item quint8 hmsec    
+	\item quint8 sec       
+	\item quint8 min        
+	\item quint8 hrs        
+	\item quint8 hold
+\end{enumerate}
+\subsubsection{Constants}
+\begin{enumerate}
+	\item int tc$\_$chain;   
+	\item float azenc$\_$wild$\_$sample$\_$tolerance;
+	\item float elenc$\_$wild$\_$sample$\_$tolerance;
+	\item float enc1$\_$az$\_$bias;
+	\item float enc1$\_$el$\_$bias;
+	\item float enc2$\_$az$\_$bias;
+	\item float enc2$\_$el$\_$bias;
+	\item float az$\_$cdm$\_$slope;
+	\item float az$\_$prog$\_$slope;
+	\item float el$\_$cdm$\_$slope;
+	\item float el$\_$prog$\_$slope;
+	\item int analog$\_$channel$\_$no; 
+	\item float PA$\_$Upperlimit;
+	\item float PA$\_$lowerlimit;
+	\item QString prog$\_$file1;
+	\item uint DIO$\_$PortNo$\_$ServoOpModes;
+	\item uint DIO$\_$PortNo$\_$ServoDrive$\_$RCU3Bits;
+	\item uint DIO$\_$PortNo$\_$DCERCUStatus;
+	\item uint DIO$\_$PortNo$\_$TxBiasSys;
+	\item uint DIO$\_$PortNo$\_$CRIPBLRHealth;
+	\item uint DIO$\_$PortNo$\_$CRISHARHealth;
+	\item uint DIO$\_$NoOf$\_$Ports;
+	\item float Az$\_$UpperLimit;
+	\item float Az$\_$LowerLimit;
+	\item float El$\_$UpperLimit;
+	\item float El$\_$lowerLimit;
+	\item int Dio$\_$Devicenumber;
+	\item qint32 Dio$\_$Item;
+	\item qint32 Ai$\_$Devicenumber;
+	\item qint32 An$\_$Item;
+	\item quint8 LogCnterDelay;
+	\item QString logfolder;	
+\end{enumerate}
+
+\subsubsection{AntLog}
+\begin{enumerate}
+	\item quint64 ProcessCount
+	\item qint64 Line1$\_$EHMS
+	\item qint64 Line2$\_$EHMS
+	\item qint64 Selected$\_$EHMS
+	\item int CDT$\_$SelectedLine
+	\item char ext$\_$int
+	\item uint Az$\_$DriveOn$\_$TcProcess
+	\item uint El$\_$DriveOn$\_$TcProcess
+	\item uint EmStop$\_$TcProcess
+	\item uint Az$\_$OpMode$\_$TcProcess
+	\item uint El$\_$OpMode$\_$TcProcess
+	\item float Commanded$\_$Az$\_$El$\_$TcProcess[2]
+	\item float AntennaPosition$\_$Az$\_$El$\_$TcProcess[2]
+	\item float Error$\_$Az$\_$El$\_$TcProcess[2]
+	\item float Az$\_$ch1
+	\item float El$\_$ch1
+	\item float Az$\_$ch2
+	\item float El$\_$ch2
+	\item bool EDAUCurrentChainSelectedFlag
+	\item bool EDAUCh1$\_$OverallHealth
+	\item bool EDAUCh2$\_$OverallHealth
+	\item bool EDAUCh1$\_$IntExtStatusforProc
+	\item bool EDAUCh2$\_$IntExtStatusforProc
+	\item int CDM$\_$SelectedLine
+	\item int CDM$\_$SelectedSource
+	\item float Az$\_$CDM1$\_$Src1
+	\item float El$\_$CDM1$\_$Src1
+	\item float Az$\_$CDM1$\_$Src2
+	\item float El$\_$CDM1$\_$Src2
+	\item float Az$\_$CDM2$\_$Src1
+	\item float El$\_$CDM2$\_$Src1
+	\item float Az$\_$CDM2$\_$Src2
+	\item float El$\_$CDM2$\_$Src2
+	\item uint ID$\_$CDM1$\_$Src1
+	\item uint ID$\_$CDM1$\_$Src2
+	\item uint ID$\_$CDM2$\_$Src1
+	\item uint ID$\_$CDM2$\_$Src2
+	\item uint CompFlag$\_$CDM1
+	\item uint CompFlag$\_$CDM2
+	\item quint64 cdm1$\_$RxCount
+	\item quint64 cdm2$\_$RxCount
+	\item quint64 Pres$\_$cdm$\_$L1$\_$Src1$\_$Count
+	\item quint64 Pres$\_$cdm$\_$L1$\_$Src2$\_$Count
+	\item quint64 Pres$\_$cdm$\_$L2$\_$Src1$\_$Count
+	\item quint64 Pres$\_$cdm$\_$L2$\_$Src2$\_$Count
+	\item quint64 line1$\_$MCC$\_$Cnt
+	\item quint64 line2$\_$MCC$\_$Cnt
+	\item bool Antlog$\_$Selection$\_$Flag
+	\item quint64 AntlogCounter
+\end{enumerate}
+
+\subsubsection{Acquired$\_$encoder$\_$Data}
+\begin{enumerate}
+	\item qint64 Line1$\_$EHMS
+	\item qint64 Line2$\_$EHMS
+	\item qint64 Selected$\_$EHMS
+	\item int EDAUChain1$\_$id
+	\item float Az$\_$hnds$\_$ch1
+	\item float Az$\_$tens$\_$ch1
+	\item float Az$\_$ones$\_$ch1
+	\item float Az$\_$1tenth$\_$ch1
+	\item float Az$\_$1hundredth$\_$ch1
+	\item float El$\_$hnds$\_$ch1
+	\item float El$\_$tens$\_$ch1
+	\item float El$\_$ones$\_$ch1
+	\item float El$\_$1tenth$\_$ch1
+	\item float El$\_$1hundredth$\_$ch1
+	\item char Edau1$\_$ExtIntLog
+	\item int EDAUchain1$\_$HealthByte
+	\item int EDAUChain1$\_$EndByte
+	\item float Az$\_$ch1
+	\item float El$\_$ch1
+	\item int EDAUChain2$\_$id
+	\item float Az$\_$hnds$\_$ch2
+	\item float Az$\_$tens$\_$ch2
+	\item float Az$\_$ones$\_$ch2
+	\item float Az$\_$1tenth$\_$ch2
+	\item float Az$\_$1hundredth$\_$ch2
+	\item float El$\_$hnds$\_$ch2
+	\item float El$\_$tens$\_$ch2
+	\item float El$\_$ones$\_$ch2
+	\item float El$\_$1tenth$\_$ch2
+	\item float El$\_$1hundredth$\_$ch2
+	\item char Edau2$\_$ExtIntLog
+	\item int EDAUchain2$\_$HealthByte
+	\item int EDAUChain2$\_$EndByte
+	\item float Az$\_$ch2
+	\item float El$\_$ch2
+	\item bool EDAUCh1$\_$OverallHealth
+	\item bool EDAUCh2$\_$OverallHealth
+	\item quint32 EDAUCh1$\_$NotHelathCnt
+	\item quint32 EDAUCh2$\_$NotHelathCnt
+	\item quint32 EDAUCh1$\_$Data$\_$NotProcessedCnt
+	\item quint32 EDAUCh2$\_$Data$\_$NotProcessedCnt
+	\item bool EDAUCh1$\_$IntExtStatusforProc
+	\item bool EDAUCh2$\_$IntExtStatusforProc
+	\item bool EDAUCurrentChainSelectedFlag
+	\item float EDAUDataforProc$\_$Az
+	\item float EDAUDataforProc$\_$El
+	\item bool EDAUCh1 InitialisedFlag
+	\item bool EDAUCh2 InitialisedFlag
+	\item bool EDAUCh1 JumpsFlag
+	\item bool EDAUCh2 JumpsFlag
+	\item quint64 EDAUCh1 WildSampleCnt
+	\item quint64 EDAUCh2 WildSampleCnt
+\end{enumerate}
+
+\subsubsection{NetRxMc}
+\begin{enumerate}
+	\item quint32 range1
+	\item quint32   azimuth1
+	\item quint32 elevation1 
+	\item quint32 radartime
+	\item quint32 cdm$\_$source1
+	\item quint32 range2 
+	\item quint32 azimuth2
+	\item quint32 elevation2 
+	\item quint32 rangetime
+	\item quint32 cdm$\_$source2 
+	\item quint32 sys$\_$id
+	\item quint32 comp$\_$flags
+\end{enumerate}
+
+\subsubsection{Stnlog}
+\begin{enumerate}
+	\item uint station$\_$Id
+	\item uint system$\_$In$\_$use
+	\item quint64 ProcessCount
+	\item qint64 Line1$\_$EHMS
+	\item qint64 Line2$\_$EHMS
+	\item qint64 Selected$\_$EHMS
+	\item char ext$\_$int
+	\item bool TcReadyNotReady$\_$TcProcess
+	\item bool TcRadiateNotRadiate$\_$TcProcess
+	\item uint PowerStatus
+	\item float powerLevel
+	\item bool DCE$\_$RCU$\_$Health$\_$TcProcess
+	\item bool DCE$\_$RCU$\_$ComdControl$\_$TcProcess
+	\item uint DCE$\_$RCU$\_$ComdWord$\_$TcProcess
+	\item quint64 cdm1$\_$RxCount
+	\item quint64 cdm2$\_$RxCount
+	\item quint64 Pres$\_$cdm$\_$L1$\_$Src1$\_$Count
+	\item quint64 Pres$\_$cdm$\_$L1$\_$Src2$\_$Count
+	\item quint64 Pres$\_$cdm$\_$L2$\_$Src1$\_$Count
+	\item quint64 Pres$\_$cdm$\_$L2$\_$Src2$\_$Count
+	\item quint64 line1$\_$MCC$\_$Cnt
+	\item quint64 line2$\_$MCC$\_$Cnt
+	\item quint8 CRI$\_$SHAR$\_$Health$\_$Processor$\_$TcProcess
+	\item quint8 CRI$\_$SHAR$\_$Health$\_$Eth1$\_$TcProcess
+	\item quint8 CRI$\_$SHAR$\_$Health$\_$Eth2$\_$TcProcess
+	\item quint8 CRI$\_$SHAR$\_$Health$\_$DI$\_$TcProcess
+	\item quint8 CRI$\_$SHAR$\_$Health$\_$DO$\_$TcProcess
+	\item quint8 CRI$\_$SHAR$\_$Health$\_$RUN$\_$TcProcess
+	\item bool CRI$\_$PBLR$\_$Health$\_$Processor$\_$TcProcess
+	\item bool CRI$\_$PBLR$\_$Health$\_$Eth1$\_$TcProcess
+	\item bool CRI$\_$PBLR$\_$Health$\_$Eth2$\_$TcProcess
+	\item bool CRI$\_$PBLR$\_$Health$\_$DI$\_$TcProcess
+	\item bool CRI$\_$PBLR$\_$Health$\_$DO$\_$TcProcess
+	\item bool CRI$\_$PBLR$\_$Health$\_$RUN$\_$TcProcess
+	\item quint8 RCU$\_$3Bit$\_$Status$\_$TcProcess
+	\item bool Stnlog$\_$Selection$\_$Flag
+	\item bool Dio$\_$OkStatus$\_$flag
+	\item quint64 AO$\_$WriteSuccessCount
+	\item quint64 AO$\_$WriteErrorCount
+	\item quint64 Sio1$\_$datanormalcount
+	\item quint64 Sio1$\_$dataabsentcount
+	\item quint64 Sio2$\_$datanormalcount
+	\item quint64 Sio2$\_$dataabsentcount
+	\item quint64 Sio3$\_$datanormalcount
+	\item quint64 Sio3$\_$dataabsentcount
+	\item quint64 Sio4$\_$datanormalcount
+	\item quint64 Sio4$\_$dataabsentcount
+	\item quint64 nopacketRxCount$\_$L1
+	\item quint64 nopacketRxCount$\_$L2
+	\item quint64 StnlogCounter
+\end{enumerate}
+
+\subsubsection{DCE$\_$RCUlog}
+\begin{enumerate}
+	\item char Ch1$\_$sign      
+	\item quint8 Ch1$\_$hrs        
+	\item quint8 Ch1$\_$min        
+	\item quint8 Ch1$\_$sec      
+	\item quint8 Ch1$\_$hmsec    
+	\item char Ch2$\_$sign      
+	\item quint8 Ch2$\_$hrs        
+	\item quint8 Ch2$\_$min       
+	\item quint8 Ch2$\_$sec       
+	\item quint8 Ch2$\_$hmsec    
+	\item quint8 DCE$\_$RCU$\_$ComdWord
+	\item bool DCE$\_$RCU$\_$Health
+	\item bool DCE$\_$RCU$\_$LocalRemote
+	\item bool SynthesisedPowerHealth
+\end{enumerate}
+
+\subsubsection{NetTxMCC}
+\begin{enumerate}
+	\item quint8 stationid
+	\item quint8 chainid
+	\item quint8 tcchainsts
+	\item quint8 comdencsts
+	\item quint8 txpwrsts
+	\item quint8 servosts
+	\item quint8 azcdmlsb
+	\item quint8 azcdmmsb
+	\item quint8 azposlsb
+	\item quint8 azposmsb
+	\item quint8 azerrlsb
+	\item quint8 azerrmsb
+	\item quint8 elcdmlsb
+	\item quint8 elcdmmsb
+	\item quint8  elposlsb
+	\item quint8  elposmsb
+	\item quint8 encochaininfo
+	\item quint8 cdtsec
+	\item quint8 cdtmin
+	\item quint8 cdthrs
+	\item quint8 cdt$\_$hmsec
+	\item quint8 elerrlsb
+	\item quint8 elerrmsb
+	\item quint8 block$\_$id$\_$msb
+	\item quint8 block$\_$id$\_$lsb
+	\item quint8 tx$\_$PLC$\_$Status$\_$SHAR
+	\item quint8 tx$\_$PLC$\_$Status$\_$PBLR
+	\item quint8 tx$\_$PLC$\_$Status$\_$SHAR$\_$RCU$\_$3Bit
+	\item quint64 Mcc$\_$Txline$\_$count
+                  
+\end{enumerate}
+
+\subsubsection{cdm1$\_$buffer}
+\begin{enumerate}
+	\item quint8quint64 ProcessCount
+\item qint64 Line1$\_$EHMS
+\item qint64 Line2$\_$EHMS
+\item qint64 Selected$\_$EHMS
+\item char ext$\_$int
+\item int range1
+\item int azimuth1
+\item int elevation1
+\item int Radartime
+\item int cdm$\_$source1
+\item int range2
+\item int azimuth2
+\item int elevation2
+\item int Rangetime
+\item int cdm$\_$source2
+\item int sys$\_$id
+\item int comp$\_$flag
+\item quint8 packetsize
+\item quint64 cdm1$\_$RxCount
+\item quint64 Pres$\_$cdm$\_$L1$\_$Src1$\_$Count
+\item quint64 Pres$\_$cdm$\_$L1$\_$Src2$\_$Count
+\item quint64 Cdm1logCounter
+\end{enumerate}
+
+\subsubsection{cdm2$\_$buffer}
+\begin{enumerate}
+	\item quint8quint64 ProcessCount
+	\item qint64 Line1$\_$EHMS
+	\item qint64 Line2$\_$EHMS
+	\item qint64 Selected$\_$EHMS
+	\item char ext$\_$int
+	\item int range1
+	\item int azimuth1
+	\item int elevation1
+	\item int Radartime
+	\item int cdm$\_$source1
+	\item int range2
+	\item int azimuth2
+	\item int elevation2
+	\item int Rangetime
+	\item int cdm$\_$source2
+	\item int sys$\_$id
+	\item int comp$\_$flag
+	\item quint8 packetsize
+	\item quint64 cdm2$\_$RxCount
+	\item quint64 Pres$\_$cdm$\_$L2$\_$Src1$\_$Count
+	\item quint64 Pres$\_$cdm$\_$L2$\_$Src2$\_$Count
+	\item quint64 Cdm2logCounter
+\end{enumerate}
+
+\subsection{Input data files}
+
+The details of input files are given in section. \ref{Section:InpFileFormat} and the corresponding pin/port assignments along with formats are given in section. \ref{Section:ConnectDataPortsFormat}.
+
+\subsection{Configuration files}
+The details of input configuration files are given in section. \ref{Section:InpFileFormat} and the corresponding pin/port assignments along with formats are given in section. \ref{Section:ConnectDataPortsFormat}.
